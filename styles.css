@@ -1,0 +1,641 @@
+/* =====================================================
+   Gupta Dental Care - Custom Styles
+   Professional Medical Theme with Blue & White Colors
+   ===================================================== */
+
+/* ==================== Variables ==================== */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #0056b3;
+    --accent-color: #00a8e8;
+    --light-blue: #e7f3ff;
+    --dark-blue: #003d82;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --white: #ffffff;
+    --light-gray: #f8f9fa;
+    --border-color: #dee2e6;
+    --success: #28a745;
+    --warning: #ffc107;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* ==================== Global Styles ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+body[data-lang="hi"] {
+    font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+section {
+    padding: 80px 0;
+}
+
+a {
+    transition: all 0.3s ease;
+}
+
+/* ==================== Navigation ==================== */
+.navbar {
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+    box-shadow: var(--shadow);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.navbar-brand i {
+    font-size: 1.8rem;
+}
+
+.nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem !important;
+    color: var(--text-dark) !important;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+.language-toggle {
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.language-toggle:hover {
+    background-color: var(--primary-color);
+    color: var(--white) !important;
+}
+
+/* ==================== Hero Section ==================== */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #e7f3ff 0%, #ffffff 100%);
+    padding-top: 80px;
+}
+
+.hero-content h1 {
+    color: var(--dark-blue);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.hero-content p.lead {
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+.hero-buttons .btn {
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.hero-buttons .btn-primary {
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+}
+
+.hero-buttons .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
+}
+
+.hero-buttons .btn-outline-primary:hover {
+    transform: translateY(-3px);
+}
+
+.hero-image img {
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.hero-badges .badge {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+}
+
+/* ==================== Trust Section ==================== */
+.trust-section {
+    padding: 60px 0;
+}
+
+.trust-item {
+    transition: transform 0.3s ease;
+}
+
+.trust-item:hover {
+    transform: translateY(-10px);
+}
+
+.trust-item i {
+    transition: all 0.3s ease;
+}
+
+.trust-item:hover i {
+    transform: scale(1.1);
+}
+
+.trust-item h5 {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* ==================== Section Titles ==================== */
+.section-title h2 {
+    color: var(--dark-blue);
+    position: relative;
+    display: inline-block;
+}
+
+.title-border {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    margin: 15px 0;
+    border-radius: 2px;
+}
+
+/* ==================== About Section ==================== */
+.qualifications ul li {
+    padding: 0.5rem 0;
+    color: var(--text-dark);
+}
+
+.qualifications i {
+    font-size: 1.2rem;
+}
+
+/* ==================== Service Cards ==================== */
+.service-card {
+    background: var(--white);
+    padding: 2.5rem 1.5rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    transition: all 0.4s ease;
+    border: 2px solid transparent;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon {
+    transform: rotateY(360deg);
+}
+
+.service-icon i {
+    font-size: 2rem;
+    color: var(--white);
+}
+
+.service-card h4 {
+    color: var(--dark-blue);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.service-card p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+/* ==================== Gallery ==================== */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.gallery-item img {
+    transition: transform 0.5s ease;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(13, 110, 253, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-overlay h5 {
+    color: var(--white);
+    font-weight: 600;
+    margin: 0;
+}
+
+/* ==================== Testimonials ==================== */
+.testimonial-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.testimonial-text {
+    font-style: italic;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.rating i {
+    font-size: 1rem;
+}
+
+.testimonial-avatar i {
+    color: var(--primary-color);
+}
+
+/* ==================== Contact Section ==================== */
+.contact-card {
+    background: var(--white);
+    padding: 2.5rem 1.5rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.contact-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.contact-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.contact-icon i {
+    font-size: 2rem;
+    color: var(--white);
+}
+
+.contact-card h5 {
+    color: var(--dark-blue);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.contact-card p {
+    color: var(--text-light);
+    margin-bottom: 0;
+}
+
+.contact-card a {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.contact-card a:hover {
+    color: var(--secondary-color);
+}
+
+.map-container {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* ==================== Footer ==================== */
+footer {
+    background-color: var(--dark-blue) !important;
+}
+
+footer h5, footer h6 {
+    color: var(--white);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+footer a:hover {
+    color: var(--accent-color) !important;
+}
+
+.social-links a {
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.social-links a:hover {
+    transform: translateY(-3px);
+}
+
+/* ==================== Floating Buttons ==================== */
+.floating-buttons {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 999;
+}
+
+.floating-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.floating-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.call-btn {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.whatsapp-btn {
+    background: linear-gradient(135deg, #25D366, #128C7E);
+}
+
+.floating-btn:hover {
+    color: var(--white);
+}
+
+/* ==================== Responsive Design ==================== */
+
+/* Tablets */
+@media (max-width: 991px) {
+    .hero-section {
+        padding-top: 100px;
+        min-height: auto;
+        padding-bottom: 60px;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-image {
+        margin-top: 3rem;
+    }
+    
+    section {
+        padding: 60px 0;
+    }
+    
+    .service-card,
+    .contact-card {
+        margin-bottom: 2rem;
+    }
+}
+
+/* Mobile Phones */
+@media (max-width: 767px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-content p.lead {
+        font-size: 1rem;
+    }
+    
+    .hero-buttons .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .hero-badges .badge {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    
+    .navbar-brand i {
+        font-size: 1.5rem;
+    }
+    
+    .service-icon,
+    .contact-icon {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .service-icon i,
+    .contact-icon i {
+        font-size: 1.5rem;
+    }
+    
+    .service-card h4,
+    .contact-card h5 {
+        font-size: 1.1rem;
+    }
+    
+    .floating-buttons {
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .floating-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .gallery-item img {
+        height: 250px;
+    }
+    
+    section {
+        padding: 40px 0;
+    }
+    
+    .trust-section {
+        padding: 40px 0;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 575px) {
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    
+    .section-title h2 {
+        font-size: 1.8rem;
+    }
+    
+    .testimonial-card,
+    .service-card,
+    .contact-card {
+        padding: 1.5rem;
+    }
+}
+
+/* ==================== Animations ==================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-on-scroll {
+    animation: fadeInUp 0.8s ease;
+}
+
+/* ==================== Print Styles ==================== */
+@media print {
+    .navbar,
+    .floating-buttons,
+    .hero-buttons {
+        display: none;
+    }
+    
+    section {
+        page-break-inside: avoid;
+    }
+}
+
+/* ==================== Accessibility ==================== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Focus styles for keyboard navigation */
+a:focus,
+button:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* ==================== Loading Animation ==================== */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--white);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==================== Custom Scrollbar ==================== */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
