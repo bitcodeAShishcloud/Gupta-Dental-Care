@@ -25,7 +25,7 @@
                 <img src="1.1.1.1.jpg" alt="Gupta Dental Care" style="height: 50px; width: auto; ">
                 <span class="ms-2 fw-bold text-primary">Gupta Dental Care</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -53,6 +53,11 @@
                             <i class="fas fa-language"></i> <span id="lang-text">हिंदी</span>
                         </button>
                     </li>
+                    <li class="nav-item ms-3">
+                        <button class="btn btn-outline-secondary btn-sm" id="bg-toggle" onclick="toggleBackgroundMode()">
+                            <i class="fas fa-adjust"></i> <span id="bg-mode-text">Light Mode</span>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -72,17 +77,17 @@
                         </p>
                         <div class="hero-buttons">
                             <a href="tel:+919984847807" class="btn btn-primary btn-lg me-3 mb-2">
-                                <i class="fas fa-phone-alt"></i> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:middle;"><path d="M3.654 1.328a.678.678 0 0 1 .252-.287c.272-.176.637-.145.888.07l2.29 1.958c.329.282.445.76.267 1.153l-.805 1.684a.678.678 0 0 1-.746.39l-1.516-.304a11.72 11.72 0 0 0 5.292 5.292l-.304-1.516a.678.678 0 0 1 .39-.746l1.684-.805c.393-.178.87-.062 1.153.267l1.958 2.29c.215.251.246.616.07.888a13.684 13.684 0 0 1-2.01 2.01c-.272.176-.637.145-.888-.07l-2.29-1.958a.678.678 0 0 1-.267-1.153l.805-1.684a.678.678 0 0 1 .746-.39l1.516.304a11.72 11.72 0 0 0-5.292-5.292l.304 1.516a.678.678 0 0 1-.39.746l-1.684.805a.678.678 0 0 1-1.153-.267L1.328 3.654a.678.678 0 0 1 .07-.888 13.684 13.684 0 0 1 2.01-2.01z"/></svg> 
                                 <span data-en="Call Now" data-hi="अभी कॉल करें">Call Now</span>
                             </a>
                             <a href="#contact" class="btn btn-outline-primary btn-lg mb-2">
-                                <i class="fas fa-map-marker-alt"></i> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" style="vertical-align:middle;"><path d="M8 0a5.53 5.53 0 0 0-5.5 5.5c0 4.5 5.5 10.5 5.5 10.5s5.5-6 5.5-10.5A5.53 5.53 0 0 0 8 0zm0 8a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg> 
                                 <span data-en="Visit Us" data-hi="हमसे मिलें">Visit Us</span>
                             </a>
                         </div>
                         <div class="hero-badges mt-4">
-                            <span class="badge bg-light text-dark me-2"><i class="fas fa-award text-warning"></i> 5+ Years Experience</span>
-                            <span class="badge bg-light text-dark me-2"><i class="fas fa-users text-success"></i> 5000+ Happy Patients</span>
+                            <span class="badge bg-light text-dark me-2" style="color:#383839;font-weight:600;text-shadow:0 1px 4px #fff6;"> <i class="fas fa-award text-warning"></i> 5+ Years Experience</span>
+                            <span class="badge bg-light text-dark me-2" style="color:#414243;font-weight:600;text-shadow:0 1px 4px #fff6;"> <i class="fas fa-users text-success"></i> 5000+ Happy Patients</span>
                         </div>
                     </div>
                 </div>
@@ -101,26 +106,26 @@
             <div class="row text-center">
                 <div class="col-md-3 col-6 mb-4">
                     <div class="trust-item">
-                        <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
-                        <h5 data-en="Safe & Hygienic" data-hi="सुरक्षित और स्वच्छ">Safe & Hygienic</h5>
+                        <i class="fas fa-shield-alt fa-3x text-primary mb-3" style="color:#0d6efd;"></i>
+                        <h5 data-en="Safe & Hygienic" data-hi="सुरक्षित और स्वच्छ" style="color:#0d6efd;text-shadow:0 1px 4px #fff6;">Safe & Hygienic</h5>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-4">
                     <div class="trust-item">
-                        <i class="fas fa-user-md fa-3x text-primary mb-3"></i>
-                        <h5 data-en="Expert Doctor" data-hi="विशेषज्ञ डॉक्टर">Expert Doctor</h5>
+                        <i class="fas fa-user-md fa-3x text-primary mb-3" style="color:#0d6efd;"></i>
+                        <h5 data-en="Expert Doctor" data-hi="विशेषज्ञ डॉक्टर" style="color:#0d6efd;text-shadow:0 1px 4px #fff6;">Expert Doctor</h5>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-4">
                     <div class="trust-item">
-                        <i class="fas fa-clock fa-3x text-primary mb-3"></i>
-                        <h5 data-en="Flexible Timing" data-hi="लचीला समय">Flexible Timing</h5>
+                        <i class="fas fa-clock fa-3x text-primary mb-3" style="color:#0d6efd;"></i>
+                        <h5 data-en="Flexible Timing" data-hi="लचीला समय" style="color:#0d6efd;text-shadow:0 1px 4px #fff6;">Flexible Timing</h5>
                     </div>
                 </div>
                 <div class="col-md-3 col-6 mb-4">
                     <div class="trust-item">
-                        <i class="fas fa-hand-holding-usd fa-3x text-primary mb-3"></i>
-                        <h5 data-en="Affordable Rates" data-hi="किफायती दरें">Affordable Rates</h5>
+                        <i class="fas fa-hand-holding-usd fa-3x text-primary mb-3" style="color:#0d6efd;"></i>
+                        <h5 data-en="Affordable Rates" data-hi="किफायती दरें" style="color:#0d6efd;text-shadow:0 1px 4px #fff6;">Affordable Rates</h5>
                     </div>
                 </div>
             </div>
@@ -165,7 +170,7 @@
     <section id="services" class="py-5 bg-light">
         <div class="container">
             <div class="section-title text-center mb-5">
-                <h2 class="fw-bold" data-en="Our Services" data-hi="हमारी सेवाएं">Our Services</h2>
+                <h2 class="fw-bold" data-en="Our Services" data-hi="हमारी सेवाएं" style="color:#fff; text-shadow:0 0 16px #fff,0 0 32px #fff; font-weight:900; font-size:2.5rem;">Our Services</h2>
                 <div class="title-border mx-auto"></div>
                 <p class="lead mt-3" data-en="Comprehensive dental solutions for your entire family" data-hi="आपके पूरे परिवार के लिए व्यापक दंत चिकित्सा समाधान">
                     Comprehensive dental solutions for your entire family
@@ -288,17 +293,24 @@
     <section id="gallery" class="py-5">
         <div class="container">
             <div class="section-title text-center mb-5">
-                <h2 class="fw-bold" data-en="Our Clinic Gallery" data-hi="हमारा क्लिनिक गैलरी">Our Clinic Gallery</h2>
+                <h2 class="fw-bold" data-en="Our Clinic Gallery" data-hi="हमारा क्लिनिक गैलरी" style="color:#c7d1e0; text-shadow:0 0 8px #fff,0 0 16px #fff; font-weight:900; font-size:2.5rem;">Our Clinic Gallery</h2>
                 <div class="title-border mx-auto"></div>
                 <p class="lead mt-3" data-en="Modern facility with state-of-the-art equipment" data-hi="अत्याधुनिक उपकरणों के साथ आधुनिक सुविधा">
                     Modern facility with state-of-the-art equipment
                 </p>
+                <button id="visitGalleryBtn" class="btn btn-outline-light mt-4 gallery-btn-contrast" style="font-weight:700; font-size:1.2rem; color:#fff; text-shadow:0 0 8px #000,0 0 16px #000; background:#ffffff; border:none;">Visit our Gallery &rarr;</button>
+            </div>
+            <!-- Gallery Popup Modal -->
+            <div id="galleryPopup" style="display:none; position:fixed; left:50%; bottom:30px; transform:translateX(-50%); background:#292929; color:#fff; border-radius:16px; box-shadow:0 4px 32px #000; padding:24px 32px; z-index:2000; min-width:260px; text-align:center;">
+                <span style="font-size:1.1rem; font-weight:600;">See all clinic photos in our full gallery!</span><br>
+                <a href="gallery.html" class="btn btn-primary mt-3" >Open Full Gallery</a>
+                <button id="closeGalleryPopup" style="position:absolute; top:8px; right:16px; background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer;">&times;</button>
             </div>
             
             <div class="row g-4">
                 <div class="col-lg-4 col-md-6">
                     <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&h=400&fit=crop" alt="Clinic Reception" class="img-fluid rounded">
+                        <img src="Dr. A Gupta.jpeg" alt="Clinic Reception" class="img-fluid rounded">
                         <div class="gallery-overlay">
                             <h5 data-en="Reception Area" data-hi="रिसेप्शन क्षेत्र">Reception Area</h5>
                         </div>
@@ -352,7 +364,7 @@
     <section id="testimonials" class="py-5 bg-light">
         <div class="container">
             <div class="section-title text-center mb-5">
-                <h2 class="fw-bold" data-en="What Our Patients Say" data-hi="हमारे मरीज क्या कहते हैं">What Our Patients Say</h2>
+                <h2 class="fw-bold" data-en="What Our Patients Say" data-hi="हमारे मरीज क्या कहते हैं" style="color:#fff; text-shadow:0 0 16px #fff,0 0 32px #fff; font-weight:900; font-size:2.5rem;">What Our Patients Say</h2>
                 <div class="title-border mx-auto"></div>
             </div>
             
@@ -507,9 +519,9 @@
                 <div class="col-md-4">
                     <h6 data-en="Connect With Us" data-hi="हमसे जुड़ें">Connect With Us</h6>
                     <div class="social-links">
-                        <a href="https://facebook.com" target="_blank" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
-                        <a href="https://instagram.com" target="_blank" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
-                        <a href="https://wa.me/919984847807" target="_blank" class="text-white"><i class="fab fa-whatsapp fa-lg"></i></a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener" class="text-white me-3" title="Facebook"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i><span class="visually-hidden">Facebook</span></a>
+                        <a href="https://instagram.com" target="_blank" rel="noopener" class="text-white me-3" title="Instagram"><i class="fab fa-instagram fa-lg" aria-hidden="true"></i><span class="visually-hidden">Instagram</span></a>
+                        <a href="https://wa.me/919984847807?text=Hello%20Dr.%20A%20Gupta,%20I%20would%20like%20to%20book%20an%20appointment" target="_blank" rel="noopener" class="text-white" title="WhatsApp"><i class="fab fa-whatsapp fa-lg" aria-hidden="true"></i><span class="visually-hidden">WhatsApp</span></a>
                     </div>
                 </div>
             </div>
@@ -525,7 +537,7 @@
         <a href="tel:+919984847807" class="floating-btn call-btn" title="Call Now">
             <i class="fas fa-phone-alt"></i>
         </a>
-        <a href="https://wa.me/919984847807?text=Hello%20Dr.%20A%20Gupta,%20I%20would%20like%20to%20book%20an%20appointment" target="_blank" class="floating-btn whatsapp-btn" title="WhatsApp">
+        <a href="https://wa.me/919984847807?text=Hello%20Dr.%20A%20Gupta,%20I%20would%20like%20to%20book%20an%20appointment" target="_blank" rel="noopener" class="floating-btn whatsapp-btn" title="WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
@@ -534,6 +546,46 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="script.js"></script>
+
+<script>
+// Gallery popup logic
+const visitBtn = document.getElementById('visitGalleryBtn');
+const popup = document.getElementById('galleryPopup');
+const closeBtn = document.getElementById('closeGalleryPopup');
+if(visitBtn && popup && closeBtn) {
+    visitBtn.onclick = () => { popup.style.display = 'block'; };
+    closeBtn.onclick = () => { popup.style.display = 'none'; };
+    window.onclick = (e) => {
+        if(e.target === popup) popup.style.display = 'none';
+    };
+}
+// Background mode toggle
+function toggleBackgroundMode() {
+    const body = document.body;
+    const html = document.documentElement;
+    const bgBtn = document.getElementById('bg-toggle');
+    const bgText = document.getElementById('bg-mode-text');
+    const isDark = body.classList.toggle('light-mode');
+    html.classList.toggle('light-mode');
+    // Update text/icon
+    if (body.classList.contains('light-mode')) {
+        bgText.textContent = 'Dark Mode';
+    } else {
+        bgText.textContent = 'Light Mode';
+    }
+    // Store preference
+    localStorage.setItem('backgroundMode', body.classList.contains('light-mode') ? 'light' : 'dark');
+}
+// On load, set mode from storage
+window.addEventListener('DOMContentLoaded', function() {
+    const mode = localStorage.getItem('backgroundMode');
+    if (mode === 'light') {
+        document.body.classList.add('light-mode');
+        document.documentElement.classList.add('light-mode');
+        document.getElementById('bg-mode-text').textContent = 'Dark Mode';
+    }
+});
+</script>
 </body>
 
 </html>

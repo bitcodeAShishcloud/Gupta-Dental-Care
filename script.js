@@ -450,3 +450,19 @@ document.querySelectorAll('section[id]').forEach(section => {
 // ==================== Export functions for global use ====================
 window.toggleLanguage = toggleLanguage;
 window.showNotification = showNotification;
+
+// ==================== Background Mode Default ====================
+window.addEventListener('DOMContentLoaded', function() {
+    const mode = localStorage.getItem('backgroundMode');
+    if (!mode || mode === 'light') {
+        document.body.classList.add('light-mode');
+        document.documentElement.classList.add('light-mode');
+        const bgText = document.getElementById('bg-mode-text');
+        if (bgText) bgText.textContent = 'Dark Mode';
+    } else if (mode === 'dark') {
+        document.body.classList.remove('light-mode');
+        document.documentElement.classList.remove('light-mode');
+        const bgText = document.getElementById('bg-mode-text');
+        if (bgText) bgText.textContent = 'Light Mode';
+    }
+});

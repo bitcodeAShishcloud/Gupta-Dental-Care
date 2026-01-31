@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Full Gallery | Gupta Dental Care</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body { background: #000; color: #fff; }
+        .gallery-title { text-align: center; font-size: 2.2rem; font-weight: 900; margin-top: 2rem; text-shadow: 0 0 16px #fff, 0 0 32px #fff; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .gallery-img { width: 100%; border-radius: 16px; box-shadow: 0 4px 32px #111; transition: transform 0.2s; background: #222; }
+        .gallery-img:hover { transform: scale(1.04); box-shadow: 0 8px 40px #fff; }
+        .navbar, footer { background: #000 !important; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="1.1.1.1.jpg" alt="Gupta Dental Care" style="height: 40px; width: auto;">
+                <span class="ms-2 fw-bold text-light">Gupta Dental Care</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="gallery.html">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 90px;">
+        <h1 class="gallery-title">Clinic Photo Gallery</h1>
+        <div class="gallery-grid">
+            <img src="Gallery/1_A.jpeg" alt="Clinic Photo 1" class="gallery-img">
+            <img src="Gallery/6_A.jpeg" alt="Clinic Photo 6" class="gallery-img">
+            <img src="Gallery/7_A.jpeg" alt="Clinic Photo 7" class="gallery-img">
+            <img src="Gallery/8_A.jpeg" alt="Clinic Photo 8" class="gallery-img">
+            <img src="Gallery/2_A.jpeg" alt="Clinic Photo 2" class="gallery-img">
+            <img src="Gallery/3_A.jpeg" alt="Clinic Photo 3" class="gallery-img">
+            <img src="Gallery/4_A.jpeg" alt="Clinic Photo 4" class="gallery-img">
+            <img src="Gallery/5_A.jpeg" alt="Clinic Photo 5" class="gallery-img">
+            <img src="Gallery/9_A.jpeg" alt="Clinic Photo 9" class="gallery-img">
+            <img src="Gallery/10_A.jpeg" alt="Clinic Photo 10" class="gallery-img">
+            <img src="Gallery/11_A.jpeg" alt="Clinic Photo 11" class="gallery-img">
+            <img src="Gallery/12_A.jpeg" alt="Clinic Photo 12" class="gallery-img">
+            <img src="Gallery/13_A.jpeg" alt="Clinic Photo 13" class="gallery-img">
+            <img src="Gallery/14_A.jpeg" alt="Clinic Photo 14" class="gallery-img">
+            <img src="Gallery/15_A.jpeg" alt="Clinic Photo 15" class="gallery-img">
+            <img src="Gallery/16_A.jpeg" alt="Clinic Photo 16" class="gallery-img">
+            <img src="Gallery/17_A.jpeg" alt="Clinic Photo 17" class="gallery-img">
+            <img src="Gallery/18_A.jpeg" alt="Clinic Photo 18" class="gallery-img">
+        </div>
+        <div style="text-align:center; margin:2rem 0;">
+            <a href="index.html" class="btn btn-outline-light" style="font-size:1.1rem;">&larr; Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <h5><img src="1.1.1.1.jpg" alt="Gupta Dental Care" style="height: 32px; width: auto; margin-right: 10px; vertical-align: middle;"> Gupta Dental Care</h5>
+                    <p class="small">Your trusted partner for complete dental health in Kushinagar</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a href="index.html#home" class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="list-inline-item"><a href="index.html#about" class="text-white-50 text-decoration-none">About</a></li>
+                        <li class="list-inline-item"><a href="index.html#services" class="text-white-50 text-decoration-none">Services</a></li>
+                        <li class="list-inline-item"><a href="index.html#contact" class="text-white-50 text-decoration-none">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-white my-3">
+            <div class="text-center small">
+                <p class="mb-0">&copy; 2026 Gupta Dental Care. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
