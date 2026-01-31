@@ -1,3 +1,7 @@
+/* Pink color for 'Open Full Gallery' button in light mode */
+body.light-mode .btn-primary.mt-3 {
+    color: #e83e8c !important;
+}
 /* ==================== Mode-Specific Text Visibility ==================== */
 body.light-mode, html.light-mode {
     color: #222 !important;
