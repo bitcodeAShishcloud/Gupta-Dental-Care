@@ -2,12 +2,12 @@
 
 ## One-Click Deployment
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/bitcodeAShishcloud/test)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/bitcodeAShishcloud/gdc)
 
 ## Manual Deployment Steps
 
 1. **Sign up at Vercel**: https://vercel.com/signup
-2. **Import your repository**: `bitcodeAShishcloud/test`
+2. **Import your repository**: `bitcodeAShishcloud/gdc`
 3. **Click Deploy** - That's it! 🎉
 
 Your site will be live at: `https://your-project.vercel.app`

@@ -17,7 +17,7 @@
 
 1. Once logged in, click **"Add New"** → **"Project"**
 2. Click **"Import Git Repository"**
-3. Find and select: `bitcodeAShishcloud/test`
+3. Find and select: `bitcodeAShishcloud/gdc`
 4. Click **"Import"**
 
 ### Step 3: Configure Project
