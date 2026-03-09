@@ -1,0 +1,23 @@
+# Development files
+node_modules
+npm-debug.log*
+.env.local
+.env
+
+# IDE files
+.vscode
+.idea
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build files
+*.log
+
+# Local server file (not needed on Vercel)
+server.js
+
+# Batch files (Windows only)
+*.bat
