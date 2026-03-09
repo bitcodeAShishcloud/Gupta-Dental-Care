@@ -1,26 +1,24 @@
-# Dependencies
-node_modules/
-npm-debug.log*
-package-lock.json
+# Appwrite Configuration (contains sensitive credentials)
+appwrite-config.js
 
-# Environment variables
+# Environment files
 .env
 .env.local
+.env.production
+
+# Node modules
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
-
-# Temporary files
-*.tmp
-*.temp

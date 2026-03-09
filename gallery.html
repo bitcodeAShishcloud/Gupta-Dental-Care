@@ -7,12 +7,160 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        body { background: #000; color: #fff; }
-        .gallery-title { text-align: center; font-size: 2.2rem; font-weight: 900; margin-top: 2rem; text-shadow: 0 0 16px #fff, 0 0 32px #fff; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
-        .gallery-img { width: 100%; border-radius: 16px; box-shadow: 0 4px 32px #111; transition: transform 0.2s; background: #222; }
-        .gallery-img:hover { transform: scale(1.04); box-shadow: 0 8px 40px #fff; }
-        .navbar, footer { background: #000 !important; }
+        :root {
+            --bg-dark: #000;
+            --text-light: #fff;
+            --shadow-base: #111;
+            --shadow-hover: rgba(255, 255, 255, 0.4);
+        }
+
+        body { 
+            background: var(--bg-dark); 
+            color: var(--text-light); 
+        }
+
+        .gallery-title { 
+            text-align: center; 
+            font-size: 2.2rem; 
+            font-weight: 900; 
+            margin-top: 2rem; 
+            text-shadow: 0 0 16px var(--text-light), 0 0 32px var(--text-light); 
+        }
+
+        /* Masonry Grid Layout */
+        .gallery-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 2rem; 
+            margin-top: 2rem;
+            grid-auto-flow: dense;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: #222;
+            box-shadow: 0 4px 32px var(--shadow-base);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.04) translateY(-5px);
+            box-shadow: 0 8px 40px var(--shadow-hover);
+            z-index: 10;
+        }
+
+        .gallery-img { 
+            width: 100%; 
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-img[data-loaded="false"] {
+            opacity: 0;
+        }
+
+        .gallery-img[data-loaded="true"] {
+            opacity: 1;
+        }
+
+        /* Loading skeleton */
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, #222 25%, #333 50%, #222 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            z-index: 1;
+        }
+
+        .gallery-item.loaded::before {
+            display: none;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Loading spinner */
+        .loading-container {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--text-light);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error message */
+        .error-message {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #ef4444;
+        }
+
+        /* Admin button */
+        .admin-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .admin-btn:hover {
+            background: #1e40af;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(37, 99, 235, 0.6);
+        }
+
+        .navbar, footer { 
+            background: var(--bg-dark) !important; 
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .gallery-title {
+                font-size: 1.75rem;
+            }
+
+            .admin-btn {
+                bottom: 1rem;
+                right: 1rem;
+                padding: 0.75rem 1.25rem;
+                font-size: 0.875rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -40,13 +188,31 @@
 
     <div class="container" style="margin-top: 90px;">
         <h1 class="gallery-title">Clinic Photo Gallery</h1>
-        <div class="gallery-grid" id="galleryContainer">
-            <!-- Images will be loaded dynamically -->
+        
+        <!-- Loading State -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="spinner"></div>
+            <p>Loading gallery...</p>
         </div>
+
+        <!-- Error State -->
+        <div class="error-message" id="errorContainer" style="display: none;">
+            <h3>⚠️ Gallery Temporarily Unavailable</h3>
+            <p>We're experiencing technical difficulties. Please try again later.</p>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid" id="galleryGrid"></div>
+
         <div style="text-align:center; margin:2rem 0;">
             <a href="index.html" class="btn btn-outline-light" style="font-size:1.1rem;">&larr; Back to Home</a>
         </div>
     </div>
+
+    <!-- Admin Access Button -->
+    <button class="admin-btn" onclick="window.open('admin.html', '_blank', 'width=1200,height=800')">
+        🔐 Admin Dashboard
+    </button>
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-4 mt-5">
@@ -72,30 +238,215 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/appwrite@14.0.1"></script>
+    <script src="appwrite-config.js"></script>
     <script>
-        // Load gallery images dynamically
-        async function loadGallery() {
+        // ======== CONFIGURATION ========
+        const CACHE_KEY = 'gdc_gallery_cache';
+        const CACHE_DURATION = 60 * 60 * 1000; // 1 hour
+        const FALLBACK_IMAGES = [
+            'Gallery/1_A.jpeg', 'Gallery/2_A.jpeg', 'Gallery/3_A.jpeg', 'Gallery/4_A.jpeg',
+            'Gallery/5_A.jpeg', 'Gallery/6_A.jpeg', 'Gallery/7_A.jpeg', 'Gallery/8_A.jpeg',
+            'Gallery/9_A.jpeg', 'Gallery/10_A.jpeg', 'Gallery/11_A.jpeg', 'Gallery/12_A.jpeg',
+            'Gallery/13_A.jpeg', 'Gallery/14_A.jpeg', 'Gallery/15_A.jpeg', 'Gallery/16_A.jpeg',
+            'Gallery/17_A.jpeg', 'Gallery/18_A.jpeg'
+        ];
+
+        // ======== DOM ELEMENTS ========
+        const galleryGrid = document.getElementById('galleryGrid');
+        const loadingContainer = document.getElementById('loadingContainer');
+        const errorContainer = document.getElementById('errorContainer');
+
+        // ======== CACHE MANAGEMENT ========
+        function getCachedGallery() {
             try {
-                const response = await fetch('gallery-images.json');
-                const images = await response.json();
-                const container = document.getElementById('galleryContainer');
-                
-                images.forEach(image => {
-                    const img = document.createElement('img');
-                    img.src = image.path;
-                    img.alt = image.alt || `Gallery photo ${image.filename}`;
-                    img.className = 'gallery-img';
-                    img.loading = 'lazy';
-                    container.appendChild(img);
-                });
+                const cached = localStorage.getItem(CACHE_KEY);
+                if (!cached) return null;
+
+                const { data, timestamp } = JSON.parse(cached);
+                const age = Date.now() - timestamp;
+
+                if (age < CACHE_DURATION) {
+                    console.log('📦 Using cached gallery data');
+                    return data;
+                }
+
+                localStorage.removeItem(CACHE_KEY);
+                return null;
             } catch (error) {
-                console.error('Error loading gallery:', error);
+                console.error('Cache read error:', error);
+                return null;
             }
         }
-        
-        // Load gallery on page load
-        document.addEventListener('DOMContentLoaded', loadGallery);
+
+        function setCachedGallery(data) {
+            try {
+                localStorage.setItem(CACHE_KEY, JSON.stringify({
+                    data,
+                    timestamp: Date.now()
+                }));
+            } catch (error) {
+                console.error('Cache write error:', error);
+            }
+        }
+
+        function clearCache() {
+            localStorage.removeItem(CACHE_KEY);
+            console.log('🗑️ Gallery cache cleared');
+        }
+
+        // ======== GALLERY LOADING ========
+        async function loadGalleryFromAppwrite() {
+            try {
+                console.log('📡 Fetching gallery from Appwrite...');
+                const files = await storage.listFiles(APPWRITE_CONFIG.bucketId);
+                
+                const imageUrls = files.files.map(file => {
+                    const fileUrl = storage.getFileView(APPWRITE_CONFIG.bucketId, file.$id);
+                    // ⚡ PERFORMANCE: Add query params for automatic resizing
+                    return `${fileUrl}?width=800&height=600&output=webp`;
+                });
+
+                setCachedGallery(imageUrls);
+                return imageUrls;
+            } catch (error) {
+                console.warn('⚠️ Appwrite fetch failed, using fallback:', error);
+                return null;
+            }
+        }
+
+        async function loadGallery(forceRefresh = false) {
+            try {
+                loadingContainer.style.display = 'block';
+                errorContainer.style.display = 'none';
+                galleryGrid.innerHTML = '';
+
+                let images = forceRefresh ? null : getCachedGallery();
+
+                if (!images) {
+                    images = await loadGalleryFromAppwrite();
+                }
+
+                // Fallback to local images if Appwrite fails
+                if (!images || images.length === 0) {
+                    console.log('📁 Using local fallback images');
+                    images = FALLBACK_IMAGES;
+                }
+
+                renderGallery(images);
+                loadingContainer.style.display = 'none';
+
+            } catch (error) {
+                console.error('Gallery load error:', error);
+                showError();
+            }
+        }
+
+        // ======== GALLERY RENDERING ========
+        function renderGallery(images) {
+            galleryGrid.innerHTML = '';
+
+            images.forEach((imageSrc, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+
+                const img = document.createElement('img');
+                img.className = 'gallery-img';
+                img.src = imageSrc;
+                img.alt = `Clinic Photo ${index + 1}`;
+                img.loading = 'lazy'; // Lazy loading for performance
+                img.dataset.loaded = 'false';
+
+                // Handle image load success
+                img.addEventListener('load', () => {
+                    img.dataset.loaded = 'true';
+                    item.classList.add('loaded');
+                });
+
+                // Handle image load error
+                img.addEventListener('error', () => {
+                    console.warn(`Failed to load: ${imageSrc}`);
+                    // Try fallback if available
+                    if (FALLBACK_IMAGES[index]) {
+                        img.src = FALLBACK_IMAGES[index];
+                    } else {
+                        img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="300"%3E%3Crect fill="%23222" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" text-anchor="middle" fill="%23666" font-family="sans-serif" font-size="18"%3EImage unavailable%3C/text%3E%3C/svg%3E';
+                    }
+                    item.classList.add('loaded');
+                });
+
+                item.appendChild(img);
+                galleryGrid.appendChild(item);
+            });
+        }
+
+        function showError() {
+            loadingContainer.style.display = 'none';
+            errorContainer.style.display = 'block';
+            galleryGrid.innerHTML = '';
+        }
+
+        // ======== AUTO-REFRESH VIA POSTMESSAGE ========
+        window.addEventListener('message', (event) => {
+            // Security: Validate message origin in production
+            if (event.data && event.data.type === 'GALLERY_UPDATE') {
+                console.log('🔄 Gallery update received from admin');
+                clearCache();
+                loadGallery(true);
+                
+                // Show notification
+                showUpdateNotification();
+            }
+        });
+
+        function showUpdateNotification() {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 2rem;
+                background: #10b981;
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 8px 30px rgba(16, 185, 129, 0.4);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = '✓ Gallery updated!';
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // ======== INITIALIZATION ========
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGallery();
+        });
+
+        // ======== ANIMATIONS ========
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(400px); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(400px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ======== CONSOLE TIPS ========
+        console.log('%c⚡ PERFORMANCE TIP', 'color: #10b981; font-weight: bold; font-size: 14px;');
+        console.log('Images are cached for 1 hour. Clear cache with: localStorage.removeItem("gdc_gallery_cache")');
+        console.log('\n%c🔄 AUTO-REFRESH', 'color: #2563eb; font-weight: bold; font-size: 14px;');
+        console.log('Gallery automatically refreshes when admin uploads new images via postMessage');
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
