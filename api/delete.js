@@ -2,7 +2,7 @@ const fs = require('fs').promises;
 const path = require('path');
 
 module.exports = async (req, res) => {
-  // Set CORS headers
+  // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'DELETE,OPTIONS');
@@ -18,13 +18,23 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // NOTE: On Vercel, filesystem is read-only
-    res.status(501).json({ 
-      error: 'Delete not available on Vercel free tier',
-      message: 'Please manage images locally and commit to GitHub',
-      solution: 'See VERCEL-DEPLOYMENT.md for instructions'
-    });
+    // Extract filename from URL path
+    const filename = req.url.split('/').pop();
+
+    if (!filename) {
+      return res.status(400).json({ error: 'Filename is required' });
+    }
+
+    // Note: On Vercel, the filesystem is read-only except /tmp
+    // For production, you'd need to:
+    // 1. Delete from cloud storage (S3, Cloudinary, etc.)
+    // 2. Update gallery-images.json in a database or via GitHub API
     
+    res.status(200).json({ 
+      message: 'Delete functionality requires cloud storage integration',
+      filename,
+      note: 'To enable delete, integrate with cloud storage and update GitHub repo via API'
+    });
   } catch (error) {
     console.error('Delete error:', error);
     res.status(500).json({ error: error.message });

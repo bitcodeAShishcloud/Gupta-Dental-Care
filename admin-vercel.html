@@ -106,6 +106,13 @@
             margin-top: 1rem;
             display: none;
         }
+        .info-message {
+            background: #d1ecf1;
+            color: #0c5460;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
         .current-gallery {
             margin-top: 3rem;
             padding-top: 2rem;
@@ -145,7 +152,12 @@
 <body>
     <div class="admin-container">
         <h1 class="admin-title">📸 Gallery Management Panel</h1>
-        <p class="text-center text-muted mb-4">Upload photos to add them to the gallery</p>
+        
+        <!-- Environment Info -->
+        <div class="info-message">
+            <strong>⚡ Vercel Deployment Mode</strong><br>
+            <small>Note: For full upload functionality, you'll need to integrate with cloud storage (Cloudinary, AWS S3, etc.). Currently viewing static gallery.</small>
+        </div>
 
         <!-- Upload Area -->
         <div class="upload-area" id="uploadArea">
@@ -158,6 +170,7 @@
                 </svg>
                 <h4 class="mt-3">Click to upload or drag and drop</h4>
                 <p class="text-muted">PNG, JPG, JPEG up to 10MB each</p>
+                <p class="text-muted"><small>To enable uploads, integrate with cloud storage</small></p>
             </div>
         </div>
 
@@ -184,6 +197,7 @@
         <!-- Back Button -->
         <div class="text-center mt-4">
             <a href="gallery.html" class="btn btn-outline-secondary">← Back to Gallery</a>
+            <a href="index.html" class="btn btn-outline-primary ms-2">← Back to Home</a>
         </div>
     </div>
 
@@ -196,6 +210,10 @@
         const uploadBtn = document.getElementById('uploadBtn');
         const successMessage = document.getElementById('successMessage');
         const errorMessage = document.getElementById('errorMessage');
+
+        // Detect if running on Vercel or locally
+        const isVercel = window.location.hostname.includes('vercel.app') || window.location.hostname.includes('vercel.com');
+        const API_BASE = isVercel ? '/api' : 'http://localhost:3000';
 
         // Click to upload
         uploadArea.addEventListener('click', () => fileInput.click());
@@ -268,7 +286,8 @@
                 uploadBtn.disabled = true;
                 uploadBtn.textContent = 'Uploading...';
 
-                const response = await fetch('http://localhost:3000/upload', {
+                const uploadUrl = isVercel ? '/api/upload' : `${API_BASE}/upload`;
+                const response = await fetch(uploadUrl, {
                     method: 'POST',
                     body: formData
                 });
@@ -276,7 +295,7 @@
                 const result = await response.json();
 
                 if (response.ok) {
-                    successMessage.textContent = `Successfully uploaded ${result.files.length} photo(s)!`;
+                    successMessage.textContent = result.note || `Successfully uploaded ${result.files?.length || 0} photo(s)!`;
                     successMessage.style.display = 'block';
                     errorMessage.style.display = 'none';
 
@@ -290,7 +309,7 @@
                     setTimeout(() => {
                         loadCurrentGallery();
                         successMessage.style.display = 'none';
-                    }, 2000);
+                    }, 3000);
                 } else {
                     throw new Error(result.error || 'Upload failed');
                 }
@@ -307,22 +326,30 @@
         // Load current gallery
         async function loadCurrentGallery() {
             try {
+                // Try to load from gallery-images.json (works on Vercel)
                 const response = await fetch('gallery-images.json');
                 const images = await response.json();
                 const container = document.getElementById('currentGallery');
                 
                 container.innerHTML = '';
+                
+                if (images.length === 0) {
+                    container.innerHTML = '<p class="text-muted">No images in gallery yet.</p>';
+                    return;
+                }
+                
                 images.forEach(image => {
                     const div = document.createElement('div');
                     div.className = 'gallery-item';
                     div.innerHTML = `
-                        <img src="${image.path}" alt="${image.alt}">
-                        <button class="delete-btn" onclick="deleteImage('${image.filename}')">×</button>
+                        <img src="${image.path}" alt="${image.alt}" loading="lazy">
+                        <button class="delete-btn" onclick="deleteImage('${image.filename}')" title="Delete requires cloud storage integration">×</button>
                     `;
                     container.appendChild(div);
                 });
             } catch (error) {
                 console.error('Error loading gallery:', error);
+                document.getElementById('currentGallery').innerHTML = '<p class="text-danger">Error loading gallery images.</p>';
             }
         }
 
@@ -331,25 +358,29 @@
             if (!confirm(`Are you sure you want to delete ${filename}?`)) return;
 
             try {
-                const response = await fetch(`http://localhost:3000/delete/${filename}`, {
+                const deleteUrl = isVercel ? `/api/delete/${filename}` : `${API_BASE}/delete/${filename}`;
+                const response = await fetch(deleteUrl, {
                     method: 'DELETE'
                 });
 
                 const result = await response.json();
 
                 if (response.ok) {
-                    successMessage.textContent = 'Image deleted successfully!';
+                    successMessage.textContent = result.note || 'Image deleted successfully!';
                     successMessage.style.display = 'block';
                     setTimeout(() => {
                         loadCurrentGallery();
                         successMessage.style.display = 'none';
-                    }, 1500);
+                    }, 2000);
                 } else {
                     throw new Error(result.error || 'Delete failed');
                 }
             } catch (error) {
                 errorMessage.textContent = `Error: ${error.message}`;
                 errorMessage.style.display = 'block';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 3000);
             }
         }
 

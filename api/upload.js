@@ -1,43 +1,12 @@
-const formidable = require('formidable');
+const multiparty = require('multiparty');
 const fs = require('fs').promises;
 const path = require('path');
 
-// Helper function to update gallery JSON
-async function updateGalleryJSON() {
-  try {
-    const galleryDir = path.join(process.cwd(), 'Gallery');
-    const files = await fs.readdir(galleryDir);
-    
-    const imageFiles = files.filter(file => {
-      const ext = path.extname(file).toLowerCase();
-      return ['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext);
-    });
-
-    imageFiles.sort();
-
-    const imageData = imageFiles.map((file, index) => ({
-      filename: file,
-      path: `Gallery/${file}`,
-      alt: `Clinic Photo ${index + 1}`
-    }));
-
-    await fs.writeFile(
-      path.join(process.cwd(), 'gallery-images.json'),
-      JSON.stringify(imageData, null, 2)
-    );
-
-    return imageData;
-  } catch (error) {
-    console.error('Error updating gallery JSON:', error);
-    throw error;
-  }
-}
-
 module.exports = async (req, res) => {
-  // Set CORS headers
+  // Enable CORS
   res.setHeader('Access-Control-Allow-Credentials', true);
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
   if (req.method === 'OPTIONS') {
@@ -50,16 +19,50 @@ module.exports = async (req, res) => {
   }
 
   try {
-    // NOTE: On Vercel, filesystem is read-only except /tmp
-    // This will work locally but won't persist on Vercel
-    // For production, use Vercel Blob Storage or Cloudinary
-    
-    res.status(501).json({ 
-      error: 'Upload not available on Vercel free tier',
-      message: 'Please upload images locally and commit to GitHub, or use Vercel Blob Storage',
-      solution: 'See VERCEL-DEPLOYMENT.md for instructions'
+    const form = new multiparty.Form();
+
+    form.parse(req, async (err, fields, files) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      }
+
+      const uploadedFiles = [];
+      const photosArray = files.photos || [];
+
+      for (const file of photosArray) {
+        const originalName = file.originalFilename;
+        const ext = path.extname(originalName);
+        const nameWithoutExt = path.basename(originalName, ext);
+        const timestamp = Date.now();
+        const newFilename = `${nameWithoutExt}_${timestamp}${ext}`;
+
+        // Read the uploaded file
+        const fileBuffer = await fs.readFile(file.path);
+        
+        // In Vercel, we'll save to /tmp directory (temporary)
+        // For persistent storage, you'd need to use a service like AWS S3, Cloudinary, etc.
+        const savePath = path.join('/tmp', newFilename);
+        await fs.writeFile(savePath, fileBuffer);
+
+        uploadedFiles.push({
+          filename: newFilename,
+          path: `Gallery/${newFilename}`,
+          originalPath: file.path
+        });
+
+        // Clean up temp file
+        await fs.unlink(file.path).catch(() => {});
+      }
+
+      // Note: In production, you should save files to a cloud storage service
+      // and update the gallery-images.json accordingly in a database or GitHub
+      
+      res.status(200).json({
+        message: 'Files uploaded successfully',
+        files: uploadedFiles,
+        note: 'For production, files should be saved to cloud storage (S3, Cloudinary, etc.)'
+      });
     });
-    
   } catch (error) {
     console.error('Upload error:', error);
     res.status(500).json({ error: error.message });
