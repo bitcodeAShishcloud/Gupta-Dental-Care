@@ -425,39 +425,125 @@ if ('serviceWorker' in navigator) {
 console.log('%c Welcome to Gupta Dental Care! ', 'background: #0d6efd; color: white; font-size: 16px; padding: 10px; border-radius: 5px;');
 console.log('%c For inquiries, call: +91 98765 43210 ', 'color: #0d6efd; font-size: 14px;');
 
-// ==================== Load and Display Offers ====================
-function loadOffers() {
-    const offersData = localStorage.getItem('dentalOffers');
+// ==================== Offers Data Source ====================
+// Replace with your published Google Sheet CSV URL.
+const OFFERS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSVcd6pOsJZjSkFQ15l3PB1MMoHZND0ITSjr3Ethl5KMPcvCdfU-SsVwpB76f43eN6NZmquaToDfFhZ/pub?gid=0&single=true&output=csv';
+
+function parseCSV(csvText) {
+    const rows = [];
+    let row = [];
+    let cell = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < csvText.length; i++) {
+        const char = csvText[i];
+        const next = csvText[i + 1];
+
+        if (char === '"' && inQuotes && next === '"') {
+            cell += '"';
+            i++;
+        } else if (char === '"') {
+            inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+            row.push(cell.trim());
+            cell = '';
+        } else if ((char === '\n' || char === '\r') && !inQuotes) {
+            if (char === '\r' && next === '\n') {
+                i++;
+            }
+            row.push(cell.trim());
+            cell = '';
+
+            if (row.length > 1 || row[0] !== '') {
+                rows.push(row);
+            }
+            row = [];
+        } else {
+            cell += char;
+        }
+    }
+
+    if (cell.length > 0 || row.length > 0) {
+        row.push(cell.trim());
+        rows.push(row);
+    }
+
+    return rows;
+}
+
+function csvRowsToOffers(rows) {
+    if (!rows || rows.length < 2) {
+        return [];
+    }
+
+    const headers = rows[0].map(h => h.trim());
+
+    return rows.slice(1).map(columns => {
+        const item = {};
+        headers.forEach((header, index) => {
+            item[header] = (columns[index] || '').trim();
+        });
+
+        return {
+            title: item.title || 'Special Offer',
+            description: item.description || '',
+            discount: Number(item.discount || 0),
+            coupon: item.coupon || '',
+            startDate: item.startDate || '',
+            endDate: item.endDate || '',
+            badge: item.badge || 'Special',
+            icon: item.icon || 'fas fa-gift',
+            terms: item.terms || 'Limited time offer',
+            active: String(item.active).toUpperCase() === 'TRUE',
+            featured: String(item.featured).toUpperCase() === 'TRUE'
+        };
+    });
+}
+
+function isOfferLive(offer, now = new Date()) {
+    if (!offer.active || !offer.endDate) {
+        return false;
+    }
+
+    const endDate = new Date(`${offer.endDate}T23:59:59`);
+    if (Number.isNaN(endDate.getTime())) {
+        return false;
+    }
+
+    if (offer.startDate) {
+        const startDate = new Date(`${offer.startDate}T00:00:00`);
+        if (!Number.isNaN(startDate.getTime()) && now < startDate) {
+            return false;
+        }
+    }
+
+    return now <= endDate;
+}
+
+function renderOffers(activeOffers) {
     const offersContainer = document.getElementById('offersContainer');
     const noOffersMessage = document.getElementById('noOffersMessage');
-    
-    if (!offersData) {
-        if (noOffersMessage) noOffersMessage.style.display = 'block';
-        return;
-    }
-    
-    const offers = JSON.parse(offersData);
-    const now = new Date();
-    
-    // Filter active and non-expired offers
-    const activeOffers = offers.filter(offer => {
-        return offer.active && new Date(offer.endDate) >= now;
-    });
 
-    // Show a one-time popup per session when at least one live offer is available.
-    maybeShowLiveOfferPopup(activeOffers);
-    
-    if (activeOffers.length === 0) {
-        if (noOffersMessage) noOffersMessage.style.display = 'block';
+    if (!offersContainer) {
         return;
     }
-    
-    if (noOffersMessage) noOffersMessage.style.display = 'none';
-    
-    offersContainer.innerHTML = activeOffers.map((offer, index) => {
+
+    if (!activeOffers.length) {
+        if (noOffersMessage) {
+            noOffersMessage.style.display = 'block';
+        }
+        offersContainer.innerHTML = '';
+        return;
+    }
+
+    if (noOffersMessage) {
+        noOffersMessage.style.display = 'none';
+    }
+
+    offersContainer.innerHTML = activeOffers.map((offer) => {
         const isFeatured = offer.featured === true;
         const iconClass = offer.icon || 'fas fa-gift';
-        
+
         return `
         <div class="col-lg-4 col-md-6">
             <div class="offer-card ${isFeatured ? 'offer-card-featured' : ''}">
@@ -499,6 +585,42 @@ function loadOffers() {
         </div>
         `;
     }).join('');
+
+    // Show a one-time popup per session when at least one live offer is available.
+    maybeShowLiveOfferPopup(activeOffers);
+}
+
+// ==================== Load and Display Offers ====================
+async function loadOffers() {
+    const noOffersMessage = document.getElementById('noOffersMessage');
+
+    if (!OFFERS_CSV_URL || OFFERS_CSV_URL === 'PASTE_YOUR_PUBLISHED_CSV_URL_HERE') {
+        console.warn('OFFERS_CSV_URL is not configured.');
+        if (noOffersMessage) {
+            noOffersMessage.style.display = 'block';
+        }
+        return;
+    }
+
+    try {
+        const response = await fetch(OFFERS_CSV_URL, { cache: 'no-store' });
+        if (!response.ok) {
+            throw new Error(`Failed to fetch offers: ${response.status}`);
+        }
+
+        const csvText = await response.text();
+        const rows = parseCSV(csvText);
+        const offers = csvRowsToOffers(rows);
+        const now = new Date();
+        const activeOffers = offers.filter(offer => isOfferLive(offer, now));
+
+        renderOffers(activeOffers);
+    } catch (error) {
+        console.error('Offer load error:', error);
+        if (noOffersMessage) {
+            noOffersMessage.style.display = 'block';
+        }
+    }
 }
 
 function maybeShowLiveOfferPopup(activeOffers) {
