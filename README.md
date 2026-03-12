@@ -1,114 +1,133 @@
 # Gupta Dental Care - Professional Dentist Website
 
-A modern, bilingual (English & Hindi) website for Gupta Dental Care, a dental clinic located in Gandhi Chauk, Kasia Bazaar, Kushinagar, UP.
+A modern, bilingual (English & Hindi) website for Gupta Dental Care, a dental clinic located at Gandhi Chauk, Kasia Bazaar, Kushinagar, UP.
 
-![Gupta Dental Care](1.1.1.1.jpg)
+Live site: [https://bitcodeAShishcloud.github.io/test/](https://bitcodeAShishcloud.github.io/test/)
 
 ## 🦷 Features
 
-- **Bilingual Support**: Seamless toggle between English and Hindi
-- **Responsive Design**: Mobile-first approach, works perfectly on all devices
-- **Professional UI**: Clean, medical-themed white and blue color scheme
-- **Interactive Elements**: 
-  - Floating Call & WhatsApp buttons
-  - Smooth scrolling navigation
-  - Animated service cards
-  - Image gallery with hover effects
-- **SEO Optimized**: Local SEO keywords for better search visibility
-- **Google Maps Integration**: Easy location finding
+- **Bilingual Support** — Seamless toggle between English and Hindi
+- **Responsive Design** — Mobile-first, works on all devices
+- **Professional UI** — Medical-themed color scheme
+- **Dynamic Offers** — Loaded automatically from Google Sheet (no code change needed)
+- **Private Admin Form** — Submit new offers via `admin-offer.html` (kept private)
+- **Floating Buttons** — Call & WhatsApp always visible
+- **Smooth Scrolling** — Animated navigation
+- **SEO Optimized** — Local keywords for Kushinagar
+- **Google Maps** — Embedded clinic location
 
-## 📄 Pages/Sections
+## 📄 Pages / Sections
 
-1. **Home** - Hero section with call-to-action buttons
-2. **About Doctor** - Dr. A Gupta's qualifications and experience
-3. **Services** - Comprehensive dental services offered
-4. **Gallery** - Clinic facility photos
-5. **Testimonials** - Patient reviews and ratings
-6. **Contact** - Location, phone, hours, and Google Maps
+1. **Home** — Hero with call-to-action buttons
+2. **About Doctor** — Dr. A Gupta's qualifications and experience
+3. **Services** — Comprehensive dental services
+4. **Special Offers** — Auto-loaded from Google Sheet
+5. **Gallery** — Clinic facility photos
+6. **Testimonials** — Patient reviews
+7. **Contact** — Location, phone, hours, Google Maps
 
 ## 🛠️ Technologies Used
 
-- **HTML5** - Semantic markup
-- **CSS3** - Modern styling with animations
-- **JavaScript** - Interactive features
-- **Bootstrap 5.3** - Responsive grid and components
-- **Font Awesome 6.4** - Professional icons
-- **Google Fonts** - Poppins & Noto Sans Devanagari
+- **HTML5** — Semantic markup
+- **CSS3** — Modern styling with animations
+- **JavaScript (ES2017+)** — Async/await fetch, CSV parsing
+- **Bootstrap 5.3** — Responsive grid and components
+- **Font Awesome 6.4** — Icons
+- **Google Fonts** — Poppins & Noto Sans Devanagari
+- **Google Sheets** — Offer data source (published CSV)
+- **Google Apps Script** — Offer submit endpoint
+- **Google Drive** — (optional) Photo storage for gallery
+
+## 📂 File Structure
+
+```
+├── index.html          # Main website
+├── styles.css          # All custom styles
+├── script.js           # JS — offer fetch, gallery, UI logic
+├── gallery.html        # Full gallery page
+├── admin-offer.html    # Private admin form (do NOT link publicly)
+├── 1.1.1.1.jpg         # Clinic logo
+├── Dr. A Gupta.jpeg    # Doctor photo
+└── README.md           # This file
+```
+
+> `admin-offer.html` should be kept in a **private repo or local machine only**.  
+> Never link it from `index.html`.
+
+## 🏷️ Offers System — How It Works
+
+```
+Admin fills admin-offer.html form
+        ↓
+Apps Script (doPost) receives data
+        ↓
+Row appended to Google Sheet
+        ↓
+Website fetches published CSV on every page load
+        ↓
+Active, non-expired offers shown as cards
+```
+
+### Google Sheet Column Format
+
+| Column | Description | Example |
+|---|---|---|
+| `active` | Show or hide | `TRUE` / `FALSE` |
+| `title` | Offer name | `Teeth Cleaning Offer` |
+| `description` | Short description | `Professional scaling` |
+| `discount` | Percent number | `20` |
+| `coupon` | Coupon code | `CLEAN20` |
+| `startDate` | Start date | `2026-03-12` |
+| `endDate` | End date | `2026-03-31` |
+| `badge` | Badge label | `Hot Deal` |
+| `icon` | Font Awesome class | `fas fa-tooth` |
+| `terms` | Terms text | `Valid once per patient` |
+| `featured` | Highlight card | `TRUE` / `FALSE` |
+
+> Dates must be in `YYYY-MM-DD` format.
+
+### To Add a New Offer
+
+1. Open `admin-offer.html` in your browser (locally or private hosting).
+2. Fill in the offer details and click **Submit Offer**.
+3. Check your Google Sheet — a new row will appear.
+4. Reload the main website — offer will show automatically.
+
+### To Disable an Offer
+
+- In Google Sheet, change `active` column value to `FALSE` for that row.
+- Or set `endDate` to a past date.
 
 ## 📞 Contact Information
 
-- **Clinic Name**: Gupta Dental Care
-- **Doctor**: Dr. A Gupta
+- **Clinic**: Gupta Dental Care
+- **Doctor**: Dr. A Gupta (BDS, MDS)
 - **Location**: Gandhi Chauk, Kasia Bazaar, Kushinagar, UP 274402
 - **Phone**: +91 99848 47807
 - **WhatsApp**: +91 99848 47807
-- **Working Hours**: 
-  - Mon - Sun: 11:00 AM - 6:00 PM
-  - Wednesday: Closed
+- **Hours**: Mon–Sun 11:00 AM – 6:00 PM | Wednesday: Closed
 
-## 🚀 Services Offered
+## 🚀 Deployment
 
-- General Dentistry
-- Root Canal Treatment
-- Dental Implants
-- Teeth Whitening
-- Crowns & Bridges
-- Pediatric Dentistry
-- Orthodontics (Braces)
-- Gum Treatment
-- Tooth Extraction
+### GitHub Pages
+1. Push all files to a GitHub repository
+2. Go to `Settings → Pages`
+3. Source: `main` branch, root `/`
+4. Site live at `https://username.github.io/repo-name/`
 
-## � File Structure
-
-```
-html/
-│
-├── index.html          # Main HTML file
-├── styles.css          # Custom CSS styles
-├── script.js           # JavaScript functionality
-├── 1.1.1.1.jpg        # Clinic logo
-├── Dr. A Gupta.jpeg   # Doctor's photo
-└── README.md          # This file
-```
-
-## 🌐 Deployment
-
-### Option 1: GitHub Pages (Recommended)
-1. Upload all files to a GitHub repository
-2. Go to Settings → Pages
-3. Select branch `main` and root folder `/`
-4. Your site will be live at `https://username.github.io/repo-name/`
-
-### Option 2: Traditional Web Hosting
-1. Upload all files to your web hosting via FTP/cPanel
-2. Ensure `index.html` is in the root directory
-3. Make sure image files are in the same directory
-
-## ✨ Key Features Explained
-
-### Language Toggle
-- Automatically saves user's language preference
-- Smooth content switching with animations
-- Uses Devanagari fonts for Hindi content
-
-### Floating Action Buttons
-- Always visible Call button (green)
-- Always visible WhatsApp button (with pre-filled message)
-- Scroll-to-top button (appears after scrolling)
-
-### Responsive Design
-- Mobile: Optimized for phones (320px+)
-- Tablet: Enhanced layout for tablets (768px+)
-- Desktop: Full-featured layout (992px+)
+### Traditional Hosting
+1. Upload all files via FTP/cPanel
+2. Ensure `index.html` is in root directory
 
 ## 🎨 Color Scheme
 
-- **Primary Blue**: #0d6efd
-- **Secondary Blue**: #0056b3
-- **Accent Blue**: #00a8e8
-- **Light Background**: #f8f9fa
-- **Text Dark**: #333333
-- **White**: #ffffff
+| Name | Hex |
+|---|---|
+| Primary Blue | `#0d6efd` |
+| Secondary Blue | `#0056b3` |
+| Accent Blue | `#00a8e8` |
+| Light Background | `#f8f9fa` |
+| Text Dark | `#333333` |
 
 ## 📱 Browser Compatibility
 
@@ -116,43 +135,22 @@ html/
 - ✅ Firefox (Latest)
 - ✅ Safari (Latest)
 - ✅ Edge (Latest)
-- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+- ✅ Mobile — iOS Safari, Chrome Mobile
 
-## 🔧 Customization
+## 🔧 Quick Customizations
 
-### To change phone number:
-Search for `9984847807` in `index.html` and replace with new number
-
-### To change working hours:
-Edit the "Working Hours" section in the Contact area
-
-### To change clinic address:
-Update the "Our Location" section and Google Maps embed URL
-
-### To add more services:
-Copy a service card div in the Services section and modify content
-
-## 📊 Performance
-
-- Fast loading time with optimized images
-- Lazy loading for images
-- Minimal external dependencies
-- Clean, semantic code
-
-## 🙏 Credits
-
-- **Developer**: Created with care for Gupta Dental Care
-- **Images**: Unsplash (placeholder images for gallery)
-- **Icons**: Font Awesome
-- **Fonts**: Google Fonts
+| What | Where |
+|---|---|
+| Phone number | Search `9984847807` in `index.html` |
+| Working hours | Contact section in `index.html` |
+| Clinic address | Contact section + Maps embed URL |
+| Offers data | Google Sheet (no code change needed) |
+| Offer submit endpoint | `admin-offer.html` → form `action` URL |
 
 ## 📝 License
 
-This website is created for Gupta Dental Care. All rights reserved © 2026.
+© 2026 Gupta Dental Care. All rights reserved.
 
 ---
 
-**Need help?** Contact the website administrator or developer for support.
-
-**Last Updated**: January 2026
-# gdc
+**Last Updated**: March 2026
