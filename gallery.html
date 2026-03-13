@@ -110,7 +110,11 @@
 	</main>
 
 	<script>
-		const galleryImages = [
+		// Published Google Sheet CSV for gallery rows.
+		// Expected headers: active,title,caption,imageUrl,order
+		const GALLERY_CSV_URL = "PASTE_YOUR_GALLERY_CSV_URL_HERE";
+
+		const fallbackGalleryImages = [
 			"Gallery/1_A.jpeg",
 			"Gallery/2_A.jpeg",
 			"Gallery/3_A.jpeg",
@@ -133,17 +137,143 @@
 
 		const grid = document.getElementById("galleryGrid");
 
-		galleryImages.forEach((imagePath, index) => {
-			const card = document.createElement("article");
-			card.className = "gallery-card";
+		function parseCSV(csvText) {
+			const rows = [];
+			let row = [];
+			let cell = "";
+			let inQuotes = false;
 
-			card.innerHTML = `
-				<img src="${imagePath}" alt="Clinic photo ${index + 1}" loading="lazy">
-				<div class="img-caption">Clinic Photo ${index + 1}</div>
-			`;
+			for (let i = 0; i < csvText.length; i++) {
+				const char = csvText[i];
+				const next = csvText[i + 1];
 
-			grid.appendChild(card);
-		});
+				if (char === '"' && inQuotes && next === '"') {
+					cell += '"';
+					i++;
+				} else if (char === '"') {
+					inQuotes = !inQuotes;
+				} else if (char === ',' && !inQuotes) {
+					row.push(cell.trim());
+					cell = "";
+				} else if ((char === "\n" || char === "\r") && !inQuotes) {
+					if (char === "\r" && next === "\n") {
+						i++;
+					}
+					row.push(cell.trim());
+					cell = "";
+					if (row.length > 1 || row[0] !== "") {
+						rows.push(row);
+					}
+					row = [];
+				} else {
+					cell += char;
+				}
+			}
+
+			if (cell.length > 0 || row.length > 0) {
+				row.push(cell.trim());
+				rows.push(row);
+			}
+
+			return rows;
+		}
+
+		function normalizeDriveUrl(input) {
+			const value = String(input || "").trim();
+			if (!value) return "";
+
+			if (value.includes("drive.google.com/file/d/")) {
+				const parts = value.split("/d/");
+				if (parts[1]) {
+					const fileId = parts[1].split("/")[0];
+					return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1200`;
+				}
+			}
+
+			if (value.includes("id=")) {
+				const idPart = value.split("id=")[1].split("&")[0];
+				if (idPart) {
+					return `https://drive.google.com/thumbnail?id=${idPart}&sz=w1200`;
+				}
+			}
+
+			return value;
+		}
+
+		function renderGalleryFromRows(rows) {
+			const headers = rows[0].map(h => h.toLowerCase().trim());
+			const items = rows.slice(1).map(columns => {
+				const rowObj = {};
+				headers.forEach((h, idx) => {
+					rowObj[h] = (columns[idx] || "").trim();
+				});
+
+				return {
+					active: String(rowObj.active || "").toUpperCase() === "TRUE",
+					title: rowObj.title || "Clinic Photo",
+					caption: rowObj.caption || rowObj.description || "",
+					imageUrl: normalizeDriveUrl(rowObj.imageurl || rowObj.image || rowObj.photourl || rowObj.driveurl || ""),
+					order: Number(rowObj.order || 9999)
+				};
+			}).filter(item => item.active && item.imageUrl);
+
+			items.sort((a, b) => a.order - b.order);
+
+			if (!items.length) {
+				throw new Error("No active gallery rows found in CSV");
+			}
+
+			grid.innerHTML = "";
+			items.forEach((item, index) => {
+				const card = document.createElement("article");
+				card.className = "gallery-card";
+				card.innerHTML = `
+					<img src="${item.imageUrl}" alt="${item.title || `Clinic photo ${index + 1}`}" loading="lazy">
+					<div class="img-caption">${item.caption || item.title || `Clinic Photo ${index + 1}`}</div>
+				`;
+				grid.appendChild(card);
+			});
+		}
+
+		function renderFallbackGallery() {
+			grid.innerHTML = "";
+			fallbackGalleryImages.forEach((imagePath, index) => {
+				const card = document.createElement("article");
+				card.className = "gallery-card";
+				card.innerHTML = `
+					<img src="${imagePath}" alt="Clinic photo ${index + 1}" loading="lazy">
+					<div class="img-caption">Clinic Photo ${index + 1}</div>
+				`;
+				grid.appendChild(card);
+			});
+		}
+
+		async function loadGallery() {
+			if (!GALLERY_CSV_URL || GALLERY_CSV_URL === "PASTE_YOUR_GALLERY_CSV_URL_HERE") {
+				renderFallbackGallery();
+				return;
+			}
+
+			try {
+				const response = await fetch(GALLERY_CSV_URL, { cache: "no-store" });
+				if (!response.ok) {
+					throw new Error(`Failed to load gallery CSV: ${response.status}`);
+				}
+
+				const csvText = await response.text();
+				const rows = parseCSV(csvText);
+				if (!rows.length) {
+					throw new Error("Empty CSV");
+				}
+
+				renderGalleryFromRows(rows);
+			} catch (error) {
+				console.error("Gallery CSV load failed:", error);
+				renderFallbackGallery();
+			}
+		}
+
+		loadGallery();
 	</script>
 </body>
 </html>

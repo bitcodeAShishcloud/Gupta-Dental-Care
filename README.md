@@ -98,6 +98,107 @@ Active, non-expired offers shown as cards
 - In Google Sheet, change `active` column value to `FALSE` for that row.
 - Or set `endDate` to a past date.
 
+## 🖼️ Gallery System (Google Drive + Sheet + Upload Page)
+
+The project now supports a private upload page for gallery images:
+
+- `admin-gallery.html` uploads a selected image to Google Drive via Apps Script.
+- Apps Script stores metadata in a Sheet row.
+- `gallery.html` loads images from the published gallery CSV.
+
+### Gallery Sheet Columns
+
+| Column | Description | Example |
+|---|---|---|
+| `active` | Show/hide image | `TRUE` |
+| `title` | Image title | `Root Canal Case` |
+| `caption` | Short caption | `Before and after treatment` |
+| `imageUrl` | Public image URL | `https://drive.google.com/thumbnail?id=...&sz=w1200` |
+| `order` | Sort order | `1` |
+
+### Configure gallery.html
+
+In `gallery.html`, set:
+
+```js
+const GALLERY_CSV_URL = "PASTE_YOUR_GALLERY_CSV_URL_HERE";
+```
+
+The published CSV must come from the gallery sheet tab.
+
+### Apps Script: Add Upload Handler (Drive + Sheet)
+
+Use this in your `Code.gs` (merge with your current offer logic):
+
+```javascript
+const ADMIN_TOKEN = 'YOUR_ADMIN_TOKEN';
+const GALLERY_SHEET_NAME = 'Gallery';
+
+function doPost(e) {
+        const p = e.parameter || {};
+
+        if (p.action === 'uploadGalleryPhoto') {
+                return uploadGalleryPhoto_(p);
+        }
+
+        // Existing offer handler here...
+        return ContentService.createTextOutput(JSON.stringify({ ok: false, error: 'Unknown action' }))
+                .setMimeType(ContentService.MimeType.JSON);
+}
+
+function uploadGalleryPhoto_(p) {
+        try {
+                if (p.token !== ADMIN_TOKEN) {
+                        return json_({ ok: false, error: 'Unauthorized token' });
+                }
+
+                if (!p.fileBase64 || !p.fileName || !p.mimeType || !p.title) {
+                        return json_({ ok: false, error: 'Missing required upload fields' });
+                }
+
+                const bytes = Utilities.base64Decode(p.fileBase64);
+                const blob = Utilities.newBlob(bytes, p.mimeType, p.fileName);
+                const file = DriveApp.createFile(blob);
+
+                // Make public for website display.
+                file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+
+                const imageUrl = 'https://drive.google.com/thumbnail?id=' + file.getId() + '&sz=w1200';
+
+                const ss = SpreadsheetApp.getActiveSpreadsheet();
+                const sheet = ss.getSheetByName(GALLERY_SHEET_NAME);
+                if (!sheet) {
+                        return json_({ ok: false, error: 'Gallery sheet not found' });
+                }
+
+                sheet.appendRow([
+                        String(p.active || 'TRUE').toUpperCase() === 'TRUE' ? 'TRUE' : 'FALSE',
+                        p.title,
+                        p.caption || '',
+                        imageUrl,
+                        Number(p.order || 999)
+                ]);
+
+                return json_({ ok: true, imageUrl: imageUrl });
+        } catch (err) {
+                return json_({ ok: false, error: String(err) });
+        }
+}
+
+function json_(obj) {
+        return ContentService.createTextOutput(JSON.stringify(obj))
+                .setMimeType(ContentService.MimeType.JSON);
+}
+```
+
+### How to Use
+
+1. Keep `admin-gallery.html` private.
+2. Open it and fill Apps Script URL + token.
+3. Select image and submit.
+4. Check Drive and Gallery sheet row.
+5. Reload `gallery.html` page to see new image.
+
 ## 📞 Contact Information
 
 - **Clinic**: Gupta Dental Care
