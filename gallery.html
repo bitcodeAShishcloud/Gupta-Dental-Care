@@ -1,29 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/jpeg" href="favicon.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="favicon.jpeg">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clinic Full Gallery | Gupta Dental Care</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <style>
-        body { background: #000; color: #fff; }
-        .gallery-title { text-align: center; font-size: 2.2rem; font-weight: 900; margin-top: 2rem; text-shadow: 0 0 16px #fff, 0 0 32px #fff; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
-        .gallery-img { width: 100%; border-radius: 16px; box-shadow: 0 4px 32px #111; transition: transform 0.2s; background: #222; }
-        .gallery-img:hover { transform: scale(1.04); box-shadow: 0 8px 40px #fff; }
-        .navbar, footer { background: #000 !important; }
+        /* Gallery page specific styles */
+        .gallery-filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .gallery-filter-btn {
+            padding: 8px 24px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gallery-filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .gallery-filter-btn:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .gallery-video-item video {
+            width: 100%;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+
+        .gallery-loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        .gallery-loading i {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .lightbox-overlay.active {
+            display: flex;
+        }
+
+        .lightbox-overlay img,
+        .lightbox-overlay video {
+            max-width: 92%;
+            max-height: 92%;
+            border-radius: 12px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 10001;
+            transition: var(--transition);
+        }
+
+        .lightbox-close:hover {
+            color: var(--primary);
+            transform: scale(1.2);
+        }
     </style>
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="1.1.1.1.jpg" alt="Gupta Dental Care" style="height: 40px; width: auto;">
-                <span class="ms-2 fw-bold text-light">Gupta Dental Care</span>
+            <a class="navbar-brand d-flex align-items-center" href="index.html" style="max-width: 75%;">
+                <img src="logo.jpg" alt="Gupta Dental Care Logo" style="height: 40px; width: auto; object-fit: contain;">
+                <div class="brand-text ms-2 text-start text-truncate">
+                    <span class="d-block fw-bold brand-title" style="font-size: 1.2rem; letter-spacing: 0;">Gupta Dental Care</span>
+                </div>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -38,31 +138,41 @@
         </div>
     </nav>
 
-    <div class="container" style="margin-top: 90px;">
-        <h1 class="gallery-title">Clinic Photo Gallery</h1>
-        <div class="gallery-grid">
-            <img src="Gallery/1_A.jpeg" alt="Clinic Photo 1" class="gallery-img">
-            <img src="Gallery/6_A.jpeg" alt="Clinic Photo 6" class="gallery-img">
-            <img src="Gallery/7_A.jpeg" alt="Clinic Photo 7" class="gallery-img">
-            <img src="Gallery/8_A.jpeg" alt="Clinic Photo 8" class="gallery-img">
-            <img src="Gallery/2_A.jpeg" alt="Clinic Photo 2" class="gallery-img">
-            <img src="Gallery/3_A.jpeg" alt="Clinic Photo 3" class="gallery-img">
-            <img src="Gallery/4_A.jpeg" alt="Clinic Photo 4" class="gallery-img">
-            <img src="Gallery/5_A.jpeg" alt="Clinic Photo 5" class="gallery-img">
-            <img src="Gallery/9_A.jpeg" alt="Clinic Photo 9" class="gallery-img">
-            <img src="Gallery/10_A.jpeg" alt="Clinic Photo 10" class="gallery-img">
-            <img src="Gallery/11_A.jpeg" alt="Clinic Photo 11" class="gallery-img">
-            <img src="Gallery/12_A.jpeg" alt="Clinic Photo 12" class="gallery-img">
-            <img src="Gallery/13_A.jpeg" alt="Clinic Photo 13" class="gallery-img">
-            <img src="Gallery/14_A.jpeg" alt="Clinic Photo 14" class="gallery-img">
-            <img src="Gallery/15_A.jpeg" alt="Clinic Photo 15" class="gallery-img">
-            <img src="Gallery/16_A.jpeg" alt="Clinic Photo 16" class="gallery-img">
-            <img src="Gallery/17_A.jpeg" alt="Clinic Photo 17" class="gallery-img">
-            <img src="Gallery/18_A.jpeg" alt="Clinic Photo 18" class="gallery-img">
+    <div class="container" style="margin-top: 120px;">
+        <div class="text-center mb-4">
+            <h1 class="display-4 fw-bold">Clinic Photo & Video Gallery</h1>
+            <div class="title-border"></div>
         </div>
-        <div style="text-align:center; margin:2rem 0;">
-            <a href="index.html" class="btn btn-outline-light" style="font-size:1.1rem;">&larr; Back to Home</a>
+
+        <!-- Filter Bar -->
+        <div class="gallery-filter-bar">
+            <button class="gallery-filter-btn active" onclick="filterGallery('all', this)">
+                <i class="fas fa-th me-1"></i> All
+            </button>
+            <button class="gallery-filter-btn" onclick="filterGallery('image', this)">
+                <i class="fas fa-image me-1"></i> Photos
+            </button>
+            <button class="gallery-filter-btn" onclick="filterGallery('video', this)">
+                <i class="fas fa-video me-1"></i> Videos
+            </button>
         </div>
+
+        <div class="row g-4" id="dynamicGalleryContainer">
+            <div class="gallery-loading">
+                <i class="fas fa-circle-notch"></i>
+                <p>Loading gallery...</p>
+            </div>
+        </div>
+        
+        <div class="text-center my-5">
+            <a href="index.html" class="btn btn-primary btn-lg">&larr; Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+        <span class="lightbox-close" onclick="closeLightbox(event)">&times;</span>
+        <div id="lightboxContent"></div>
     </div>
 
     <!-- Footer -->
@@ -70,15 +180,23 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mb-3 mb-md-0">
-                    <h5><img src="1.1.1.1.jpg" alt="Gupta Dental Care" style="height: 32px; width: auto; margin-right: 10px; vertical-align: middle;"> Gupta Dental Care</h5>
+                    <h5><img src="logo.jpg" alt="Gupta Dental Care"
+                            style="height: 32px; width: auto; margin-right: 10px; vertical-align: middle;"> Gupta Dental
+                        Care</h5>
                     <p class="small">Your trusted partner for complete dental health in Kushinagar</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <ul class="list-inline mb-0">
-                        <li class="list-inline-item"><a href="index.html#home" class="text-white-50 text-decoration-none">Home</a></li>
-                        <li class="list-inline-item"><a href="index.html#about" class="text-white-50 text-decoration-none">About</a></li>
-                        <li class="list-inline-item"><a href="index.html#services" class="text-white-50 text-decoration-none">Services</a></li>
-                        <li class="list-inline-item"><a href="index.html#contact" class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="list-inline-item"><a href="index.html#home"
+                                class="text-white-50 text-decoration-none">Home</a></li>
+                        <li class="list-inline-item"><a href="index.html#about"
+                                class="text-white-50 text-decoration-none">About</a></li>
+                        <li class="list-inline-item"><a href="index.html#services"
+                                class="text-white-50 text-decoration-none">Services</a></li>
+                        <li class="list-inline-item"><a href="index.html#contact"
+                                class="text-white-50 text-decoration-none">Contact</a></li>
+                        <li class="list-inline-item"><a href="admin.html"
+                                class="text-white-50 text-decoration-none"><i class="fas fa-lock me-1" style="font-size: 0.7rem;"></i>Admin</a></li>
                     </ul>
                 </div>
             </div>
@@ -89,6 +207,164 @@
         </div>
     </footer>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Configuration from Admin Panel
+        let cloudinaryConfig = {
+            cloudName: 'dnamua01d', // Your New Cloud Name
+            galleryTag: 'gupta_dental_gallery'
+        };
+
+        // Static gallery items based on local Gallery folder (Fallback)
+        const localImages = [
+            "1_A.jpeg", "2_A.jpeg", "3_A.jpeg", "4_A.jpeg", "5_A.jpeg", "6_A.jpeg",
+            "7_A.jpeg", "8_A.jpeg", "9_A.jpeg", "10_A.jpeg", "11_A.jpeg", "12_A.jpeg",
+            "13_A.jpeg", "14_A.jpeg", "15_A.jpeg", "16_A.jpeg", "17_A.jpeg", "18_A.jpeg"
+        ];
+
+        async function initGallery() {
+            // Load config from localStorage
+            const saved = localStorage.getItem('cloudinary_config');
+            if (saved) {
+                cloudinaryConfig = JSON.parse(saved);
+            }
+
+            if (cloudinaryConfig.cloudName && cloudinaryConfig.galleryTag) {
+                try {
+                    await fetchCloudinaryImages();
+                } catch (error) {
+                    console.warn("Cloudinary fetch failed, falling back to local images:", error);
+                    renderLocalGallery();
+                }
+            } else {
+                renderLocalGallery();
+            }
+        }
+
+        async function fetchCloudinaryImages() {
+            const container = document.getElementById('dynamicGalleryContainer');
+            const url = `https://res.cloudinary.com/${cloudinaryConfig.cloudName}/image/list/${cloudinaryConfig.galleryTag}.json?cb=${Date.now()}`;
+            
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                console.error("Cloudinary Error:", response.status, response.statusText);
+                if (response.status === 404) {
+                    console.warn("No images found with tag:", cloudinaryConfig.galleryTag);
+                } else if (response.status === 403) {
+                    alert("Gallery configuration issue: You must enable 'Resource List' in your Cloudinary Security settings.");
+                }
+                throw new Error("Could not fetch resources");
+            }
+            
+            const data = await response.json();
+            const resources = (data.resources || []).reverse();
+            
+            console.log(`Successfully loaded ${resources.length} images from Cloudinary.`);
+            
+            if (resources.length === 0) {
+                console.log("Empty gallery found, showing local folder images as fallback.");
+                renderLocalGallery();
+                return;
+            }
+
+            container.innerHTML = '';
+            resources.forEach(res => {
+                const col = document.createElement('div');
+                col.className = 'col-lg-3 col-md-4 col-sm-6';
+                
+                // Optimized Cloudinary URL
+                const fileUrl = `https://res.cloudinary.com/${cloudinaryConfig.cloudName}/image/upload/f_auto,q_auto/${res.public_id}.${res.format}`;
+                const thumbUrl = `https://res.cloudinary.com/${cloudinaryConfig.cloudName}/image/upload/w_500,h_500,c_fill,f_auto,q_auto/${res.public_id}.${res.format}`;
+                
+                col.innerHTML = `
+                    <div class="gallery-item premium-hover" onclick="openLightbox('image', '${fileUrl}')">
+                        <img src="${thumbUrl}" alt="Clinic Photo" class="img-fluid rounded-4 shadow-sm gallery-img" loading="lazy">
+                        <div class="gallery-overlay rounded-4">
+                            <i class="fas fa-search-plus fs-2 text-white"></i>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(col);
+            });
+        }
+
+        function renderLocalGallery() {
+            const container = document.getElementById('dynamicGalleryContainer');
+            container.innerHTML = '';
+
+            localImages.forEach(imgName => {
+                const col = document.createElement('div');
+                col.className = 'col-lg-3 col-md-4 col-sm-6';
+                const fileUrl = 'Gallery/' + imgName;
+                
+                col.innerHTML = `
+                    <div class="gallery-item premium-hover" onclick="openLightbox('image', '${fileUrl}')">
+                        <img src="${fileUrl}" alt="Clinic Photo" class="img-fluid rounded-4 shadow-sm gallery-img" loading="lazy">
+                        <div class="gallery-overlay rounded-4">
+                            <i class="fas fa-search-plus fs-2 text-white"></i>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(col);
+            });
+
+            // Add a badge indicating these are local fallback images if no cloudinary config
+            if (!cloudinaryConfig.cloudName) {
+                console.log("Showing local gallery (no Cloudinary config)");
+            }
+        }
+
+        // Filter function
+        function filterGallery(type, btn) {
+            document.querySelectorAll('.gallery-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            if (type === 'video') {
+                const container = document.getElementById('dynamicGalleryContainer');
+                container.innerHTML = '<div class="col-12 text-center text-muted py-5"><i class="fas fa-video-slash mb-3 fa-2x"></i><p>No videos available at the moment.</p></div>';
+            } else {
+                initGallery();
+            }
+        }
+
+        // Lightbox
+        function openLightbox(type, url) {
+            const overlay = document.getElementById('lightbox');
+            const content = document.getElementById('lightboxContent');
+
+            if (type === 'video') {
+                content.innerHTML = `<video src="${url}" controls autoplay style="max-width:92vw;max-height:90vh;border-radius:12px;"></video>`;
+            } else {
+                content.innerHTML = `<img src="${url}" alt="Gallery" style="max-width:92vw;max-height:90vh;border-radius:12px;">`;
+            }
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(e) {
+            if (e.target.id === 'lightbox' || e.target.classList.contains('lightbox-close')) {
+                document.getElementById('lightbox').classList.remove('active');
+                document.getElementById('lightboxContent').innerHTML = '';
+                document.body.style.overflow = '';
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const lightbox = document.getElementById('lightbox');
+                if (lightbox && lightbox.classList.contains('active')) {
+                    lightbox.classList.remove('active');
+                    document.getElementById('lightboxContent').innerHTML = '';
+                    document.body.style.overflow = '';
+                }
+            }
+        });
+
+        // Initialize on load
+        window.onload = initGallery;
+    </script>
 </body>
+
 </html>

@@ -6,34 +6,35 @@
 let currentLanguage = 'en';
 
 // ==================== Document Ready ====================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Initialize features
     initNavbar();
     initSmoothScroll();
-    initScrollAnimations();
     initActiveNavLinks();
-    
+    initGalleryPopup();
+    initTheme();
+
     console.log('Gupta Dental Care website loaded successfully!');
 });
 
 // ==================== Navbar Functionality ====================
 function initNavbar() {
     const navbar = document.querySelector('.navbar');
-    
-    window.addEventListener('scroll', function() {
+
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
     });
-    
+
     // Close mobile menu when clicking on a nav link
     const navLinks = document.querySelectorAll('.nav-link');
     const navbarCollapse = document.querySelector('.navbar-collapse');
-    
+
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             if (window.innerWidth < 992) {
                 const bsCollapse = new bootstrap.Collapse(navbarCollapse, {
                     toggle: false
@@ -47,24 +48,24 @@ function initNavbar() {
 // ==================== Smooth Scrolling ====================
 function initSmoothScroll() {
     const links = document.querySelectorAll('a[href^="#"]');
-    
+
     links.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
-            
+
             // Ignore empty hash and non-section links
             if (href === '#' || href === '#!') {
                 return;
             }
-            
+
             const target = document.querySelector(href);
-            
+
             if (target) {
                 e.preventDefault();
-                
+
                 const navbarHeight = document.querySelector('.navbar').offsetHeight;
                 const targetPosition = target.offsetTop - navbarHeight - 20;
-                
+
                 window.scrollTo({
                     top: targetPosition,
                     behavior: 'smooth'
@@ -78,24 +79,24 @@ function initSmoothScroll() {
 function initActiveNavLinks() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-    
-    window.addEventListener('scroll', function() {
+
+    window.addEventListener('scroll', function () {
         let current = '';
         const scrollPosition = window.scrollY + 100;
-        
+
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.offsetHeight;
-            
+
             if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
                 current = section.getAttribute('id');
             }
         });
-        
+
         navLinks.forEach(link => {
             link.classList.remove('active');
             const href = link.getAttribute('href');
-            
+
             if (href === `#${current}`) {
                 link.classList.add('active');
             }
@@ -107,20 +108,20 @@ function initActiveNavLinks() {
 function toggleLanguage() {
     // Toggle language state
     currentLanguage = currentLanguage === 'en' ? 'hi' : 'en';
-    
+
     // Update body attribute for font family
     document.body.setAttribute('data-lang', currentLanguage);
-    
+
     // Update button text
     const langText = document.getElementById('lang-text');
     langText.textContent = currentLanguage === 'en' ? 'हिंदी' : 'English';
-    
+
     // Update all bilingual content
     updateContent();
-    
+
     // Store preference
     localStorage.setItem('preferredLanguage', currentLanguage);
-    
+
     // Show notification
     showNotification(currentLanguage === 'en' ? 'Language changed to English' : 'भाषा हिंदी में बदल गई');
 }
@@ -128,11 +129,11 @@ function toggleLanguage() {
 // ==================== Update Content ====================
 function updateContent() {
     const elements = document.querySelectorAll('[data-en][data-hi]');
-    
+
     elements.forEach(element => {
         const englishText = element.getAttribute('data-en');
         const hindiText = element.getAttribute('data-hi');
-        
+
         if (currentLanguage === 'en') {
             element.textContent = englishText;
         } else {
@@ -148,7 +149,7 @@ function showNotification(message) {
     if (existingNotification) {
         existingNotification.remove();
     }
-    
+
     // Create notification
     const notification = document.createElement('div');
     notification.className = 'custom-notification';
@@ -157,18 +158,20 @@ function showNotification(message) {
         position: fixed;
         top: 100px;
         right: 20px;
-        background: linear-gradient(135deg, #0d6efd, #00a8e8);
+        background: rgba(14, 165, 233, 0.9);
+        backdrop-filter: blur(10px);
         color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 50px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        padding: 0.8rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         z-index: 9999;
-        font-weight: 500;
-        animation: slideInRight 0.5s ease, fadeOut 0.5s ease 2.5s;
+        font-weight: 600;
+        border: 1px solid rgba(255,255,255,0.1);
+        animation: slideInRight 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), fadeOut 0.5s ease 2.5s;
     `;
-    
+
     document.body.appendChild(notification);
-    
+
     // Remove after 3 seconds
     setTimeout(() => {
         notification.remove();
@@ -181,8 +184,8 @@ function initScrollAnimations() {
         threshold: 0.1,
         rootMargin: '0px 0px -100px 0px'
     };
-    
-    const observer = new IntersectionObserver(function(entries) {
+
+    const observer = new IntersectionObserver(function (entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-on-scroll');
@@ -190,35 +193,35 @@ function initScrollAnimations() {
             }
         });
     }, observerOptions);
-    
+
     // Observe service cards
     const serviceCards = document.querySelectorAll('.service-card');
     serviceCards.forEach(card => observer.observe(card));
-    
+
     // Observe testimonial cards
     const testimonialCards = document.querySelectorAll('.testimonial-card');
     testimonialCards.forEach(card => observer.observe(card));
-    
+
     // Observe gallery items
     const galleryItems = document.querySelectorAll('.gallery-item');
     galleryItems.forEach(item => observer.observe(item));
-    
+
     // Observe contact cards
     const contactCards = document.querySelectorAll('.contact-card');
     contactCards.forEach(card => observer.observe(card));
 }
 
 // ==================== Load Saved Language Preference ====================
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     const savedLanguage = localStorage.getItem('preferredLanguage');
-    
+
     if (savedLanguage && savedLanguage !== currentLanguage) {
         currentLanguage = savedLanguage;
         document.body.setAttribute('data-lang', currentLanguage);
-        
+
         const langText = document.getElementById('lang-text');
         langText.textContent = currentLanguage === 'en' ? 'हिंदी' : 'English';
-        
+
         updateContent();
     }
 });
@@ -226,9 +229,9 @@ window.addEventListener('load', function() {
 // ==================== Gallery Image Modal (Optional Enhancement) ====================
 function initGalleryModal() {
     const galleryItems = document.querySelectorAll('.gallery-item img');
-    
+
     galleryItems.forEach(img => {
-        img.addEventListener('click', function() {
+        img.addEventListener('click', function () {
             // Create modal overlay
             const modal = document.createElement('div');
             modal.className = 'gallery-modal';
@@ -245,7 +248,7 @@ function initGalleryModal() {
                 z-index: 10000;
                 cursor: pointer;
             `;
-            
+
             // Create image
             const modalImg = document.createElement('img');
             modalImg.src = this.src;
@@ -255,17 +258,17 @@ function initGalleryModal() {
                 border-radius: 10px;
                 box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
             `;
-            
+
             modal.appendChild(modalImg);
             document.body.appendChild(modal);
-            
+
             // Close on click
-            modal.addEventListener('click', function() {
+            modal.addEventListener('click', function () {
                 modal.remove();
             });
-            
+
             // Close on ESC key
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') {
                     modal.remove();
                 }
@@ -300,11 +303,11 @@ function initScrollToTop() {
         z-index: 998;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     `;
-    
+
     document.body.appendChild(scrollBtn);
-    
+
     // Show/hide on scroll
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 500) {
             scrollBtn.style.opacity = '1';
             scrollBtn.style.visibility = 'visible';
@@ -313,21 +316,21 @@ function initScrollToTop() {
             scrollBtn.style.visibility = 'hidden';
         }
     });
-    
+
     // Scroll to top on click
-    scrollBtn.addEventListener('click', function() {
+    scrollBtn.addEventListener('click', function () {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     });
-    
+
     // Hover effect
-    scrollBtn.addEventListener('mouseenter', function() {
+    scrollBtn.addEventListener('mouseenter', function () {
         this.style.transform = 'scale(1.1)';
     });
-    
-    scrollBtn.addEventListener('mouseleave', function() {
+
+    scrollBtn.addEventListener('mouseleave', function () {
         this.style.transform = 'scale(1)';
     });
 }
@@ -339,7 +342,7 @@ initScrollToTop();
 function validateForm(form) {
     const inputs = form.querySelectorAll('input[required], textarea[required]');
     let isValid = true;
-    
+
     inputs.forEach(input => {
         if (!input.value.trim()) {
             isValid = false;
@@ -348,7 +351,7 @@ function validateForm(form) {
             input.classList.remove('is-invalid');
         }
     });
-    
+
     return isValid;
 }
 
@@ -380,7 +383,7 @@ document.head.appendChild(style);
 // ==================== WhatsApp Click Tracking ====================
 const whatsappBtn = document.querySelector('.whatsapp-btn');
 if (whatsappBtn) {
-    whatsappBtn.addEventListener('click', function() {
+    whatsappBtn.addEventListener('click', function () {
         console.log('WhatsApp button clicked');
     });
 }
@@ -388,7 +391,7 @@ if (whatsappBtn) {
 // ==================== Call Button Click Tracking ====================
 const callBtn = document.querySelector('.call-btn');
 if (callBtn) {
-    callBtn.addEventListener('click', function() {
+    callBtn.addEventListener('click', function () {
         console.log('Call button clicked');
     });
 }
@@ -429,12 +432,12 @@ console.log('%c For inquiries, call: +91 98765 43210 ', 'color: #0d6efd; font-si
 function trackEvent(eventName, eventData) {
     // Placeholder for Google Analytics or other analytics tools
     console.log('Event tracked:', eventName, eventData);
-    
+
     // Example: gtag('event', eventName, eventData);
 }
 
 // Track page sections viewed
-const sectionObserver = new IntersectionObserver(function(entries) {
+const sectionObserver = new IntersectionObserver(function (entries) {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const sectionId = entry.target.getAttribute('id');
@@ -447,22 +450,48 @@ document.querySelectorAll('section[id]').forEach(section => {
     sectionObserver.observe(section);
 });
 
-// ==================== Export functions for global use ====================
-window.toggleLanguage = toggleLanguage;
-window.showNotification = showNotification;
+// ==================== Gallery Navigation Logic ====================
+function initGalleryPopup() {
+    const visitBtn = document.getElementById('visitGalleryBtn');
+    if (visitBtn) {
+        visitBtn.onclick = () => { window.location.href = 'gallery.html'; };
+    }
+}
 
-// ==================== Background Mode Default ====================
-window.addEventListener('DOMContentLoaded', function() {
+// ==================== Theme & Background Mode ====================
+function initTheme() {
     const mode = localStorage.getItem('backgroundMode');
     if (!mode || mode === 'light') {
-        document.body.classList.add('light-mode');
-        document.documentElement.classList.add('light-mode');
-        const bgText = document.getElementById('bg-mode-text');
-        if (bgText) bgText.textContent = 'Dark Mode';
-    } else if (mode === 'dark') {
-        document.body.classList.remove('light-mode');
-        document.documentElement.classList.remove('light-mode');
-        const bgText = document.getElementById('bg-mode-text');
-        if (bgText) bgText.textContent = 'Light Mode';
+        setLightMode();
+    } else {
+        setDarkMode();
     }
-});
+}
+
+function setLightMode() {
+    document.body.classList.add('light-mode');
+    document.documentElement.classList.add('light-mode');
+    const bgText = document.getElementById('bg-mode-text');
+    if (bgText) bgText.textContent = 'Dark Mode';
+    localStorage.setItem('backgroundMode', 'light');
+}
+
+function setDarkMode() {
+    document.body.classList.remove('light-mode');
+    document.documentElement.classList.remove('light-mode');
+    const bgText = document.getElementById('bg-mode-text');
+    if (bgText) bgText.textContent = 'Light Mode';
+    localStorage.setItem('backgroundMode', 'dark');
+}
+
+function toggleBackgroundMode() {
+    if (document.body.classList.contains('light-mode')) {
+        setDarkMode();
+        showNotification('Dark Mode enabled');
+    } else {
+        setLightMode();
+        showNotification('Light Mode enabled');
+    }
+}
+
+window.toggleBackgroundMode = toggleBackgroundMode;
