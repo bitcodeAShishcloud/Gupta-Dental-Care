@@ -93,7 +93,7 @@ html/
 3. Select branch: `main`
 4. Select folder: `/ (root)`
 5. Your site will be available at:
-   `https://bitcodeashishcloud.github.io/Gupta-Dental-Care/`
+   [`https://bitcodeashishcloud.github.io/Gupta-Dental-Care/`](https://bitcodeashishcloud.github.io/Gupta-Dental-Care/)
 
 ### Traditional Hosting
 1. Upload files using FTP/cPanel
