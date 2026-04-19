@@ -13,11 +13,45 @@ let config = {
 let selectedFiles = [];
 
 document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        if (localStorage.getItem('admin_auth') === 'true') {
+            window.location.href = 'admin.html';
+            return;
+        }
+        initLogin(loginForm);
+        initTheme();
+        return;
+    }
+
     loadConfig();
     initEventListeners();
     refreshGallery();
     initTheme();
 });
+
+// ==================== Auth & Login ====================
+
+function initLogin(loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        
+        // Base64 encoded credentials for basic security obfuscation
+        const validEmailsEnc = ['Z3VwdGFkZW50YWxjYXJlMDFAZ21haWwuY29t', 'YWd1cHRhMzgxNjBAZ21haWwuY29t'];
+        const passEnc = 'QWd1cHRhQCMxODQ1';
+        
+        if (validEmailsEnc.includes(btoa(email)) && btoa(password) === passEnc) {
+            localStorage.setItem('admin_auth', 'true');
+            window.location.href = 'admin.html';
+        } else {
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.classList.remove('d-none');
+            errorMsg.classList.add('animate__animated', 'animate__headShake');
+        }
+    });
+}
 
 // ==================== Configuration ====================
 
