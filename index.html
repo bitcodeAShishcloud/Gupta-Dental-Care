@@ -496,30 +496,142 @@
                 <h2 class="fw-bold" data-en="What Our Patients Say" data-hi="हमारे मरीज क्या कहते हैं">What Our Patients
                     Say</h2>
                 <div class="title-border mx-auto"></div>
-                <p class="text-muted mt-2" style="font-size:0.97rem;">Real reviews from our valued patients</p>
+                <p class="text-muted mt-2 d-flex flex-wrap align-items-center justify-content-center gap-2" style="font-size:0.97rem;">
+                    <span data-en="Real reviews from our valued patients" data-hi="हमारे मूल्यवान मरीजों की वास्तविक समीक्षाएं">Real reviews from our valued patients</span>
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill" style="font-weight: 500; font-size: 0.8rem; border: 1px solid rgba(14, 165, 233, 0.2);">
+                        <i class="fas fa-arrows-alt-h me-1"></i>
+                        <span data-en="Swipe or use arrows to view all 30+ reviews" data-hi="सभी 30+ समीक्षाएं देखने के लिए स्वाइप करें या तीरों का उपयोग करें">Swipe or use arrows to view all 30+ reviews</span>
+                    </span>
+                </p>
             </div>
 
-            <!-- Scroll Track -->
-            <div id="testimonial-scroll" style="
-                display: flex;
-                gap: 20px;
-                overflow-x: auto;
-                scroll-snap-type: x mandatory;
-                -webkit-overflow-scrolling: touch;
-                cursor: grab;
-            ">
+            <!-- Scroll Track Wrapper -->
+            <div class="testimonial-wrapper position-relative">
+                <!-- Navigation Buttons -->
+                <button class="scroll-nav-btn prev-btn" id="testimonial-prev" aria-label="Previous reviews">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="scroll-nav-btn next-btn" id="testimonial-next" aria-label="Next reviews">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Scroll Track -->
+                <div id="testimonial-scroll" style="
+                    display: flex;
+                    gap: 20px;
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                    cursor: grab;
+                ">
+                </div>
             </div>
         </div>
 
         <style>
-            /* Hide scrollbar completely */
+            /* Elegant styled scrollbar */
             #testimonial-scroll::-webkit-scrollbar {
-                display: none;
+                height: 6px;
+                display: block;
+            }
+
+            #testimonial-scroll::-webkit-scrollbar-track {
+                background: rgba(14, 165, 233, 0.05);
+                border-radius: 10px;
+            }
+
+            #testimonial-scroll::-webkit-scrollbar-thumb {
+                background: rgba(14, 165, 233, 0.3);
+                border-radius: 10px;
+                transition: background 0.3s;
+            }
+
+            #testimonial-scroll::-webkit-scrollbar-thumb:hover {
+                background: var(--primary);
             }
 
             #testimonial-scroll {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
+                -ms-overflow-style: auto;
+                scrollbar-width: thin;
+                scrollbar-color: rgba(14, 165, 233, 0.3) rgba(14, 165, 233, 0.05);
+                padding-bottom: 15px; /* space for scrollbar */
+            }
+
+            /* Hide scrollbar on laptop/desktop view (992px and up) */
+            @media (min-width: 992px) {
+                #testimonial-scroll::-webkit-scrollbar {
+                    display: none;
+                }
+                #testimonial-scroll {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                    padding-bottom: 0px;
+                }
+            }
+
+            .testimonial-wrapper {
+                position: relative;
+                padding: 0 45px;
+            }
+
+            .scroll-nav-btn {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                background: var(--bg-surface);
+                border: 1px solid var(--border-glass);
+                color: var(--primary);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                z-index: 5;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .scroll-nav-btn:hover {
+                background: var(--primary);
+                color: #fff;
+                border-color: var(--primary);
+                transform: translateY(-50%) scale(1.08);
+                box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+            }
+
+            .scroll-nav-btn:active {
+                transform: translateY(-50%) scale(0.95);
+            }
+
+            .scroll-nav-btn.disabled {
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .prev-btn {
+                left: 0px;
+            }
+
+            .next-btn {
+                right: 0px;
+            }
+
+            @media (max-width: 768px) {
+                .testimonial-wrapper {
+                    padding: 0 5px;
+                }
+                .scroll-nav-btn {
+                    width: 38px;
+                    height: 38px;
+                    font-size: 0.9rem;
+                }
+                .prev-btn {
+                    left: -5px;
+                }
+                .next-btn {
+                    right: -5px;
+                }
             }
 
             .r-card {
@@ -530,7 +642,6 @@
                 border-radius: 15px;
                 padding: 26px 22px 20px;
                 box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
-                scroll-snap-align: start;
                 display: flex;
                 flex-direction: column;
                 transition: box-shadow .25s, transform .25s;
@@ -688,20 +799,121 @@
 
                 // Mouse-drag to scroll (desktop)
                 let isDown = false, startX, scrollLeft;
+                let isPaused = false;
+                let resumeTimeout;
+
                 track.addEventListener('mousedown', e => {
                     isDown = true;
+                    isPaused = true;
                     track.classList.add('dragging');
                     startX = e.pageX - track.offsetLeft;
                     scrollLeft = track.scrollLeft;
+                    clearTimeout(resumeTimeout);
                 });
-                track.addEventListener('mouseleave', () => { isDown = false; track.classList.remove('dragging'); });
-                track.addEventListener('mouseup', () => { isDown = false; track.classList.remove('dragging'); });
+                track.addEventListener('mouseleave', () => { 
+                    isDown = false; 
+                    track.classList.remove('dragging'); 
+                    isPaused = false;
+                });
+                track.addEventListener('mouseup', () => { 
+                    isDown = false; 
+                    track.classList.remove('dragging'); 
+                    isPaused = false;
+                });
                 track.addEventListener('mousemove', e => {
                     if (!isDown) return;
                     e.preventDefault();
                     const x = e.pageX - track.offsetLeft;
                     track.scrollLeft = scrollLeft - (x - startX) * 1.4;
                 });
+
+                // Touch events for mobile to pause auto-scroll
+                track.addEventListener('touchstart', () => {
+                    isPaused = true;
+                    clearTimeout(resumeTimeout);
+                });
+                track.addEventListener('touchend', () => {
+                    isPaused = false;
+                });
+
+                // Navigation buttons click scroll
+                const prevBtn = document.getElementById('testimonial-prev');
+                const nextBtn = document.getElementById('testimonial-next');
+
+                if (prevBtn && nextBtn) {
+                    const getScrollAmount = () => {
+                        const firstCard = track.querySelector('.r-card');
+                        if (firstCard) {
+                            return firstCard.getBoundingClientRect().width + 20; // card width + gap
+                        }
+                        return 320; // fallback
+                    };
+
+                    const updateArrows = () => {
+                        const scrollLeft = track.scrollLeft;
+                        const maxScroll = track.scrollWidth - track.clientWidth;
+                        
+                        // Show/hide prev button
+                        if (scrollLeft <= 5) {
+                            prevBtn.classList.add('disabled');
+                        } else {
+                            prevBtn.classList.remove('disabled');
+                        }
+                        
+                        // Show/hide next button
+                        if (scrollLeft >= maxScroll - 5) {
+                            nextBtn.classList.add('disabled');
+                        } else {
+                            nextBtn.classList.remove('disabled');
+                        }
+                    };
+
+                    prevBtn.addEventListener('click', () => {
+                        isPaused = true;
+                        track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+                        // Resume auto-scroll after 3 seconds of inactivity
+                        clearTimeout(resumeTimeout);
+                        resumeTimeout = setTimeout(() => { isPaused = false; }, 3000);
+                    });
+
+                    nextBtn.addEventListener('click', () => {
+                        isPaused = true;
+                        track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+                        // Resume auto-scroll after 3 seconds of inactivity
+                        clearTimeout(resumeTimeout);
+                        resumeTimeout = setTimeout(() => { isPaused = false; }, 3000);
+                    });
+
+                    // Update arrows state on scroll and window resize
+                    track.addEventListener('scroll', updateArrows);
+                    window.addEventListener('resize', updateArrows);
+                    
+                    // Initialize arrow states
+                    updateArrows();
+                    setTimeout(updateArrows, 100);
+                }
+
+                // Continuous Auto Scroll Logic
+                const scrollSpeed = 0.5; // Very slow speed (0.5px per frame)
+                
+                const step = () => {
+                    if (!isPaused && !isDown) {
+                        track.scrollLeft += scrollSpeed;
+                        const maxScroll = track.scrollWidth - track.clientWidth;
+                        // Reset to start smoothly when it reaches the end
+                        if (track.scrollLeft >= maxScroll - 1) {
+                            track.scrollLeft = 0;
+                        }
+                    }
+                    requestAnimationFrame(step);
+                };
+
+                // Pause on hover
+                track.addEventListener('mouseenter', () => { isPaused = true; });
+                track.addEventListener('mouseleave', () => { if (!isDown) isPaused = false; });
+
+                // Start animation
+                requestAnimationFrame(step);
             })();
         </script>
     </section>
