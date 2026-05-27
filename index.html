@@ -124,14 +124,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#contact" data-en="Contact" data-hi="संपर्क">Contact</a>
                     </li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0 mb-2 mb-lg-0">
+                        <a class="btn btn-primary nav-cta-btn px-3 py-2 fw-bold text-white" href="booking.html" data-en="Book Appointment" data-hi="अपॉइंटमेंट बुक करें" style="border-radius: 20px; font-size: 0.9rem; text-decoration: none;">Book Appointment</a>
+                    </li>
                     <li class="nav-item ms-3">
                         <button class="btn btn-outline-primary btn-sm language-toggle" onclick="toggleLanguage()">
                             <i class="fas fa-language"></i> <span id="lang-text">हिंदी</span>
                         </button>
                     </li>
                     <li class="nav-item ms-3">
-                        <button class="btn btn-outline-secondary btn-sm" id="bg-toggle"
-                            onclick="toggleBackgroundMode()">
+                        <button class="btn btn-outline-secondary btn-sm" id="bg-toggle" onclick="toggleBackgroundMode()">
                             <i class="fas fa-adjust"></i> <span id="bg-mode-text">Light Mode</span>
                         </button>
                     </li>
@@ -142,12 +144,17 @@
 
     <!-- Hero Section -->
     <section id="home" class="hero-section">
+        <div class="hero-shapes">
+            <div class="shape-particle" style="top: 20%; left: 8%; font-size: 1.5rem; animation-delay: 0s;"><i class="fas fa-tooth"></i></div>
+            <div class="shape-particle" style="top: 65%; left: 12%; font-size: 1.8rem; animation-delay: 2.5s;"><i class="fas fa-smile"></i></div>
+            <div class="shape-particle" style="top: 25%; left: 85%; font-size: 2rem; animation-delay: 4.5s;"><i class="fas fa-calendar-alt"></i></div>
+            <div class="shape-particle" style="top: 75%; left: 78%; font-size: 1.6rem; animation-delay: 1.2s;"><i class="fas fa-user-md"></i></div>
+        </div>
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <div class="hero-content">
-                        <h1 class="display-4 fw-bold mb-4" data-en="Your Smile, Our Priority"
-                            data-hi="आपकी मुस्कान, हमारी प्राथमिकता">
+                        <h1 class="display-4 fw-bold mb-4" data-en="Your Smile, Our Priority" data-hi="आपकी मुस्कान, हमारी प्राथमिकता">
                             Your Smile, Our Priority
                         </h1>
                         <p class="lead mb-4"
@@ -164,13 +171,9 @@
                                 </svg>
                                 <span data-en="Call Now" data-hi="अभी कॉल करें">Call Now</span>
                             </a>
-                            <a href="#contact" class="btn btn-outline-primary btn-lg mb-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
-                                    viewBox="0 0 16 16" style="vertical-align:middle;">
-                                    <path
-                                        d="M8 0a5.53 5.53 0 0 0-5.5 5.5c0 4.5 5.5 10.5 5.5 10.5s5.5-6 5.5-10.5A5.53 5.53 0 0 0 8 0zm0 8a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" />
-                                </svg>
-                                <span data-en="Visit Us" data-hi="हमसे मिलें">Visit Us</span>
+                            <a href="booking.html" class="btn btn-outline-primary btn-lg mb-2">
+                                <i class="fas fa-calendar-alt me-2" aria-hidden="true"></i>
+                                <span data-en="Book Online" data-hi="ऑनलाइन बुक करें">Book Online</span>
                             </a>
                         </div>
                         <div class="hero-badges mt-4">
@@ -273,6 +276,193 @@
         </div>
     </section>
 
+    <!-- Symptom Checker Section -->
+    <section id="symptom-checker" class="py-5">
+        <div class="container">
+            <div class="section-title text-center mb-5">
+                <h2 class="fw-bold" data-en="Interactive Symptom Checker" data-hi="इंटरएक्टिव लक्षण जांचकर्ता">Interactive Symptom Checker</h2>
+                <div class="title-border mx-auto"></div>
+                <p class="lead mt-3" data-en="Identify your symptoms and get instant dental care advice"
+                    data-hi="अपने लक्षणों की पहचान करें और तत्काल दंत चिकित्सा सलाह प्राप्त करें">
+                    Identify your symptoms and get instant dental care advice
+                </p>
+            </div>
+            
+            <div class="row g-4 justify-content-center">
+                <!-- Toothache -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="symptom-card" data-symptom-id="toothache">
+                        <div class="symptom-icon text-danger">
+                            <i class="fas fa-tooth"></i>
+                        </div>
+                        <h5 data-en="Toothache / Severe Pain" data-hi="दांत दर्द / गंभीर दर्द">Toothache / Severe Pain</h5>
+                    </div>
+                </div>
+                <!-- Crooked Teeth -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="symptom-card" data-symptom-id="crooked">
+                        <div class="symptom-icon text-primary">
+                            <i class="fas fa-teeth-open"></i>
+                        </div>
+                        <h5 data-en="Crooked / Misaligned Teeth" data-hi="टेढ़े-मेढ़े दांत">Crooked / Misaligned Teeth</h5>
+                    </div>
+                </div>
+                <!-- Yellow/Stained Teeth -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="symptom-card" data-symptom-id="yellow">
+                        <div class="symptom-icon text-warning">
+                            <i class="fas fa-smile-beam"></i>
+                        </div>
+                        <h5 data-en="Yellow / Stained Teeth" data-hi="पीले / दागदार दांत">Yellow / Stained Teeth</h5>
+                    </div>
+                </div>
+                <!-- Bleeding Gums -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="symptom-card" data-symptom-id="bleeding">
+                        <div class="symptom-icon text-danger">
+                            <i class="fas fa-hand-holding-medical"></i>
+                        </div>
+                        <h5 data-en="Bleeding / Swollen Gums" data-hi="मसूड़ों से खून आना / सूजन">Bleeding / Swollen Gums</h5>
+                    </div>
+                </div>
+                <!-- Broken Tooth -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="symptom-card" data-symptom-id="broken">
+                        <div class="symptom-icon text-info">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h5 data-en="Broken / Chipped Tooth" data-hi="टूटा हुआ दांत">Broken / Chipped Tooth</h5>
+                    </div>
+                </div>
+                <!-- Dental Emergency -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="symptom-card" data-symptom-id="emergency">
+                        <div class="symptom-icon text-danger">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h5 data-en="Dental Emergency / Sudden Injury" data-hi="दंत आपातकाल / अचानक चोट">Dental Emergency / Sudden Injury</h5>
+                    </div>
+                </div>
+                <!-- Other Issue / Not Sure -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="symptom-card" data-symptom-id="other">
+                        <div class="symptom-icon text-secondary">
+                            <i class="far fa-question-circle"></i>
+                        </div>
+                        <h5 data-en="Other Issue / Not Sure" data-hi="अन्य समस्या / निश्चित नहीं">Other Issue / Not Sure</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advice Boxes -->
+            <!-- Toothache Advice -->
+            <div class="symptom-advice-box" id="symptom-advice-toothache">
+                <div class="symptom-advice-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h5 data-en="Recommendation: Root Canal Treatment (RCT)" data-hi="अनुशंसा: रूट कैनाल उपचार (RCT)">Recommendation: Root Canal Treatment (RCT)</h5>
+                </div>
+                <div class="symptom-advice-content mb-4">
+                    <p data-en="Severe toothache often indicates deep decay or infection in the tooth pulp. Root Canal Treatment (RCT) saves the natural tooth by removing the infection and sealing it. We recommend booking an appointment for Root Canal Treatment."
+                       data-hi="गंभीर दांत दर्द अक्सर दांत के पल्प में गहरी सड़न या संक्रमण का संकेत देता है। रूट कैनाल उपचार (RCT) संक्रमण को हटाकर और इसे सील करके प्राकृतिक दांत को बचाता है। हम रूट कैनाल उपचार के लिए अपॉइंटमेंट बुक करने की सलाह देते हैं।">
+                       Severe toothache often indicates deep decay or infection in the tooth pulp. Root Canal Treatment (RCT) saves the natural tooth by removing the infection and sealing it. We recommend booking an appointment for Root Canal Treatment.
+                    </p>
+                </div>
+                <a href="booking.html?service=rct&symptoms=Severe%20toothache%20and%20sharp%20pain" class="btn btn-primary" data-en="Book Recommendation" data-hi="अनुशंसा बुक करें">Book Recommendation</a>
+            </div>
+
+            <!-- Crooked Teeth Advice -->
+            <div class="symptom-advice-box" id="symptom-advice-crooked">
+                <div class="symptom-advice-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h5 data-en="Recommendation: Orthodontics (Braces)" data-hi="अनुशंसा: ऑर्थोडॉन्टिक्स (ब्रेसेस)">Recommendation: Orthodontics (Braces)</h5>
+                </div>
+                <div class="symptom-advice-content mb-4">
+                    <p data-en="Misaligned or crooked teeth can affect your bite and smile. Orthodontics (braces or aligners) can help align your teeth perfectly. Book a consult to explore metal/ceramic braces or clear aligners."
+                       data-hi="टेढ़े-मेढ़े दांत आपके काटने की क्षमता और मुस्कान को प्रभावित कर सकते हैं। ऑर्थोडॉन्टिक्स (ब्रेसिज़ या एलाइनर) आपके दांतों को पूरी तरह से संरेखित करने में मदद कर सकते हैं। मेटल/सिरेमिक ब्रेसिज़ या क्लियर एलाइनर के बारे में जानने के लिए अपॉइंटमेंट बुक करें।">
+                       Misaligned or crooked teeth can affect your bite and smile. Orthodontics (braces or aligners) can help align your teeth perfectly. Book a consult to explore metal/ceramic braces or clear aligners.
+                    </p>
+                </div>
+                <a href="booking.html?service=braces&symptoms=Misaligned%20and%20crooked%20teeth" class="btn btn-primary" data-en="Book Recommendation" data-hi="अनुशंसा बुक करें">Book Recommendation</a>
+            </div>
+
+            <!-- Yellow Teeth Advice -->
+            <div class="symptom-advice-box" id="symptom-advice-yellow">
+                <div class="symptom-advice-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h5 data-en="Recommendation: Teeth Whitening / Scaling" data-hi="अनुशंसा: दांतों की सफेदी / स्केलिंग">Recommendation: Teeth Whitening / Scaling</h5>
+                </div>
+                <div class="symptom-advice-content mb-4">
+                    <p data-en="Stains from food, coffee, or plaque build-up can discolor teeth. Professional teeth whitening and scaling can quickly restore a bright, radiant smile. Book a teeth whitening session today!"
+                       data-hi="भोजन, कॉफी, या पट्टिका (plaque) के जमने से दांतों का रंग खराब हो सकता है। पेशेवर रूप से दांतों की सफेदी और स्केलिंग एक उज्जवल, चमकदार मुस्कान को जल्दी से बहाल कर सकती है। आज ही दांतों की सफेदी का सत्र बुक करें!">
+                       Stains from food, coffee, or plaque build-up can discolor teeth. Professional teeth whitening and scaling can quickly restore a bright, radiant smile. Book a teeth whitening session today!
+                    </p>
+                </div>
+                <a href="booking.html?service=whitening&symptoms=Stained%20and%20yellow%20teeth" class="btn btn-primary" data-en="Book Recommendation" data-hi="अनुशंसा बुक करें">Book Recommendation</a>
+            </div>
+
+            <!-- Bleeding Gums Advice -->
+            <div class="symptom-advice-box" id="symptom-advice-bleeding">
+                <div class="symptom-advice-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h5 data-en="Recommendation: Gum Treatment" data-hi="अनुशंसा: मसूड़ों का उपचार">Recommendation: Gum Treatment</h5>
+                </div>
+                <div class="symptom-advice-content mb-4">
+                    <p data-en="Bleeding or swollen gums are primary symptoms of gingivitis or gum disease. Professional scaling and specialized gum treatment will remove harmful plaque and restore gum health. Book a gum care consult."
+                       data-hi="मसूड़ों से खून आना या सूजन होना जिंजिवाइटिस या मसूड़ों की बीमारी के प्राथमिक लक्षण हैं। पेशेवर स्केलिंग और विशेष मसूड़ों का उपचार हानिकारक प्लाक को हटा देगा और मसूड़ों के स्वास्थ्य को बहाल करेगा। मसूड़ों की देखभाल के लिए परामर्श बुक करें।">
+                       Bleeding or swollen gums are primary symptoms of gingivitis or gum disease. Professional scaling and specialized gum treatment will remove harmful plaque and restore gum health. Book a gum care consult.
+                    </p>
+                </div>
+                <a href="booking.html?service=gum&symptoms=Bleeding%20and%20swollen%20gums" class="btn btn-primary" data-en="Book Recommendation" data-hi="अनुशंसा बुक करें">Book Recommendation</a>
+            </div>
+
+            <!-- Broken Tooth Advice -->
+            <div class="symptom-advice-box" id="symptom-advice-broken">
+                <div class="symptom-advice-header">
+                    <i class="fas fa-info-circle"></i>
+                    <h5 data-en="Recommendation: Crowns & Bridges" data-hi="अनुशंसा: क्राउन और ब्रिज">Recommendation: Crowns & Bridges</h5>
+                </div>
+                <div class="symptom-advice-content mb-4">
+                    <p data-en="A broken or chipped tooth requires quick restoration to prevent nerve damage. Custom crowns or bridges can restore the tooth's structure, strength, and appearance. Book a crown & bridge consultation."
+                       data-hi="टूटे हुए या क्षतिग्रस्त दांत को तंत्रिका क्षति से बचाने के लिए त्वरित बहाली की आवश्यकता होती है। कस्टम क्राउन या ब्रिज दांत की संरचना, ताकत और उपस्थिति को बहाल कर सकते हैं। क्राउन और ब्रिज परामर्श बुक करें।">
+                       A broken or chipped tooth requires quick restoration to prevent nerve damage. Custom crowns or bridges can restore the tooth's structure, strength, and appearance. Book a crown & bridge consultation.
+                    </p>
+                </div>
+                <a href="booking.html?service=crowns&symptoms=Broken%20or%20chipped%20tooth" class="btn btn-primary" data-en="Book Recommendation" data-hi="अनुशंसा बुक करें">Book Recommendation</a>
+            </div>
+
+            <!-- Emergency Advice -->
+            <div class="symptom-advice-box" id="symptom-advice-emergency">
+                <div class="symptom-advice-header">
+                    <i class="fas fa-exclamation-triangle text-danger"></i>
+                    <h5 data-en="Recommendation: Urgent Dental Consultation / Extraction" data-hi="अनुशंसा: तत्काल दंत परामर्श / निष्कर्षण">Recommendation: Urgent Dental Consultation / Extraction</h5>
+                </div>
+                <div class="symptom-advice-content mb-4">
+                    <p data-en="For severe dental trauma, unbearable pain, or sudden injury, you need an urgent dental check-up. Depending on the condition, extraction or emergency general dentistry might be required. Book an urgent appointment now."
+                       data-hi="गंभीर दंत आघात, असहनीय दर्द, या अचानक चोट के लिए, आपको तत्काल दंत जांच की आवश्यकता है। स्थिति के आधार पर, निष्कर्षण या आपातकालीन सामान्य दंत चिकित्सा की आवश्यकता हो सकती है। अभी तत्काल अपॉइंटमेंट बुक करें।">
+                       For severe dental trauma, unbearable pain, or sudden injury, you need an urgent dental check-up. Depending on the condition, extraction or emergency general dentistry might be required. Book an urgent appointment now.
+                    </p>
+                </div>
+                <a href="booking.html?service=extraction&symptoms=Emergency%20dental%20pain%20and%20trauma" class="btn btn-primary" data-en="Book Recommendation" data-hi="अनुशंसा बुक करें">Book Recommendation</a>
+            </div>
+
+            <!-- Other Advice -->
+            <div class="symptom-advice-box" id="symptom-advice-other">
+                <div class="symptom-advice-header">
+                    <i class="fas fa-info-circle text-secondary"></i>
+                    <h5 data-en="Recommendation: General / Custom Consultation" data-hi="अनुशंसा: सामान्य / व्यक्तिगत परामर्श">Recommendation: General / Custom Consultation</h5>
+                </div>
+                <div class="symptom-advice-content mb-4">
+                    <p data-en="If you have an unlisted issue or are unsure about your treatment needs, a general clinical checkup is the best starting point. Our expert dentists will examine you and recommend a personalized care plan. Book a custom consultation slot below."
+                       data-hi="यदि आपके पास कोई अन्य समस्या है या आप उपचार की आवश्यकताओं के बारे में सुनिश्चित नहीं हैं, तो एक सामान्य नैदानिक ​​जांच सबसे अच्छा प्रारंभिक बिंदु है। हमारे विशेषज्ञ दंत चिकित्सक आपकी जांच करेंगे और व्यक्तिगत देखभाल योजना की सिफारिश करेंगे। नीचे एक कस्टम परामर्श स्लॉट बुक करें।">
+                       If you have an unlisted issue or are unsure about your treatment needs, a general clinical checkup is the best starting point. Our expert dentists will examine you and recommend a personalized care plan. Book a custom consultation slot below.
+                    </p>
+                </div>
+                <a href="booking.html?service=other&symptoms=I%20have%20an%20unlisted%20dental%20concern%20or%20inquiry" class="btn btn-primary" data-en="Book Recommendation" data-hi="अनुशंसा बुक करें">Book Recommendation</a>
+            </div>
+            
+        </div>
+    </section>
+
     <!-- Services Section -->
     <section id="services" class="py-5 bg-light">
         <div class="container">
@@ -285,123 +475,167 @@
                 </p>
             </div>
 
-            <div class="row g-4">
+            <div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-card text-center h-100">
+                    <div class="service-card text-center h-100 d-flex flex-column">
                         <div class="service-icon">
                             <i class="fas fa-tooth"></i>
                         </div>
                         <h4 data-en="General Dentistry" data-hi="सामान्य दंत चिकित्सा">General Dentistry</h4>
-                        <p data-en="Regular check-ups, teeth cleaning, cavity fillings, and preventive care for optimal oral health"
+                        <p class="flex-grow-1" data-en="Regular check-ups, teeth cleaning, cavity fillings, and preventive care for optimal oral health"
                             data-hi="नियमित जांच, दांतों की सफाई, कैविटी भरना और इष्टतम मौखिक स्वास्थ्य के लिए निवारक देखभाल">
                             Regular check-ups, teeth cleaning, cavity fillings, and preventive care for optimal oral
                             health
                         </p>
+                        <div class="mt-3">
+                            <a href="booking.html?service=general" class="btn btn-sm btn-outline-primary" data-en="Book Now" data-hi="अभी बुक करें">Book Now</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-card text-center h-100">
+                    <div class="service-card text-center h-100 d-flex flex-column">
                         <div class="service-icon">
                             <i class="fas fa-syringe"></i>
                         </div>
                         <h4 data-en="Root Canal Treatment" data-hi="रूट कैनाल उपचार">Root Canal Treatment</h4>
-                        <p data-en="Painless root canal therapy using modern techniques to save your natural teeth"
+                        <p class="flex-grow-1" data-en="Painless root canal therapy using modern techniques to save your natural teeth"
                             data-hi="आपके प्राकृतिक दांतों को बचाने के लिए आधुनिक तकनीकों का उपयोग करके दर्द रहित रूट कैनाल थेरेपी">
                             Painless root canal therapy using modern techniques to save your natural teeth
                         </p>
+                        <div class="mt-3">
+                            <a href="booking.html?service=rct" class="btn btn-sm btn-outline-primary" data-en="Book Now" data-hi="अभी बुक करें">Book Now</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-card text-center h-100">
+                    <div class="service-card text-center h-100 d-flex flex-column">
                         <div class="service-icon">
                             <i class="fas fa-teeth"></i>
                         </div>
                         <h4 data-en="Dental Implants" data-hi="डेंटल इम्प्लांट्स">Dental Implants</h4>
-                        <p data-en="Permanent tooth replacement solution with natural look and feel"
+                        <p class="flex-grow-1" data-en="Permanent tooth replacement solution with natural look and feel"
                             data-hi="प्राकृतिक रूप और अनुभव के साथ स्थायी दांत प्रतिस्थापन समाधान">
                             Permanent tooth replacement solution with natural look and feel
                         </p>
+                        <div class="mt-3">
+                            <a href="booking.html?service=implants" class="btn btn-sm btn-outline-primary" data-en="Book Now" data-hi="अभी बुक करें">Book Now</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-card text-center h-100">
+                    <div class="service-card text-center h-100 d-flex flex-column">
                         <div class="service-icon">
                             <i class="fas fa-smile-beam"></i>
                         </div>
                         <h4 data-en="Teeth Whitening" data-hi="दांतों की सफेदी">Teeth Whitening</h4>
-                        <p data-en="Professional teeth whitening for a brighter, confident smile"
+                        <p class="flex-grow-1" data-en="Professional teeth whitening for a brighter, confident smile"
                             data-hi="एक उज्जवल, आत्मविश्वास भरी मुस्कान के लिए पेशेवर दांत सफेदी">
                             Professional teeth whitening for a brighter, confident smile
                         </p>
+                        <div class="mt-3">
+                            <a href="booking.html?service=whitening" class="btn btn-sm btn-outline-primary" data-en="Book Now" data-hi="अभी बुक करें">Book Now</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-card text-center h-100">
+                    <div class="service-card text-center h-100 d-flex flex-column">
                         <div class="service-icon">
                             <i class="fas fa-crown"></i>
                         </div>
                         <h4 data-en="Crowns & Bridges" data-hi="क्राउन और ब्रिज">Crowns & Bridges</h4>
-                        <p data-en="Restore damaged teeth or replace missing teeth with custom crowns and bridges"
+                        <p class="flex-grow-1" data-en="Restore damaged teeth or replace missing teeth with custom crowns and bridges"
                             data-hi="कस्टम क्राउन और ब्रिज के साथ क्षतिग्रस्त दांतों को बहाल करें या लापता दांतों को बदलें">
                             Restore damaged teeth or replace missing teeth with custom crowns and bridges
                         </p>
+                        <div class="mt-3">
+                            <a href="booking.html?service=crowns" class="btn btn-sm btn-outline-primary" data-en="Book Now" data-hi="अभी बुक करें">Book Now</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-card text-center h-100">
+                    <div class="service-card text-center h-100 d-flex flex-column">
                         <div class="service-icon">
                             <i class="fas fa-child"></i>
                         </div>
                         <h4 data-en="Pediatric Dentistry" data-hi="बाल दंत चिकित्सा">Pediatric Dentistry</h4>
-                        <p data-en="Gentle and caring dental treatment for children in a friendly environment"
+                        <p class="flex-grow-1" data-en="Gentle and caring dental treatment for children in a friendly environment"
                             data-hi="एक मित्रवत वातावरण में बच्चों के लिए कोमल और देखभाल भरा दंत उपचार">
                             Gentle and caring dental treatment for children in a friendly environment
                         </p>
+                        <div class="mt-3">
+                            <a href="booking.html?service=pediatric" class="btn btn-sm btn-outline-primary" data-en="Book Now" data-hi="अभी बुक करें">Book Now</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-card text-center h-100">
+                    <div class="service-card text-center h-100 d-flex flex-column">
                         <div class="service-icon">
                             <i class="fas fa-teeth-open"></i>
                         </div>
                         <h4 data-en="Orthodontics (Braces)" data-hi="ऑर्थोडॉन्टिक्स (ब्रेसेस)">Orthodontics (Braces)
                         </h4>
-                        <p data-en="Straighten your teeth with metal or ceramic braces for a perfect smile"
+                        <p class="flex-grow-1" data-en="Straighten your teeth with metal or ceramic braces for a perfect smile"
                             data-hi="एक आदर्श मुस्कान के लिए धातु या सिरेमिक ब्रेसिज़ के साथ अपने दांतों को सीधा करें">
                             Straighten your teeth with metal or ceramic braces for a perfect smile
                         </p>
+                        <div class="mt-3">
+                            <a href="booking.html?service=braces" class="btn btn-sm btn-outline-primary" data-en="Book Now" data-hi="अभी बुक करें">Book Now</a>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-card text-center h-100">
+                    <div class="service-card text-center h-100 d-flex flex-column">
                         <div class="service-icon">
                             <i class="fas fa-hand-holding-medical"></i>
                         </div>
                         <h4 data-en="Gum Treatment" data-hi="मसूड़ों का उपचार">Gum Treatment</h4>
-                        <p data-en="Treatment for gum diseases, bleeding gums, and periodontal issues"
+                        <p class="flex-grow-1" data-en="Treatment for gum diseases, bleeding gums, and periodontal issues"
                             data-hi="मसूड़ों की बीमारियों, मसूड़ों से खून आना और पीरियोडोंटल समस्याओं के लिए उपचार">
                             Treatment for gum diseases, bleeding gums, and periodontal issues
                         </p>
+                        <div class="mt-3">
+                            <a href="booking.html?service=gum" class="btn btn-sm btn-outline-primary" data-en="Book Now" data-hi="अभी बुक करें">Book Now</a>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Tooth Extraction -->
                 <div class="col-lg-4 col-md-6">
-                    <div class="service-card text-center h-100">
+                    <div class="service-card text-center h-100 d-flex flex-column">
                         <div class="service-icon">
                             <i class="fas fa-circle-minus"></i>
                         </div>
                         <h4 data-en="Tooth Extraction" data-hi="दांत निकालना">Tooth Extraction</h4>
-                        <p data-en="Safe and painless tooth extraction including wisdom tooth removal"
+                        <p class="flex-grow-1" data-en="Safe and painless tooth extraction including wisdom tooth removal"
                             data-hi="ज्ञान दांत हटाने सहित सुरक्षित और दर्द रहित दांत निष्कर्षण">
                             Safe and painless tooth extraction including wisdom tooth removal
                         </p>
+                        <div class="mt-3">
+                            <a href="booking.html?service=extraction" class="btn btn-sm btn-outline-primary" data-en="Book Now" data-hi="अभी बुक करें">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Other / Consultation -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card text-center h-100 d-flex flex-column">
+                        <div class="service-icon">
+                            <i class="far fa-question-circle"></i>
+                        </div>
+                        <h4 data-en="Other / Consultation" data-hi="अन्य / परामर्श">Other / Consultation</h4>
+                        <p class="flex-grow-1" data-en="Consult our dentists for customized care plans, jaw pain, general inquiries, or unlisted treatments"
+                            data-hi="अनुकूलित देखभाल योजनाओं, जबड़े के दर्द, सामान्य पूछताछ या अवांछित उपचारों के लिए हमारे दंत चिकित्सकों से परामर्श लें">
+                            Consult our dentists for customized care plans, jaw pain, general inquiries, or unlisted treatments
+                        </p>
+                        <div class="mt-3">
+                            <a href="booking.html?service=other" class="btn btn-sm btn-outline-primary" data-en="Book Now" data-hi="अभी बुक करें">Book Now</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -910,6 +1144,87 @@
                 requestAnimationFrame(step);
             })();
         </script>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-5">
+        <div class="container">
+            <div class="section-title text-center mb-5">
+                <h2 class="fw-bold" data-en="Frequently Asked Questions" data-hi="अक्सर पूछे जाने वाले प्रश्न">Frequently Asked Questions</h2>
+                <div class="title-border mx-auto"></div>
+                <p class="lead mt-3" data-en="Find answers to common dental queries and treatment details"
+                    data-hi="सामान्य दंत चिकित्सा प्रश्नों और उपचार विवरणों के उत्तर खोजें">
+                    Find answers to common dental queries and treatment details
+                </p>
+            </div>
+            
+            <div class="faq-accordion">
+                <!-- Item 1 -->
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h5 class="faq-question" data-en="What are the clinic timings?" data-hi="क्लिनिक का समय क्या है?">What are the clinic timings?</h5>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-content-inner" data-en="We are open Monday to Saturday from 11:00 AM to 2:00 PM and 3:00 PM to 6:00 PM. Sunday is closed." data-hi="हम सोमवार से शनिवार सुबह 11:00 बजे से दोपहर 2:00 बजे तक और दोपहर 3:00 बजे से शाम 6:00 बजे तक खुले रहते हैं। रविवार को बंद रहता है।">
+                            We are open Monday to Saturday from 11:00 AM to 2:00 PM and 3:00 PM to 6:00 PM. Sunday is closed.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h5 class="faq-question" data-en="Is Root Canal Treatment (RCT) painful?" data-hi="क्या रूट कैनाल उपचार (RCT) दर्दनाक होता है?">Is Root Canal Treatment (RCT) painful?</h5>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-content-inner" data-en="With modern anesthesia and advanced techniques, RCT is virtually painless. It actually relieves the pain caused by tooth decay." data-hi="आधुनिक एनेस्थीसिया और उन्नत तकनीकों के साथ, RCT व्यावहारिक रूप से दर्द रहित होता. यह वास्तव में दांतों की सड़न के कारण होने वाले दर्द से राहत देता है।">
+                            With modern anesthesia and advanced techniques, RCT is virtually painless. It actually relieves the pain caused by tooth decay.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h5 class="faq-question" data-en="How long do dental braces treatments take?" data-hi="दंत ब्रेसिज़ उपचार में कितना समय लगता है?">How long do dental braces treatments take?</h5>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-content-inner" data-en="The duration of orthodontic treatment varies depending on complexity, typically ranging from 12 to 24 months." data-hi="ऑर्थोडॉन्टिक्स उपचार की अवधि जटिलता के आधार पर भिन्न होती है, आमतौर पर यह 12 से 24 महीनों तक चलती है।">
+                            The duration of orthodontic treatment varies depending on complexity, typically ranging from 12 to 24 months.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h5 class="faq-question" data-en="Do you provide emergency dental services?" data-hi="क्या आप आपातकालीन दंत चिकित्सा सेवाएं प्रदान करते हैं?">Do you provide emergency dental services?</h5>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-content-inner" data-en="Yes, we accommodate same-day emergency appointments for severe pain, tooth fractures, or swelling." data-hi="हां, हम गंभीर दर्द, दांत टूटने या सूजन के लिए उसी दिन आपातकालीन नियुक्तियों की व्यवस्था करते हैं।">
+                            Yes, we accommodate same-day emergency appointments for severe pain, tooth fractures, or swelling.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="faq-item">
+                    <div class="faq-header">
+                        <h5 class="faq-question" data-en="What is the cost of dental implants?" data-hi="डेंटल इम्प्लांट की कीमत क्या है?">What is the cost of dental implants?</h5>
+                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
+                    </div>
+                    <div class="faq-content">
+                        <div class="faq-content-inner" data-en="Dental implants are highly customized. The cost depends on the brand, material, and number of implants required. We offer affordable premium solutions." data-hi="डेंटल इम्प्लांट अत्यधिक अनुकूलित (customized) होते हैं। लागत ब्रांड, सामग्री और आवश्यक इम्प्लांट की संख्या पर निर्भर करती है। हम किफायती प्रीमियम समाधान प्रदान करते हैं।">
+                            Dental implants are highly customized. The cost depends on the brand, material, and number of implants required. We offer affordable premium solutions.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Contact Section -->

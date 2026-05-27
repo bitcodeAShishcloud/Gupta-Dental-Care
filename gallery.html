@@ -147,11 +147,24 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="index.html#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="gallery.html">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#home" data-en="Home" data-hi="होम">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about" data-en="About" data-hi="डॉक्टर के बारे में">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#services" data-en="Services" data-hi="सेवाएं">Services</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="gallery.html" data-en="Gallery" data-hi="गैलरी">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact" data-en="Contact" data-hi="संपर्क">Contact</a></li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0 mb-2 mb-lg-0">
+                        <a class="btn btn-primary nav-cta-btn px-3 py-2 fw-bold text-white" href="booking.html" data-en="Book Appointment" data-hi="अपॉइंटमेंट बुक करें" style="border-radius: 20px; font-size: 0.9rem; text-decoration: none;">Book Appointment</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <button class="btn btn-outline-primary btn-sm language-toggle" onclick="toggleLanguage()">
+                            <i class="fas fa-language"></i> <span id="lang-text">हिंदी</span>
+                        </button>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <button class="btn btn-outline-secondary btn-sm" id="bg-toggle" onclick="toggleBackgroundMode()">
+                            <i class="fas fa-adjust"></i> <span id="bg-mode-text">Light Mode</span>
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -159,32 +172,32 @@
 
     <div class="container" style="margin-top: 120px;">
         <div class="text-center mb-4">
-            <h1 class="display-4 fw-bold">Clinic Photo & Video Gallery</h1>
+            <h1 class="display-4 fw-bold" data-en="Clinic Photo & Video Gallery" data-hi="क्लिनिक फोटो और वीडियो गैलरी">Clinic Photo & Video Gallery</h1>
             <div class="title-border"></div>
         </div>
 
         <!-- Filter Bar -->
         <div class="gallery-filter-bar">
             <button class="gallery-filter-btn active" onclick="filterGallery('all', this)">
-                <i class="fas fa-th me-1"></i> All
+                <i class="fas fa-th me-1"></i> <span data-en="All" data-hi="सभी">All</span>
             </button>
             <button class="gallery-filter-btn" onclick="filterGallery('image', this)">
-                <i class="fas fa-image me-1"></i> Photos
+                <i class="fas fa-image me-1"></i> <span data-en="Photos" data-hi="तस्वीरें">Photos</span>
             </button>
             <button class="gallery-filter-btn" onclick="filterGallery('video', this)">
-                <i class="fas fa-video me-1"></i> Videos
+                <i class="fas fa-video me-1"></i> <span data-en="Videos" data-hi="वीडियो">Videos</span>
             </button>
         </div>
 
         <div class="row g-4" id="dynamicGalleryContainer">
             <div class="gallery-loading">
                 <i class="fas fa-circle-notch"></i>
-                <p>Loading gallery...</p>
+                <p data-en="Loading gallery..." data-hi="गैलरी लोड हो रही है...">Loading gallery...</p>
             </div>
         </div>
         
         <div class="text-center my-5">
-            <a href="index.html" class="btn btn-primary btn-lg">&larr; Back to Home</a>
+            <a href="index.html" class="btn btn-primary btn-lg" data-en="&larr; Back to Home" data-hi="&larr; होम पर वापस जाएं">&larr; Back to Home</a>
         </div>
     </div>
 
@@ -202,18 +215,18 @@
                     <h5><img src="logo.png" alt="Gupta Dental Care Clinic Logo"
                             style="height: 32px; width: auto; margin-right: 10px; vertical-align: middle;"> Gupta Dental
                         Care</h5>
-                    <p class="small">Your trusted partner for complete dental health in Kushinagar</p>
+                    <p class="small" data-en="Your trusted partner for complete dental health in Kushinagar" data-hi="कुशीनगर में संपूर्ण दंत स्वास्थ्य के लिए आपका विश्वसनीय साथी">Your trusted partner for complete dental health in Kushinagar</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item"><a href="index.html#home"
-                                class="text-white-50 text-decoration-none">Home</a></li>
+                                class="text-white-50 text-decoration-none" data-en="Home" data-hi="होम">Home</a></li>
                         <li class="list-inline-item"><a href="index.html#about"
-                                class="text-white-50 text-decoration-none">About</a></li>
+                                class="text-white-50 text-decoration-none" data-en="About" data-hi="के बारे में">About</a></li>
                         <li class="list-inline-item"><a href="index.html#services"
-                                class="text-white-50 text-decoration-none">Services</a></li>
+                                class="text-white-50 text-decoration-none" data-en="Services" data-hi="सेवाएं">Services</a></li>
                         <li class="list-inline-item"><a href="index.html#contact"
-                                class="text-white-50 text-decoration-none">Contact</a></li>
+                                class="text-white-50 text-decoration-none" data-en="Contact" data-hi="संपर्क">Contact</a></li>
                         <li class="list-inline-item"><a href="admin.html"
                                 class="text-white-50 text-decoration-none"><i class="fas fa-lock me-1" style="font-size: 0.7rem;"></i>Admin</a></li>
                     </ul>
@@ -226,8 +239,9 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JS & App JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
     <script>
         // Configuration from Admin Panel
         let cloudinaryConfig = {

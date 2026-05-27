@@ -460,3 +460,665 @@ body.light-mode .bg-light {
         font-size: 3rem;
     }
 }
+
+/* ==================== Next-Gen Booking Wizard Styles ==================== */
+.booking-section {
+    padding-top: 130px;
+    background: radial-gradient(circle at 10% 20%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.02) 0%, transparent 50%);
+}
+
+.booking-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass);
+    border-radius: 30px;
+    box-shadow: var(--shadow-glass);
+    padding: 40px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.booking-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+}
+
+.booking-card:hover {
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.booking-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, var(--text-main) 30%, var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.booking-subtitle {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 40px;
+}
+
+/* Multi-Step Wizard Progress Bar */
+.step-progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    flex: 1;
+}
+
+.progress-step-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(15, 23, 42, 0.4);
+    border: 2px solid var(--border-glass);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+body.light-mode .progress-step-icon {
+    background: #E2E8F0;
+    color: #64748B;
+}
+
+.progress-step-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: var(--transition);
+}
+
+.progress-line {
+    height: 3px;
+    background: var(--border-glass);
+    flex-grow: 1;
+    margin: 0 -20px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+    transition: var(--transition);
+}
+
+.progress-step.active .progress-step-icon {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+}
+
+.progress-step.active .progress-step-label {
+    color: var(--primary);
+}
+
+.progress-step.completed .progress-step-icon {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+.progress-step.completed .progress-step-label {
+    color: var(--accent);
+}
+
+.progress-line.filled {
+    background: var(--primary);
+}
+
+/* Wizard Steps Display */
+.wizard-step-panel {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out forwards;
+}
+
+.wizard-step-panel.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Treatment Card Selection Grid */
+.treatment-grid-container {
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 5px;
+    margin-bottom: 25px;
+}
+
+/* Scrollbar for grid */
+.treatment-grid-container::-webkit-scrollbar {
+    width: 5px;
+}
+.treatment-grid-container::-webkit-scrollbar-track {
+    background: rgba(14, 165, 233, 0.02);
+}
+.treatment-grid-container::-webkit-scrollbar-thumb {
+    background: rgba(14, 165, 233, 0.2);
+    border-radius: 10px;
+}
+
+.treatment-card-option {
+    background: rgba(15, 23, 42, 0.2);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+body.light-mode .treatment-card-option {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.treatment-card-option:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    background: rgba(14, 165, 233, 0.05);
+}
+
+.treatment-card-option.selected {
+    border-color: var(--primary) !important;
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(14, 165, 233, 0.2)) !important;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+}
+
+body.light-mode .treatment-card-option.selected {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.05), rgba(14, 165, 233, 0.15)) !important;
+}
+
+.treatment-option-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: rgba(14, 165, 233, 0.1);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    transition: var(--transition);
+}
+
+.treatment-card-option.selected .treatment-option-icon {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.1);
+}
+
+.treatment-option-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+/* Time Slot Buttons */
+.time-slot-btn {
+    background: rgba(15, 23, 42, 0.2);
+    border: 1px solid var(--border-glass);
+    color: var(--text-main);
+    border-radius: 12px;
+    padding: 12px 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+body.light-mode .time-slot-btn {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.time-slot-btn:hover {
+    border-color: var(--primary);
+    background: rgba(14, 165, 233, 0.05);
+    transform: translateY(-2px);
+}
+
+.time-slot-btn.selected {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: white !important;
+    box-shadow: 0 8px 20px -5px var(--primary);
+}
+
+/* Sidebar Info Card */
+.info-sidebar-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass);
+    border-radius: 30px;
+    box-shadow: var(--shadow-glass);
+    padding: 35px;
+    height: 100%;
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.status-badge.open {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--accent);
+}
+
+.sidebar-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.schedule-list-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-glass);
+    font-size: 0.92rem;
+}
+
+.schedule-list-item:last-child {
+    border-bottom: none;
+}
+
+.schedule-day {
+    font-weight: 600;
+}
+
+.schedule-time {
+    color: var(--text-muted);
+}
+
+.sidebar-info-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.sidebar-info-item:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar-info-icon {
+    width: 45px;
+    height: 45px;
+    background: rgba(14, 165, 233, 0.1);
+    color: var(--primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.sidebar-info-text h6 {
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.sidebar-info-text p {
+    margin-bottom: 0;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+}
+
+/* Success Card */
+.success-card {
+    text-align: center;
+    padding: 20px 10px;
+}
+
+.success-icon-wrap {
+    width: 80px;
+    height: 80px;
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 30px;
+    animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.success-summary {
+    background: rgba(15, 23, 42, 0.15);
+    border-radius: 20px;
+    padding: 24px;
+    margin: 30px 0;
+    text-align: left;
+    border: 1px solid var(--border-glass);
+}
+
+body.light-mode .success-summary {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.success-summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+.success-summary-item:last-child {
+    margin-bottom: 0;
+}
+
+.success-summary-label {
+    color: var(--text-muted);
+}
+
+.success-summary-val {
+    font-weight: 600;
+}
+
+/* Spinner */
+.spinner-border-sm {
+    width: 1.2rem;
+    height: 1.2rem;
+    border-width: 0.15em;
+    vertical-align: middle;
+}
+
+.wizard-nav-btns .btn {
+    border-radius: 12px;
+    font-weight: 600;
+    padding: 12px 24px;
+    transition: var(--transition);
+}
+
+.wizard-nav-btns .btn-primary:hover {
+    box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+}
+
+.booking-form .form-control,
+.booking-form .form-select {
+    background: rgba(15, 23, 42, 0.2);
+    border: 1px solid var(--border-glass);
+    color: var(--text-main);
+    border-radius: 12px;
+    padding: 14px 16px;
+    transition: var(--transition);
+}
+
+body.light-mode .booking-form .form-control,
+body.light-mode .booking-form .form-select {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.booking-form .form-control:focus,
+.booking-form .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+    background: rgba(15, 23, 42, 0.3);
+}
+
+body.light-mode .booking-form .form-control:focus,
+body.light-mode .booking-form .form-select:focus {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+/* ==================== Scroll Progress Bar ==================== */
+.scroll-progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    z-index: 10000;
+    background: transparent;
+}
+.scroll-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--secondary));
+    transition: width 0.1s ease-out;
+}
+
+/* ==================== Hero Floating Shapes ==================== */
+.hero-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+.shape-particle {
+    position: absolute;
+    color: var(--primary);
+    opacity: 0.12;
+    animation: floatParticle 10s ease-in-out infinite alternate;
+}
+@keyframes floatParticle {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-40px) rotate(360deg);
+    }
+}
+
+/* ==================== Symptom Checker ==================== */
+.symptom-card {
+    background: var(--bg-surface);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-glass);
+    border-radius: 20px;
+    padding: 30px 20px;
+    cursor: pointer;
+    transition: var(--transition);
+    height: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.symptom-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent, rgba(14, 165, 233, 0.03));
+    opacity: 0;
+    transition: var(--transition);
+}
+.symptom-card:hover::before {
+    opacity: 1;
+}
+.symptom-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-glass);
+}
+.symptom-card.active {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.05), rgba(14, 165, 233, 0.15));
+    box-shadow: var(--shadow-glass);
+}
+.symptom-icon {
+    font-size: 2.5rem;
+    margin-bottom: 18px;
+    display: inline-block;
+    transition: var(--transition);
+}
+.symptom-card:hover .symptom-icon,
+.symptom-card.active .symptom-icon {
+    transform: scale(1.15) rotate(10deg);
+}
+.symptom-card h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.symptom-advice-box {
+    background: var(--bg-surface);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px dashed var(--primary);
+    border-radius: 24px;
+    padding: 30px;
+    margin-top: 30px;
+    display: none;
+    box-shadow: var(--shadow-glass);
+    animation: fadeIn 0.4s ease-in-out forwards;
+}
+.symptom-advice-box.active {
+    display: block;
+}
+.symptom-advice-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    color: var(--primary);
+}
+.symptom-advice-header i {
+    font-size: 1.5rem;
+}
+.symptom-advice-header h5 {
+    margin-bottom: 0;
+    font-weight: 700;
+}
+.symptom-advice-content {
+    font-size: 0.98rem;
+    line-height: 1.6;
+}
+
+/* ==================== FAQ Accordion ==================== */
+.faq-accordion {
+    max-width: 850px;
+    margin: 0 auto;
+}
+.faq-item {
+    background: var(--bg-surface);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-glass);
+    border-radius: 18px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+.faq-item:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-glass);
+}
+.faq-item.active {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-glass);
+}
+.faq-header {
+    padding: 22px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+.faq-question {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0;
+    padding-right: 15px;
+}
+.faq-icon {
+    color: var(--primary);
+    font-size: 1rem;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+.faq-item.active .faq-icon {
+    transform: rotate(180deg);
+}
+.faq-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0 28px;
+}
+.faq-content-inner {
+    padding-top: 5px;
+    padding-bottom: 25px;
+    color: var(--text-muted);
+    font-size: 0.96rem;
+    line-height: 1.7;
+    border-top: 1px solid var(--border-glass);
+}
+
+/* Service Card Highlighting when symptom is selected */
+.service-card.highlight-service {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 25px rgba(14, 165, 233, 0.45) !important;
+    transform: translateY(-8px) scale(1.03);
+    background: linear-gradient(135deg, var(--bg-surface), rgba(14, 165, 233, 0.05)) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
