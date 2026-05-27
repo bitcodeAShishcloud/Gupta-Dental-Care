@@ -106,23 +106,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="#home" data-en="Home" data-hi="होम">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#about" data-en="About" data-hi="डॉक्टर के बारे में">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services" data-en="Services" data-hi="सेवाएं">Services</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="symptoms.html" data-en="Symptom Checker" data-hi="लक्षण जांचकर्ता">Symptom Checker</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#gallery" data-en="Gallery" data-hi="गैलरी">Gallery</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#testimonials" data-en="Testimonials"
-                            data-hi="समीक्षा">Testimonials</a>
+                        <a class="nav-link" href="#testimonials" data-en="Testimonials" data-hi="समीक्षा">Testimonials</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact" data-en="Contact" data-hi="संपर्क">Contact</a>
@@ -137,7 +127,7 @@
                     </li>
                     <li class="nav-item ms-3">
                         <button class="btn btn-outline-secondary btn-sm" id="bg-toggle" onclick="toggleBackgroundMode()">
-                            <i class="fas fa-adjust"></i> <span id="bg-mode-text">Light Mode</span>
+                            <i class="fas fa-moon"></i> <span id="bg-mode-text">Dark Mode</span>
                         </button>
                     </li>
                 </ul>
@@ -961,87 +951,6 @@
                 requestAnimationFrame(step);
             })();
         </script>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="py-5">
-        <div class="container">
-            <div class="section-title text-center mb-5">
-                <h2 class="fw-bold" data-en="Frequently Asked Questions" data-hi="अक्सर पूछे जाने वाले प्रश्न">Frequently Asked Questions</h2>
-                <div class="title-border mx-auto"></div>
-                <p class="lead mt-3" data-en="Find answers to common dental queries and treatment details"
-                    data-hi="सामान्य दंत चिकित्सा प्रश्नों और उपचार विवरणों के उत्तर खोजें">
-                    Find answers to common dental queries and treatment details
-                </p>
-            </div>
-            
-            <div class="faq-accordion">
-                <!-- Item 1 -->
-                <div class="faq-item">
-                    <div class="faq-header">
-                        <h5 class="faq-question" data-en="What are the clinic timings?" data-hi="क्लिनिक का समय क्या है?">What are the clinic timings?</h5>
-                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
-                    </div>
-                    <div class="faq-content">
-                        <div class="faq-content-inner" data-en="We are open Monday to Saturday from 11:00 AM to 2:00 PM and 3:00 PM to 6:00 PM. Sunday is closed." data-hi="हम सोमवार से शनिवार सुबह 11:00 बजे से दोपहर 2:00 बजे तक और दोपहर 3:00 बजे से शाम 6:00 बजे तक खुले रहते हैं। रविवार को बंद रहता है।">
-                            We are open Monday to Saturday from 11:00 AM to 2:00 PM and 3:00 PM to 6:00 PM. Sunday is closed.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="faq-item">
-                    <div class="faq-header">
-                        <h5 class="faq-question" data-en="Is Root Canal Treatment (RCT) painful?" data-hi="क्या रूट कैनाल उपचार (RCT) दर्दनाक होता है?">Is Root Canal Treatment (RCT) painful?</h5>
-                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
-                    </div>
-                    <div class="faq-content">
-                        <div class="faq-content-inner" data-en="With modern anesthesia and advanced techniques, RCT is virtually painless. It actually relieves the pain caused by tooth decay." data-hi="आधुनिक एनेस्थीसिया और उन्नत तकनीकों के साथ, RCT व्यावहारिक रूप से दर्द रहित होता. यह वास्तव में दांतों की सड़न के कारण होने वाले दर्द से राहत देता है।">
-                            With modern anesthesia and advanced techniques, RCT is virtually painless. It actually relieves the pain caused by tooth decay.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="faq-item">
-                    <div class="faq-header">
-                        <h5 class="faq-question" data-en="How long do dental braces treatments take?" data-hi="दंत ब्रेसिज़ उपचार में कितना समय लगता है?">How long do dental braces treatments take?</h5>
-                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
-                    </div>
-                    <div class="faq-content">
-                        <div class="faq-content-inner" data-en="The duration of orthodontic treatment varies depending on complexity, typically ranging from 12 to 24 months." data-hi="ऑर्थोडॉन्टिक्स उपचार की अवधि जटिलता के आधार पर भिन्न होती है, आमतौर पर यह 12 से 24 महीनों तक चलती है।">
-                            The duration of orthodontic treatment varies depending on complexity, typically ranging from 12 to 24 months.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 4 -->
-                <div class="faq-item">
-                    <div class="faq-header">
-                        <h5 class="faq-question" data-en="Do you provide emergency dental services?" data-hi="क्या आप आपातकालीन दंत चिकित्सा सेवाएं प्रदान करते हैं?">Do you provide emergency dental services?</h5>
-                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
-                    </div>
-                    <div class="faq-content">
-                        <div class="faq-content-inner" data-en="Yes, we accommodate same-day emergency appointments for severe pain, tooth fractures, or swelling." data-hi="हां, हम गंभीर दर्द, दांत टूटने या सूजन के लिए उसी दिन आपातकालीन नियुक्तियों की व्यवस्था करते हैं।">
-                            Yes, we accommodate same-day emergency appointments for severe pain, tooth fractures, or swelling.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Item 5 -->
-                <div class="faq-item">
-                    <div class="faq-header">
-                        <h5 class="faq-question" data-en="What is the cost of dental implants?" data-hi="डेंटल इम्प्लांट की कीमत क्या है?">What is the cost of dental implants?</h5>
-                        <div class="faq-icon"><i class="fas fa-chevron-down"></i></div>
-                    </div>
-                    <div class="faq-content">
-                        <div class="faq-content-inner" data-en="Dental implants are highly customized. The cost depends on the brand, material, and number of implants required. We offer affordable premium solutions." data-hi="डेंटल इम्प्लांट अत्यधिक अनुकूलित (customized) होते हैं। लागत ब्रांड, सामग्री और आवश्यक इम्प्लांट की संख्या पर निर्भर करती है। हम किफायती प्रीमियम समाधान प्रदान करते हैं।">
-                            Dental implants are highly customized. The cost depends on the brand, material, and number of implants required. We offer affordable premium solutions.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
     <!-- Contact Section -->

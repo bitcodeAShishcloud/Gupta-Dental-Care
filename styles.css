@@ -208,6 +208,7 @@ section {
     background: linear-gradient(135deg, transparent, rgba(14, 165, 233, 0.05));
     opacity: 0;
     transition: var(--transition);
+    pointer-events: none;
 }
 
 .service-card:hover {
@@ -990,6 +991,7 @@ body.light-mode .booking-form .form-select:focus {
     background: linear-gradient(135deg, transparent, rgba(14, 165, 233, 0.03));
     opacity: 0;
     transition: var(--transition);
+    pointer-events: none;
 }
 .symptom-card:hover::before {
     opacity: 1;

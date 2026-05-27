@@ -115,9 +115,13 @@ function toggleLanguage() {
     // Update body attribute for font family
     document.body.setAttribute('data-lang', currentLanguage);
 
-    // Update button text
+    // Update desktop button text
     const langText = document.getElementById('lang-text');
-    langText.textContent = currentLanguage === 'en' ? 'हिंदी' : 'English';
+    if (langText) langText.textContent = currentLanguage === 'en' ? 'हिंदी' : 'English';
+
+    // Update mobile button text (short form)
+    const langTextMobile = document.getElementById('lang-text-mobile');
+    if (langTextMobile) langTextMobile.textContent = currentLanguage === 'en' ? 'हिं' : 'En';
 
     // Update all bilingual content
     updateContent();
@@ -481,6 +485,11 @@ function setLightMode() {
     document.documentElement.classList.add('light-mode');
     const bgText = document.getElementById('bg-mode-text');
     if (bgText) bgText.textContent = 'Dark Mode';
+    // Sync mobile toggle icon
+    const mobileBtn = document.getElementById('bg-toggle-mobile');
+    if (mobileBtn) mobileBtn.querySelector('i').className = 'fas fa-moon';
+    const desktopBtn = document.getElementById('bg-toggle');
+    if (desktopBtn) desktopBtn.querySelector('i').className = 'fas fa-moon';
     localStorage.setItem('backgroundMode', 'light');
 }
 
@@ -489,6 +498,11 @@ function setDarkMode() {
     document.documentElement.classList.remove('light-mode');
     const bgText = document.getElementById('bg-mode-text');
     if (bgText) bgText.textContent = 'Light Mode';
+    // Sync mobile toggle icon
+    const mobileBtn = document.getElementById('bg-toggle-mobile');
+    if (mobileBtn) mobileBtn.querySelector('i').className = 'fas fa-sun';
+    const desktopBtn = document.getElementById('bg-toggle');
+    if (desktopBtn) desktopBtn.querySelector('i').className = 'fas fa-sun';
     localStorage.setItem('backgroundMode', 'dark');
 }
 
