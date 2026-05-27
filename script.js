@@ -553,29 +553,14 @@ function initFAQ() {
 function initSymptomChecker() {
     const symptomCards = document.querySelectorAll('.symptom-card');
     const adviceBoxes = document.querySelectorAll('.symptom-advice-box');
-    const serviceCards = document.querySelectorAll('.service-card');
     
     if (symptomCards.length === 0) return;
-
-    // Mapping of symptom-id to service query slug
-    const symptomToServiceMap = {
-        'toothache': 'rct',
-        'crooked': 'braces',
-        'yellow': 'whitening',
-        'bleeding': 'gum',
-        'broken': 'crowns',
-        'emergency': 'extraction',
-        'other': 'other'
-    };
 
     symptomCards.forEach(card => {
         card.addEventListener('click', function () {
             // Remove active classes
             symptomCards.forEach(c => c.classList.remove('active'));
             adviceBoxes.forEach(b => b.classList.remove('active'));
-
-            // Remove highlight classes from service cards
-            serviceCards.forEach(s => s.classList.remove('highlight-service'));
 
             // Set active states
             this.classList.add('active');
@@ -584,20 +569,6 @@ function initSymptomChecker() {
             
             if (targetAdviceBox) {
                 targetAdviceBox.classList.add('active');
-
-                // Highlight matching service card in the grid below
-                const targetServiceSlug = symptomToServiceMap[symptomId];
-                if (targetServiceSlug) {
-                    serviceCards.forEach(sCard => {
-                        const link = sCard.querySelector('a[href*="service="]');
-                        if (link) {
-                            const href = link.getAttribute('href');
-                            if (href.includes(`service=${targetServiceSlug}`)) {
-                                sCard.classList.add('highlight-service');
-                            }
-                        }
-                    });
-                }
 
                 // Scroll smoothly to advice box
                 const navbarHeight = document.querySelector('.navbar').offsetHeight;
