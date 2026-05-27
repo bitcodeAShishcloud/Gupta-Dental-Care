@@ -532,206 +532,245 @@
 
     <!-- Testimonials Section -->
     <section id="testimonials" class="py-5 bg-light">
-        <div class="container-fluid px-4 px-md-5">
+        <div class="container px-4 px-md-5">
             <div class="section-title text-center mb-5">
-                <h2 class="fw-bold" data-en="What Our Patients Say" data-hi="हमारे मरीज क्या कहते हैं">What Our Patients
-                    Say</h2>
+                <h2 class="fw-bold animate-on-scroll" data-en="What Our Patients Say" data-hi="हमारे मरीज क्या कहते हैं">What Our Patients Say</h2>
                 <div class="title-border mx-auto"></div>
-                <p class="text-muted mt-2" style="font-size:0.97rem;" data-en="Real reviews from our valued patients" data-hi="हमारे मूल्यवान मरीजों की वास्तविक समीक्षाएं">Real reviews from our valued patients</p>
+                <p class="text-muted mt-2" style="font-size:0.97rem;" data-en="Read honest reviews from patients who have experienced our dental services." data-hi="हमारे दंत चिकित्सा सेवाओं का अनुभव करने वाले मरीजों की ईमानदार समीक्षाएं पढ़ें।">Read honest reviews from patients who have experienced our dental services.</p>
             </div>
 
             <!-- Scroll Track Wrapper -->
             <div class="testimonial-wrapper position-relative">
-                <!-- Navigation Buttons -->
-                <button class="scroll-nav-btn prev-btn" id="testimonial-prev" aria-label="Previous reviews">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="scroll-nav-btn next-btn" id="testimonial-next" aria-label="Next reviews">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-
                 <!-- Scroll Track -->
-                <div id="testimonial-scroll" style="
-                    display: flex;
-                    gap: 20px;
-                    overflow-x: auto;
-                    -webkit-overflow-scrolling: touch;
-                    cursor: grab;
-                ">
+                <div id="testimonial-scroll" class="testimonial-scroll-container">
+                    <!-- Cards will be populated by JS -->
                 </div>
+            </div>
+
+            <!-- Custom Premium Testimonial Navigation Controls at Bottom -->
+            <div class="testimonial-controls d-flex align-items-center justify-content-center mt-4 gap-3">
+                <button class="ctrl-btn prev-btn" id="testimonial-prev" aria-label="Previous reviews">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <div class="pagination-dots d-flex align-items-center gap-2" id="testimonial-pagination">
+                    <!-- Generated Dynamically by JS -->
+                </div>
+                <button class="ctrl-btn next-btn" id="testimonial-next" aria-label="Next reviews">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </button>
             </div>
         </div>
 
         <style>
-            /* Elegant styled scrollbar */
-            #testimonial-scroll::-webkit-scrollbar {
-                height: 6px;
-                display: block;
-            }
-
-            #testimonial-scroll::-webkit-scrollbar-track {
-                background: rgba(14, 165, 233, 0.05);
-                border-radius: 10px;
-            }
-
-            #testimonial-scroll::-webkit-scrollbar-thumb {
-                background: rgba(14, 165, 233, 0.3);
-                border-radius: 10px;
-                transition: background 0.3s;
-            }
-
-            #testimonial-scroll::-webkit-scrollbar-thumb:hover {
-                background: var(--primary);
-            }
-
-            #testimonial-scroll {
-                -ms-overflow-style: auto;
-                scrollbar-width: thin;
-                scrollbar-color: rgba(14, 165, 233, 0.3) rgba(14, 165, 233, 0.05);
-                padding-bottom: 15px; /* space for scrollbar */
-            }
-
-            /* Hide scrollbar on laptop/desktop view (992px and up) */
-            @media (min-width: 992px) {
-                #testimonial-scroll::-webkit-scrollbar {
-                    display: none;
-                }
-                #testimonial-scroll {
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                    padding-bottom: 0px;
-                }
-            }
-
+            /* Testimonial Section Styles */
             .testimonial-wrapper {
                 position: relative;
-                padding: 0 45px;
+                overflow: hidden;
+                padding: 10px 0;
             }
 
-            .scroll-nav-btn {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 48px;
-                height: 48px;
-                border-radius: 50%;
-                background: var(--bg-surface);
-                border: 1px solid var(--border-glass);
-                color: var(--primary);
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            .testimonial-scroll-container {
                 display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                z-index: 5;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                gap: 20px;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+                padding: 15px 5px;
+                cursor: grab;
             }
 
-            .scroll-nav-btn:hover {
-                background: var(--primary);
-                color: #fff;
-                border-color: var(--primary);
-                transform: translateY(-50%) scale(1.08);
-                box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+            /* Hide scrollbar entirely */
+            .testimonial-scroll-container::-webkit-scrollbar {
+                display: none;
             }
-
-            .scroll-nav-btn:active {
-                transform: translateY(-50%) scale(0.95);
-            }
-
-            .scroll-nav-btn.disabled {
-                opacity: 0;
-                pointer-events: none;
-            }
-
-            .prev-btn {
-                left: 0px;
-            }
-
-            .next-btn {
-                right: 0px;
-            }
-
-            @media (max-width: 768px) {
-                .testimonial-wrapper {
-                    padding: 0 5px;
-                }
-                .scroll-nav-btn {
-                    width: 38px;
-                    height: 38px;
-                    font-size: 0.9rem;
-                }
-                .prev-btn {
-                    left: -5px;
-                }
-                .next-btn {
-                    right: -5px;
-                }
+            .testimonial-scroll-container {
+                -ms-overflow-style: none;  /* IE and Edge */
+                scrollbar-width: none;  /* Firefox */
             }
 
             .r-card {
-                flex: 0 0 calc(33.333% - 14px);
-                min-width: 280px;
-                max-width: calc(33.333% - 14px);
-                background: #fff;
-                border-radius: 15px;
-                padding: 26px 22px 20px;
-                box-shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
+                flex: 0 0 100%;
+                scroll-snap-align: start;
+                background: var(--bg-surface);
+                border: 1px solid var(--border-glass);
+                border-radius: 24px;
+                padding: 35px 30px;
+                box-shadow: var(--shadow-glass);
                 display: flex;
                 flex-direction: column;
-                transition: box-shadow .25s, transform .25s;
+                transition: var(--transition);
+                color: var(--text-main);
             }
 
             .r-card:hover {
-                box-shadow: 0 6px 28px rgba(13, 110, 253, 0.13);
-                transform: translateY(-3px);
+                transform: translateY(-5px);
+                box-shadow: 0 15px 35px rgba(14, 165, 233, 0.15);
+                border-color: var(--primary);
             }
 
             .r-stars {
-                color: #f5a623;
-                font-size: 0.95rem;
-                letter-spacing: 1px;
-                margin-bottom: 10px;
+                color: var(--secondary); /* Orange/Gold */
+                font-size: 1.1rem;
+                letter-spacing: 2px;
+                margin-bottom: 15px;
             }
 
             .r-text {
-                font-size: 0.91rem;
-                color: #444;
-                line-height: 1.65;
+                font-size: 0.98rem;
+                color: var(--text-muted);
+                line-height: 1.7;
+                font-style: italic;
                 flex-grow: 1;
-                margin-bottom: 18px;
+                margin-bottom: 24px;
             }
 
             .r-footer {
                 display: flex;
                 align-items: center;
-                gap: 12px;
+                gap: 15px;
+                border-top: 1px solid var(--border-glass);
+                padding-top: 15px;
             }
 
+            /* Styled Avatar to match the screenshot precisely */
             .r-avatar {
-                width: 42px;
-                height: 42px;
+                width: 46px;
+                height: 46px;
                 border-radius: 50%;
+                border: 2px solid var(--secondary); /* Coral/Orange */
+                background: transparent;
+                color: var(--secondary);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #fff;
-                font-size: 1rem;
-                font-weight: 700;
+                font-size: 0.95rem;
+                font-weight: 800;
                 flex-shrink: 0;
                 letter-spacing: 0.5px;
             }
 
             .r-name {
                 font-weight: 700;
-                font-size: 0.92rem;
+                font-size: 0.96rem;
                 margin: 0;
                 line-height: 1.3;
+                color: var(--text-main);
             }
 
             .r-time {
-                font-size: 0.75rem;
-                color: #888;
+                font-size: 0.8rem;
+                color: var(--text-muted);
+                font-weight: 500;
+            }
+
+            /* Centered controls at the bottom */
+            .testimonial-controls {
+                user-select: none;
+                max-width: 100%;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .ctrl-btn {
+                width: 42px;
+                height: 42px;
+                border-radius: 50%;
+                background: var(--bg-surface);
+                border: 1px solid var(--border-glass);
+                color: var(--text-main);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: var(--transition);
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+                flex-shrink: 0; /* Prevent buttons from squishing on narrow screens */
+            }
+
+            body.light-mode .ctrl-btn {
+                background: #ffffff;
+                border-color: #e2e8f0;
+            }
+
+            .ctrl-btn:hover {
+                background: var(--primary);
+                color: white;
+                border-color: var(--primary);
+                transform: scale(1.08);
+                box-shadow: 0 8px 16px rgba(14, 165, 233, 0.25);
+            }
+
+            .ctrl-btn:active {
+                transform: scale(0.95);
+            }
+
+            .ctrl-btn.disabled {
+                opacity: 0.25; /* Indicated disabled state with opacity */
+                pointer-events: none;
+            }
+
+            /* Pagination Dots container */
+            .pagination-dots {
+                flex-wrap: nowrap; /* Single line horizontal row */
+                max-width: calc(100% - 100px); /* Leave ample space for buttons */
+                overflow: hidden;
+                justify-content: center;
+            }
+
+            /* Pagination Dots matching screenshot */
+            .pagination-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: #cbd5e1;
+                cursor: pointer;
+                transition: var(--transition);
+                flex-shrink: 0; /* Prevent dots from squishing */
+            }
+
+            body.light-mode .pagination-dot {
+                background: #cbd5e1;
+            }
+
+            .pagination-dot:hover {
+                background: var(--primary);
+            }
+
+            .pagination-dot.active {
+                width: 24px;
+                height: 8px;
+                border-radius: 4px;
+                background: var(--secondary); /* Coral/Orange active capsule */
+                box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+                flex-shrink: 0;
+            }
+
+            /* High-fidelity responsive mobile styles for testimonial controls */
+            @media (max-width: 767px) {
+                .testimonial-controls {
+                    gap: 10px !important;
+                }
+                .pagination-dots {
+                    gap: 5px !important;
+                    max-width: calc(100% - 80px);
+                }
+                .ctrl-btn {
+                    width: 36px;
+                    height: 36px;
+                }
+                .ctrl-btn svg {
+                    width: 14px;
+                    height: 14px;
+                }
+                .pagination-dot {
+                    width: 6px;
+                    height: 6px;
+                }
+                .pagination-dot.active {
+                    width: 16px;
+                    height: 6px;
+                }
             }
 
             /* Grab cursor while dragging */
@@ -739,217 +778,389 @@
                 cursor: grabbing;
             }
 
-            @media (max-width: 991px) {
+            /* Desktop Grid Adjustments (2 cards visible side-by-side) */
+            @media (min-width: 992px) {
                 .r-card {
                     flex: 0 0 calc(50% - 10px);
                     max-width: calc(50% - 10px);
                 }
             }
 
-            @media (max-width: 600px) {
+            /* Tablet Grid (2 cards visible or scrollable) */
+            @media (min-width: 768px) and (max-width: 991px) {
                 .r-card {
-                    flex: 0 0 85vw;
-                    max-width: 85vw;
+                    flex: 0 0 calc(50% - 10px);
+                    max-width: calc(50% - 10px);
+                }
+            }
+
+            /* Mobile Grid (1 card visible) */
+            @media (max-width: 767px) {
+                .r-card {
+                    flex: 0 0 100%;
+                    max-width: 100%;
                 }
             }
         </style>
 
         <script>
-            (function () {
-                const reviews = [
-                    { name: "Ashish Gupta", stars: 5, time: "Local Guide · 2 reviews", text: "Excellent service! Dr. A Gupta is very professional and caring. The root canal treatment was completely painless. Highly recommended for everyone in Kasia Bazaar!" },
-                    { name: "Prem Yadav", stars: 5, time: "1 review", text: "Best dental clinic in Kushinagar! Very clean and hygienic. Dr. A Gupta explained everything clearly. My whole family goes here for regular checkups." },
-                    { name: "Chhotelal Gupta", stars: 5, time: "1 review", text: "Great experience with my dental implant surgery. Dr. A Gupta is very skilled. The staff is friendly and helpful. Charges are also completely reasonable." },
-                    { name: "Suresh Sharma", stars: 5, time: "Local Guide · 15 reviews", text: "I have visited many dentists, but the care I received here was exceptional. Advanced equipment and very kind behavior. Truly the best in UP!" },
-                    { name: "Neha Verma", stars: 5, time: "3 reviews", text: "Got my teeth whitening done here. The results are amazing! The clinic has a very relaxing atmosphere. Thank you Dr. Gupta!" },
-                    { name: "Ramesh Singh", stars: 5, time: "4 reviews", text: "Highly impressed with the hygiene standards. The tooth extraction was quick and completely painless. Very transparent with pricing." },
-                    { name: "Anjali Dubey", stars: 5, time: "2 reviews", text: "Dr. Gupta is very gentle and patient, especially with kids. My daughter loved her visit. Will definitely recommend it to my friends." },
-                    { name: "Vikas Chaudhary", stars: 4.5, time: "Local Guide · 8 reviews", text: "Professional doctors and a very well-maintained clinic. They use the latest technology for treatments. Absolutely worth the visit." },
-                    { name: "Kajal Patel", stars: 5, time: "1 review", text: "Had intense tooth pain. The root canal was done so perfectly, I didn't feel a thing! Extremely talented doctor." },
-                    { name: "Sanjay Mishra", stars: 5, time: "1 review", text: "Affordable and premium dental care. They take the time to explain the procedure before starting, which is very reassuring." },
-                    { name: "Pooja Singh", stars: 5, time: "7 reviews", text: "The wait time was zero! They value appointments and provide top-notch service. Very satisfied with my braces treatment." },
-                    { name: "Amit Tiwari", stars: 5, time: "Local Guide · 12 reviews", text: "Got ceramic crowns fitted here. Perfect match and they look totally natural. Expert craftsmanship by Dr. Gupta." },
-                    { name: "Sonali Rai", stars: 5, time: "2 reviews", text: "Exceptional care! They followed up with me after my surgery to check on my recovery. Never seen a clinic care so much." },
-                    { name: "Manish Pandey", stars: 5, time: "3 reviews", text: "Friendly staff, super clean environment, and painless treatments. What more could you ask for? A+ service." },
-                    { name: "Kiran Devi", stars: 5, time: "1 review", text: "My mother got her dentures here. They fit perfectly and she is so happy. Thank you to the entire team at Gupta Dental Care." },
-                    { name: "Rahul Kushwaha", stars: 5, time: "5 reviews", text: "Best scaling and polishing experience. My teeth feel brand new. The doctor is very soft-spoken and professional." },
-                    { name: "Sneha Jaiswal", stars: 5, time: "2 reviews", text: "I was extremely scared of dentists, but Dr. Gupta made me feel completely comfortable. No pain at all during my filling!" },
-                    { name: "Dinesh Chauhan", stars: 4.5, time: "Local Guide · 11 reviews", text: "Great facility right here in Kushinagar. You don't need to go to big cities for advanced dental care anymore." },
-                    { name: "Ritu Patel", stars: 5, time: "1 review", text: "The cosmetic dentistry here is flawless. Got a smile makeover and my confidence has skyrocketed. Brilliant work." },
-                    { name: "Abhishek Rajput", stars: 5, time: "4 reviews", text: "Highly transparent about the costs. Excellent diagnosis. They only recommend treatments you actually need." },
-                    { name: "Mamta Singh", stars: 5, time: "1 review", text: "Very polite reception staff and the doctor is a genius. Cured my gum bleeding issues entirely in two visits." },
-                    { name: "Santosh Yadav", stars: 5, time: "Local Guide · 22 reviews", text: "Five stars! The clinic looks very premium and the treatment quality matches the aesthetics. Best in the region." },
-                    { name: "Geeta Gupta", stars: 5, time: "2 reviews", text: "Very clean instruments and proper sterilization protocols followed. Felt completely safe getting treated here." },
-                    { name: "Prakash Tiwari", stars: 5, time: "1 review", text: "Affordable rates without compromising on quality. The crown they installed feels just like my natural tooth." },
-                    { name: "Sunita Verma", stars: 5, time: "3 reviews", text: "Dr. A Gupta is brilliant. He saved a tooth that another clinic told me had to be removed. Forever grateful!" },
-                    { name: "Gaurav Singh", stars: 5, time: "Local Guide · 9 reviews", text: "Fast, painless, and economical. Have recommended this clinic to all my relatives in Kasia." },
-                    { name: "Anita Sharma", stars: 5, time: "1 review", text: "Excellent post-treatment support. They gave me all the necessary instructions and medications clearly written down." },
-                    { name: "Rajendra Prasad", stars: 5, time: "1 review", text: "Experienced doctor with a very steady hand. The extraction took less than five minutes and I healed quickly." },
-                    { name: "Priyanka Dubey", stars: 5, time: "4 reviews", text: "Best ambiance for a dental clinic. It smells great and doesn't have that scary hospital vibe. Very modern." },
-                    { name: "Arvind Kushwaha", stars: 5, time: "1 review", text: "They accept digital payments easily and the appointment booking is hassle-free. Very convenient for patients." },
-                    { name: "Seema Jaiswal", stars: 5, time: "2 reviews", text: "My kids actually look forward to visiting the dentist now! They give out little stickers and make the process fun." },
-                    { name: "Manoj Chaudhary", stars: 4.5, time: "Local Guide", text: "Solid infrastructure and highly educated doctor. The x-ray was done instantly inside the clinic itself." },
-                    { name: "Rekha Pandey", stars: 5, time: "1 review", text: "Very happy with my bridge work. I can finally chew properly. Thank you Dr. Gupta for your excellent service!" }
-                ];
+            document.addEventListener('DOMContentLoaded', function () {
+                (function () {
+                    // Curated top-rated reviews matching screenshot and region (minimum 20 reviews)
+                    const reviews = [
+                        { 
+                            name: "Ashish Gupta", 
+                            stars: 5, 
+                            text: "Excellent service! Dr. A Gupta is very professional and caring. The root canal treatment was completely painless. Highly recommended for everyone in Kasia Bazaar!" 
+                        },
+                        { 
+                            name: "Prem Yadav", 
+                            stars: 5, 
+                            text: "Best dental clinic in Kushinagar! Very clean and hygienic. Dr. A Gupta explained everything clearly. My whole family goes here for regular checkups." 
+                        },
+                        { 
+                            name: "Chhotelal Gupta", 
+                            stars: 5, 
+                            text: "Great experience with my dental implant surgery. Dr. A Gupta is very skilled. The staff is friendly and helpful. Charges are also completely reasonable." 
+                        },
+                        { 
+                            name: "Suresh Sharma", 
+                            stars: 5, 
+                            text: "I have visited many dentists, but the care I received here was exceptional. Advanced equipment and very kind behavior. Truly the best in UP!" 
+                        },
+                        { 
+                            name: "Neha Verma", 
+                            stars: 5, 
+                            text: "Got my teeth whitening done here. The results are amazing! The clinic has a very relaxing atmosphere. Thank you Dr. Gupta!" 
+                        },
+                        { 
+                            name: "Ramesh Singh", 
+                            stars: 5, 
+                            text: "Highly impressed with the hygiene standards. The tooth extraction was quick and completely painless. Very transparent with pricing." 
+                        },
+                        { 
+                            name: "Anjali Dubey", 
+                            stars: 5, 
+                            text: "Dr. Gupta is very gentle and patient, especially with kids. My daughter loved her visit. Will definitely recommend it to my friends." 
+                        },
+                        { 
+                            name: "Vikas Chaudhary", 
+                            stars: 4.5, 
+                            text: "Professional doctors and a very well-maintained clinic. They use the latest technology for treatments. Absolutely worth the visit." 
+                        },
+                        { 
+                            name: "Kajal Patel", 
+                            stars: 5, 
+                            text: "Had intense tooth pain. The root canal was done so perfectly, I didn't feel a thing! Extremely talented doctor." 
+                        },
+                        { 
+                            name: "Sanjay Mishra", 
+                            stars: 5, 
+                            text: "Affordable and premium dental care. They take the time to explain the procedure before starting, which is very reassuring." 
+                        },
+                        { 
+                            name: "Pooja Singh", 
+                            stars: 5, 
+                            text: "The wait time was zero! They value appointments and provide top-notch service. Very satisfied with my braces treatment." 
+                        },
+                        { 
+                            name: "Amit Tiwari", 
+                            stars: 5, 
+                            text: "Got ceramic crowns fitted here. Perfect match and they look totally natural. Expert craftsmanship by Dr. Gupta." 
+                        },
+                        { 
+                            name: "Sonali Rai", 
+                            stars: 5, 
+                            text: "Exceptional care! They followed up with me after my surgery to check on my recovery. Never seen a clinic care so much." 
+                        },
+                        { 
+                            name: "Manish Pandey", 
+                            stars: 5, 
+                            text: "Friendly staff, super clean environment, and painless treatments. What more could you ask for? A+ service." 
+                        },
+                        { 
+                            name: "Kiran Devi", 
+                            stars: 5, 
+                            text: "My mother got her dentures here. They fit perfectly and she is so happy. Thank you to the entire team at Gupta Dental Care." 
+                        },
+                        { 
+                            name: "Rahul Kushwaha", 
+                            stars: 5, 
+                            text: "Best scaling and polishing experience. My teeth feel brand new. The doctor is very soft-spoken and professional." 
+                        },
+                        { 
+                            name: "Sneha Jaiswal", 
+                            stars: 5, 
+                            text: "I was extremely scared of dentists, but Dr. Gupta made me feel completely comfortable. No pain at all during my filling!" 
+                        },
+                        { 
+                            name: "Dinesh Chauhan", 
+                            stars: 4.5, 
+                            text: "Great facility right here in Kushinagar. You don't need to go to big cities for advanced dental care anymore." 
+                        },
+                        { 
+                            name: "Ritu Patel", 
+                            stars: 5, 
+                            text: "The cosmetic dentistry here is flawless. Got a smile makeover and my confidence has skyrocketed. Brilliant work." 
+                        },
+                        { 
+                            name: "Abhishek Rajput", 
+                            stars: 5, 
+                            text: "Highly transparent about the costs. Excellent diagnosis. They only recommend treatments you actually need." 
+                        }
+                    ];
 
-                // Distinct avatar colours cycling through a palette
-                const palette = [
-                    '#1e88e5', '#43a047', '#e53935', '#fb8c00', '#8e24aa',
-                    '#00897b', '#f4511e', '#1565c0', '#2e7d32', '#ad1457',
-                    '#6d4c41', '#0277bd', '#558b2f', '#ef6c00', '#283593'
-                ];
-
-                function starsHTML(n) {
-                    let s = '';
-                    for (let i = 1; i <= 5; i++) {
-                        if (n >= i) s += '<i class="fas fa-star"></i>';
-                        else if (n >= i - 0.5) s += '<i class="fas fa-star-half-alt"></i>';
-                        else s += '<i class="far fa-star"></i>';
+                    function starsHTML(n) {
+                        let s = '';
+                        for (let i = 1; i <= 5; i++) {
+                            s += '<i class="fas fa-star"></i>';
+                        }
+                        return s;
                     }
-                    return s;
-                }
 
-                function initials(name) {
-                    return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-                }
+                    function initials(name) {
+                        return name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+                    }
 
-                const track = document.getElementById('testimonial-scroll');
+                    const track = document.getElementById('testimonial-scroll');
+                    const pagination = document.getElementById('testimonial-pagination');
+                    const prevBtn = document.getElementById('testimonial-prev');
+                    const nextBtn = document.getElementById('testimonial-next');
 
-                reviews.forEach((r, idx) => {
-                    const card = document.createElement('div');
-                    card.className = 'r-card';
-                    const bg = palette[idx % palette.length];
-                    card.innerHTML = `
-                    <div class="r-stars">${starsHTML(r.stars)}</div>
-                    <p class="r-text">"${r.text}"</p>
-                    <div class="r-footer">
-                        <div class="r-avatar" style="background:${bg};">${initials(r.name)}</div>
-                        <div>
-                            <p class="r-name">${r.name}</p>
-                            <span class="r-time">${r.time}</span>
-                        </div>
-                    </div>`;
-                    track.appendChild(card);
-                });
+                    let currentPage = 0;
+                    let autoSlideInterval;
+                    let isPaused = false;
+                    let resumeTimeout;
 
-                // Mouse-drag to scroll (desktop)
-                let isDown = false, startX, scrollLeft;
-                let isPaused = false;
-                let resumeTimeout;
-
-                track.addEventListener('mousedown', e => {
-                    isDown = true;
-                    isPaused = true;
-                    track.classList.add('dragging');
-                    startX = e.pageX - track.offsetLeft;
-                    scrollLeft = track.scrollLeft;
-                    clearTimeout(resumeTimeout);
-                });
-                track.addEventListener('mouseleave', () => { 
-                    isDown = false; 
-                    track.classList.remove('dragging'); 
-                    isPaused = false;
-                });
-                track.addEventListener('mouseup', () => { 
-                    isDown = false; 
-                    track.classList.remove('dragging'); 
-                    isPaused = false;
-                });
-                track.addEventListener('mousemove', e => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = e.pageX - track.offsetLeft;
-                    track.scrollLeft = scrollLeft - (x - startX) * 1.4;
-                });
-
-                // Touch events for mobile to pause auto-scroll
-                track.addEventListener('touchstart', () => {
-                    isPaused = true;
-                    clearTimeout(resumeTimeout);
-                });
-                track.addEventListener('touchend', () => {
-                    isPaused = false;
-                });
-
-                // Navigation buttons click scroll
-                const prevBtn = document.getElementById('testimonial-prev');
-                const nextBtn = document.getElementById('testimonial-next');
-
-                if (prevBtn && nextBtn) {
-                    const getScrollAmount = () => {
-                        const firstCard = track.querySelector('.r-card');
-                        if (firstCard) {
-                            return firstCard.getBoundingClientRect().width + 20; // card width + gap
-                        }
-                        return 320; // fallback
-                    };
-
-                    const updateArrows = () => {
-                        const scrollLeft = track.scrollLeft;
-                        const maxScroll = track.scrollWidth - track.clientWidth;
+                    // Render Cards
+                    function renderCards() {
+                        track.innerHTML = '';
+                        const lang = (typeof currentLanguage !== 'undefined') ? currentLanguage : 'en';
                         
-                        // Show/hide prev button
-                        if (scrollLeft <= 5) {
-                            prevBtn.classList.add('disabled');
-                        } else {
-                            prevBtn.classList.remove('disabled');
-                        }
+                        reviews.forEach((r, idx) => {
+                            const card = document.createElement('div');
+                            card.className = 'r-card animate-on-scroll';
+                            card.innerHTML = `
+                                <div class="r-stars">${starsHTML(r.stars)}</div>
+                                <p class="r-text">"${r.text}"</p>
+                                <div class="r-footer">
+                                    <div class="r-avatar">${initials(r.name)}</div>
+                                    <div>
+                                        <p class="r-name">${r.name}</p>
+                                        <span class="r-time" data-en="Google Reviewer" data-hi="गूगल समीक्षाकर्ता">${lang === 'en' ? 'Google Reviewer' : 'गूगल समीक्षाकर्ता'}</span>
+                                    </div>
+                                </div>
+                            `;
+                            track.appendChild(card);
+                        });
+                    }
+
+                    function getItemsPerPage() {
+                        if (window.innerWidth >= 992) return 2; // Desktop
+                        if (window.innerWidth >= 768) return 2; // Tablet
+                        return 1; // Mobile
+                    }
+
+                    function getPageCount() {
+                        return Math.ceil(reviews.length / getItemsPerPage());
+                    }
+
+                    // Render Pagination Dots dynamically based on visible width
+                    function renderDots() {
+                        if (!pagination) return;
+                        pagination.innerHTML = '';
+                        const pageCount = getPageCount();
                         
-                        // Show/hide next button
-                        if (scrollLeft >= maxScroll - 5) {
-                            nextBtn.classList.add('disabled');
-                        } else {
-                            nextBtn.classList.remove('disabled');
+                        for (let i = 0; i < pageCount; i++) {
+                            const dot = document.createElement('div');
+                            dot.className = `pagination-dot ${i === currentPage ? 'active' : ''}`;
+                            dot.setAttribute('data-page', i);
+                            
+                            dot.addEventListener('click', () => {
+                                isPaused = true;
+                                scrollToPage(i);
+                                resetAutoSlideTimer();
+                            });
+                            
+                            pagination.appendChild(dot);
                         }
-                    };
+                    }
 
-                    prevBtn.addEventListener('click', () => {
-                        isPaused = true;
-                        track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
-                        // Resume auto-scroll after 3 seconds of inactivity
+                    function updateActiveDot() {
+                        const dots = document.querySelectorAll('.pagination-dot');
+                        dots.forEach((dot, idx) => {
+                            if (idx === currentPage) {
+                                dot.classList.add('active');
+                            } else {
+                                dot.classList.remove('active');
+                            }
+                        });
+
+                        // Navigation buttons state
+                        if (prevBtn && nextBtn) {
+                            if (currentPage === 0) {
+                                prevBtn.classList.add('disabled');
+                            } else {
+                                prevBtn.classList.remove('disabled');
+                            }
+
+                            if (currentPage >= getPageCount() - 1) {
+                                nextBtn.classList.add('disabled');
+                            } else {
+                                nextBtn.classList.remove('disabled');
+                            }
+                        }
+                    }
+
+                    function scrollToPage(pageIndex) {
+                        const pageCount = getPageCount();
+                        if (pageIndex < 0) pageIndex = 0;
+                        if (pageIndex >= pageCount) pageIndex = pageCount - 1;
+                        
+                        currentPage = pageIndex;
+                        
+                        const itemsPerPage = getItemsPerPage();
+                        const cards = track.querySelectorAll('.r-card');
+                        if (cards.length > 0) {
+                            const cardWidth = cards[0].getBoundingClientRect().width;
+                            const gap = 20; // 20px CSS gap
+                            const scrollAmount = pageIndex * itemsPerPage * (cardWidth + gap);
+                            
+                            track.scrollTo({
+                                left: scrollAmount,
+                                behavior: 'smooth'
+                            });
+                        }
+                        updateActiveDot();
+                    }
+
+                    // Automatic sliding - skips to the next page every 5 seconds
+                    function startAutoSlide() {
+                        clearInterval(autoSlideInterval);
+                        autoSlideInterval = setInterval(() => {
+                            if (!isPaused && !isDown) {
+                                const pageCount = getPageCount();
+                                let nextPage = currentPage + 1;
+                                if (nextPage >= pageCount) {
+                                    nextPage = 0; // Wrap back to the beginning
+                                }
+                                scrollToPage(nextPage);
+                            }
+                        }, 5000); // 5 seconds skip
+                    }
+
+                    function resetAutoSlideTimer() {
+                        clearInterval(autoSlideInterval);
                         clearTimeout(resumeTimeout);
-                        resumeTimeout = setTimeout(() => { isPaused = false; }, 3000);
-                    });
+                        resumeTimeout = setTimeout(() => {
+                            isPaused = false;
+                            startAutoSlide();
+                        }, 5000);
+                    }
 
-                    nextBtn.addEventListener('click', () => {
-                        isPaused = true;
-                        track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
-                        // Resume auto-scroll after 3 seconds of inactivity
-                        clearTimeout(resumeTimeout);
-                        resumeTimeout = setTimeout(() => { isPaused = false; }, 3000);
-                    });
+                    // Render and Initialize
+                    renderCards();
+                    renderDots();
+                    updateActiveDot();
+                    startAutoSlide();
 
-                    // Update arrows state on scroll and window resize
-                    track.addEventListener('scroll', updateArrows);
-                    window.addEventListener('resize', updateArrows);
+                    // Desktop drag and drop
+                    let isDown = false, startX, scrollLeft;
                     
-                    // Initialize arrow states
-                    updateArrows();
-                    setTimeout(updateArrows, 100);
-                }
+                    track.addEventListener('mousedown', e => {
+                        isDown = true;
+                        isPaused = true;
+                        track.classList.add('dragging');
+                        startX = e.pageX - track.offsetLeft;
+                        scrollLeft = track.scrollLeft;
+                        clearInterval(autoSlideInterval);
+                        clearTimeout(resumeTimeout);
+                    });
 
-                // Continuous Auto Scroll Logic
-                const scrollSpeed = 0.5; // Very slow speed (0.5px per frame)
-                
-                const step = () => {
-                    if (!isPaused && !isDown) {
-                        track.scrollLeft += scrollSpeed;
-                        const maxScroll = track.scrollWidth - track.clientWidth;
-                        // Reset to start smoothly when it reaches the end
-                        if (track.scrollLeft >= maxScroll - 1) {
-                            track.scrollLeft = 0;
+                    track.addEventListener('mouseleave', () => { 
+                        isDown = false; 
+                        track.classList.remove('dragging'); 
+                        isPaused = false;
+                        startAutoSlide();
+                    });
+
+                    track.addEventListener('mouseup', () => { 
+                        isDown = false; 
+                        track.classList.remove('dragging'); 
+                        
+                        // Snap to the closest page on release
+                        const itemsPerPage = getItemsPerPage();
+                        const cards = track.querySelectorAll('.r-card');
+                        if (cards.length > 0) {
+                            const cardWidth = cards[0].getBoundingClientRect().width;
+                            const gap = 20;
+                            const pageWidth = itemsPerPage * (cardWidth + gap);
+                            const nearestPage = Math.round(track.scrollLeft / pageWidth);
+                            scrollToPage(nearestPage);
                         }
+                        
+                        isPaused = false;
+                        startAutoSlide();
+                    });
+
+                    track.addEventListener('mousemove', e => {
+                        if (!isDown) return;
+                        e.preventDefault();
+                        const x = e.pageX - track.offsetLeft;
+                        track.scrollLeft = scrollLeft - (x - startX) * 1.5;
+                    });
+
+                    // Touch support
+                    track.addEventListener('touchstart', () => {
+                        isPaused = true;
+                        clearInterval(autoSlideInterval);
+                        clearTimeout(resumeTimeout);
+                    });
+
+                    track.addEventListener('touchend', () => {
+                        // Snap to nearest page
+                        const itemsPerPage = getItemsPerPage();
+                        const cards = track.querySelectorAll('.r-card');
+                        if (cards.length > 0) {
+                            const cardWidth = cards[0].getBoundingClientRect().width;
+                            const gap = 20;
+                            const pageWidth = itemsPerPage * (cardWidth + gap);
+                            const nearestPage = Math.round(track.scrollLeft / pageWidth);
+                            scrollToPage(nearestPage);
+                        }
+                        
+                        isPaused = false;
+                        startAutoSlide();
+                    });
+
+                    // Navigation Buttons click handlers
+                    if (prevBtn && nextBtn) {
+                        prevBtn.addEventListener('click', () => {
+                            isPaused = true;
+                            scrollToPage(currentPage - 1);
+                            resetAutoSlideTimer();
+                        });
+
+                        nextBtn.addEventListener('click', () => {
+                            isPaused = true;
+                            scrollToPage(currentPage + 1);
+                            resetAutoSlideTimer();
+                        });
                     }
-                    requestAnimationFrame(step);
-                };
 
-                // Pause on hover
-                track.addEventListener('mouseenter', () => { isPaused = true; });
-                track.addEventListener('mouseleave', () => { if (!isDown) isPaused = false; });
+                    // Window Resize and Language updates
+                    window.addEventListener('resize', () => {
+                        renderDots();
+                        scrollToPage(currentPage);
+                    });
 
-                // Start animation
-                requestAnimationFrame(step);
-            })();
+                    // Update reviews when language transitions
+                    window.addEventListener('load', () => {
+                        // Make sure translation runs on Google Reviewer subtext
+                        updateContent();
+                    });
+                })();
+            });
         </script>
     </section>
 

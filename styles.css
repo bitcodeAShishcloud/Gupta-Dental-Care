@@ -1123,4 +1123,171 @@ body.light-mode .booking-form .form-select:focus {
     transform: translateY(-8px) scale(1.03);
     background: linear-gradient(135deg, var(--bg-surface), rgba(14, 165, 233, 0.05)) !important;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==================== Next-Gen Premium Datepicker Enhancements ==================== */
+
+/* Custom haptic shake animation for field validation errors */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+}
+.shake {
+    animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.date-picker-wrapper {
+    position: relative;
+}
+
+.input-group-custom {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-icon-left {
+    position: absolute;
+    left: 16px;
+    color: var(--primary);
+    font-size: 1.2rem;
+    pointer-events: none;
+    z-index: 5;
+    transition: var(--transition);
+}
+
+.booking-form .form-control.date-input-field {
+    padding-left: 48px; /* Room for the left icon */
+    cursor: pointer;
+}
+
+.booking-form .form-control.date-input-field:focus ~ .input-icon-left {
+    transform: scale(1.1);
+    color: var(--primary-dark);
+}
+
+/* Quick Dates Grid */
+.quick-dates-container {
+    background: rgba(15, 23, 42, 0.15);
+    border-radius: 18px;
+    padding: 20px;
+    border: 1px dashed var(--border-glass);
+    transition: var(--transition);
+}
+
+body.light-mode .quick-dates-container {
+    background: rgba(241, 245, 249, 0.7);
+}
+
+.quick-dates-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+}
+
+.quick-dates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.quick-date-pill {
+    background: rgba(15, 23, 42, 0.25);
+    border: 1px solid var(--border-glass);
+    color: var(--text-main);
+    border-radius: 14px;
+    padding: 10px 6px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body.light-mode .quick-date-pill {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.quick-date-pill:hover {
+    border-color: var(--primary);
+    background: rgba(14, 165, 233, 0.08);
+    transform: translateY(-2px);
+}
+
+.quick-date-pill.selected {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+    border-color: var(--primary) !important;
+    color: white !important;
+    box-shadow: 0 8px 18px -4px rgba(14, 165, 233, 0.4);
+    transform: scale(1.03);
+}
+
+.quick-date-day {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 2px;
+    letter-spacing: 0.02em;
+}
+
+.quick-date-pill.selected .quick-date-day {
+    opacity: 1;
+}
+
+.quick-date-num {
+    font-size: 0.92rem;
+    font-weight: 800;
+}
+
+/* Slot warning alert banner */
+.time-slot-alert {
+    padding: 12px 16px;
+    border-radius: 14px;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    color: #F87171;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+body.light-mode .time-slot-alert {
+    background: rgba(220, 38, 38, 0.06);
+    border-color: rgba(220, 38, 38, 0.18);
+    color: #DC2626;
+}
+
+.time-slot-alert i {
+    font-size: 1.1rem;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+}
+
+/* Day Badge Styling */
+#selected-day-badge {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    vertical-align: middle;
 }

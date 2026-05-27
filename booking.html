@@ -212,13 +212,34 @@
                                 <div class="wizard-step-panel" id="step-panel-2">
                                     <h5 class="fw-bold mb-3" data-en="Select Date & Time Slot" data-hi="तारीख और समय स्लॉट चुनें">Select Date & Time Slot</h5>
                                     
-                                    <div class="mb-4">
-                                        <label for="appointment-date" class="form-label" data-en="Preferred Date" data-hi="पसंदीदा तारीख">Preferred Date</label>
-                                        <input type="date" class="form-control" id="appointment-date" name="date" required>
-                                        <div class="invalid-feedback" data-en="Please select a valid date." data-hi="कृपया एक वैध तारीख चुनें।">Please select a valid date.</div>
+                                    <div class="mb-4 date-picker-wrapper">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <label for="appointment-date" class="form-label mb-0" data-en="Preferred Date" data-hi="पसंदीदा तारीख">Preferred Date</label>
+                                            <span id="selected-day-badge" class="badge ms-2 d-none"></span>
+                                        </div>
+                                        <div class="input-group-custom">
+                                            <span class="input-icon-left"><i class="far fa-calendar-alt"></i></span>
+                                            <input type="date" class="form-control date-input-field" id="appointment-date" name="date" required>
+                                        </div>
+                                        <input type="hidden" name="day_of_week" id="appointment-day-hidden">
+                                        <div class="invalid-feedback" id="date-validation-msg" data-en="Please select a valid date." data-hi="कृपया एक वैध तारीख चुनें।">Please select a valid date.</div>
+                                        
+                                        <!-- Dynamic Quick Dates Pills Section -->
+                                        <div class="quick-dates-container mt-3">
+                                            <div class="quick-dates-label" data-en="Or choose an upcoming date quickly:" data-hi="या जल्दी से आने वाली तारीख चुनें:">Or choose an upcoming date quickly:</div>
+                                            <div class="quick-dates-grid" id="quick-dates-grid">
+                                                <!-- Dynamic Date Pills populated by Javascript -->
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <div class="mb-3">
+                                        <!-- Time Slot Alert Message -->
+                                        <div id="time-slot-alert" class="time-slot-alert">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                            <span id="time-slot-alert-msg" data-en="Please select your preferred date before selecting a time slot." data-hi="समय स्लॉट चुनने से पहले कृपया अपनी पसंदीदा तारीख चुनें।">Please select your preferred date before selecting a time slot.</span>
+                                        </div>
+
                                         <label class="form-label mb-2" data-en="Select Available Time Slot" data-hi="उपलब्ध समय स्लॉट चुनें">Select Available Time Slot</label>
                                         
                                         <!-- Morning Slots -->
@@ -454,6 +475,155 @@
             const day = String(today.getDate()).padStart(2, '0');
             dateInput.min = `${year}-${month}-${day}`;
 
+            // --- Next-Gen Datepicker Helper Functions ---
+            const selectedDayBadge = document.getElementById('selected-day-badge');
+            const hiddenDayInput = document.getElementById('appointment-day-hidden');
+            const timeSlotAlert = document.getElementById('time-slot-alert');
+            const dateFeedback = document.getElementById('date-validation-msg');
+
+            // Handle date selection: Day identification, Wednesday blocker, pill selection sync
+            function handleDateSelection(selectedDateStr) {
+                if (!selectedDateStr) {
+                    selectedDayBadge.classList.add('d-none');
+                    hiddenDayInput.value = '';
+                    return true;
+                }
+
+                const selDate = new Date(selectedDateStr);
+                const dayIndex = selDate.getDay();
+
+                // Closed on Wednesday (3)
+                if (dayIndex === 3) {
+                    // Closed on Wednesday! Block and warn
+                    dateInput.value = '';
+                    dateInput.classList.add('is-invalid');
+                    
+                    // Show custom message
+                    dateFeedback.style.display = 'block';
+                    dateFeedback.textContent = currentLanguage === 'en' 
+                        ? 'Gupta Dental Care is closed on Wednesdays. Please select another date.' 
+                        : 'गुप्ता डेंटल केयर बुधवार को बंद रहता है। कृपया कोई अन्य तारीख चुनें।';
+                    dateFeedback.setAttribute('data-en', 'Gupta Dental Care is closed on Wednesdays. Please select another date.');
+                    dateFeedback.setAttribute('data-hi', 'गुप्ता डेंटल केयर बुधवार को बंद रहता है। कृपया कोई अन्य तारीख चुनें।');
+
+                    // Reset badges/inputs
+                    selectedDayBadge.classList.add('d-none');
+                    hiddenDayInput.value = '';
+                    
+                    // Clear selected pills
+                    document.querySelectorAll('.quick-date-pill').forEach(p => p.classList.remove('selected'));
+
+                    // Shake the date picker wrapper
+                    const dateWrapper = document.querySelector('.date-picker-wrapper');
+                    if (dateWrapper) {
+                        dateWrapper.classList.add('shake');
+                        setTimeout(() => dateWrapper.classList.remove('shake'), 500);
+                    }
+                    return false;
+                }
+
+                // Valid day - clear errors and calculate labels
+                dateInput.classList.remove('is-invalid');
+                dateFeedback.style.display = 'none';
+                if (timeSlotAlert) timeSlotAlert.style.display = 'none';
+
+                const daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const daysHi = ['रविवार', 'सोमवार', 'मंगलवार', 'बुधवार', 'गुरुवार', 'शुक्रवार', 'शनिवार'];
+
+                const dayEn = daysEn[dayIndex];
+                const dayHi = daysHi[dayIndex];
+
+                // Set hidden day field
+                hiddenDayInput.value = dayEn;
+
+                // Show day badge
+                selectedDayBadge.classList.remove('d-none');
+                selectedDayBadge.textContent = currentLanguage === 'en' ? dayEn : dayHi;
+                selectedDayBadge.setAttribute('data-en', dayEn);
+                selectedDayBadge.setAttribute('data-hi', dayHi);
+
+                // Highlight corresponding quick date pill if it matches
+                document.querySelectorAll('.quick-date-pill').forEach(pill => {
+                    if (pill.getAttribute('data-date') === selectedDateStr) {
+                        pill.classList.add('selected');
+                    } else {
+                        pill.classList.remove('selected');
+                    }
+                });
+
+                return true;
+            }
+
+            // Generate next 5 active clinic working dates (skipping Wednesdays)
+            function populateQuickDates() {
+                const quickDatesGrid = document.getElementById('quick-dates-grid');
+                if (!quickDatesGrid) return;
+                
+                quickDatesGrid.innerHTML = '';
+                
+                const daysOfWeekEn = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                const daysOfWeekHi = ['रवि', 'सोम', 'मंगल', 'बुध', 'गुरु', 'शुक्र', 'शनि'];
+                const monthsEn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                const monthsHi = ['जनवरी', 'फरवरी', 'मार्च', 'अप्रैल', 'मई', 'जून', 'जुलाई', 'अगस्त', 'सितंबर', 'अक्टूबर', 'नवंबर', 'दिसंबर'];
+                
+                const today = new Date();
+                let datesCount = 0;
+                let dayOffset = 0;
+                
+                while (datesCount < 5 && dayOffset < 15) {
+                    const nextDate = new Date();
+                    nextDate.setDate(today.getDate() + dayOffset);
+                    const dayIndex = nextDate.getDay();
+                    
+                    if (dayIndex !== 3) { // Skip Wednesdays
+                        const dateStr = nextDate.toISOString().split('T')[0];
+                        const dayNum = nextDate.getDate();
+                        const monthIndex = nextDate.getMonth();
+                        
+                        let dayLabelEn = daysOfWeekEn[dayIndex];
+                        let dateLabelEn = `${dayNum} ${monthsEn[monthIndex]}`;
+                        if (dayOffset === 0) dayLabelEn = 'Today';
+                        else if (dayOffset === 1) dayLabelEn = 'Tomorrow';
+                        
+                        let dayLabelHi = daysOfWeekHi[dayIndex];
+                        let dateLabelHi = `${dayNum} ${monthsHi[monthIndex]}`;
+                        if (dayOffset === 0) dayLabelHi = 'आज';
+                        else if (dayOffset === 1) dayLabelHi = 'कल';
+                        
+                        const pill = document.createElement('div');
+                        pill.className = 'quick-date-pill';
+                        pill.setAttribute('data-date', dateStr);
+                        pill.innerHTML = `
+                            <span class="quick-date-day" data-en="${dayLabelEn}" data-hi="${dayLabelHi}">${currentLanguage === 'en' ? dayLabelEn : dayLabelHi}</span>
+                            <span class="quick-date-num" data-en="${dateLabelEn}" data-hi="${dateLabelHi}">${currentLanguage === 'en' ? dateLabelEn : dateLabelHi}</span>
+                        `;
+                        
+                        pill.addEventListener('click', function() {
+                            dateInput.value = dateStr;
+                            handleDateSelection(dateStr);
+                        });
+                        
+                        quickDatesGrid.appendChild(pill);
+                        datesCount++;
+                    }
+                    dayOffset++;
+                }
+            }
+
+            // Populate on load
+            populateQuickDates();
+
+            // Setup date selection listeners
+            dateInput.addEventListener('change', function() {
+                handleDateSelection(this.value);
+            });
+
+            // Listen to language change to trigger custom pill text adjustments if grid exists
+            window.addEventListener('load', function() {
+                // Intercept core toggleLanguage if needed, otherwise our attributes trigger it
+                populateQuickDates();
+            });
+
             // Multi-step Wizard Navigation Logic
             const nextBtns = document.querySelectorAll('.next-step-btn');
             const backBtns = document.querySelectorAll('.back-step-btn');
@@ -527,11 +697,20 @@
                         treatmentFeedback.classList.add('d-none');
                     } else if (currentStep === 2) {
                         let valid = true;
+                        if (timeSlotAlert) timeSlotAlert.style.display = 'none';
+
                         if (!dateInput.value) {
                             dateInput.classList.add('is-invalid');
                             valid = false;
                         } else {
-                            dateInput.classList.remove('is-invalid');
+                            // Extra safety check for Wednesdays
+                            const selDate = new Date(dateInput.value);
+                            if (selDate.getDay() === 3) {
+                                handleDateSelection(dateInput.value); // Trigger blocker
+                                valid = false;
+                            } else {
+                                dateInput.classList.remove('is-invalid');
+                            }
                         }
                         
                         if (!hiddenTimeInput.value) {
@@ -628,11 +807,43 @@
             const timeSlotBtns = document.querySelectorAll('.time-slot-btn');
             timeSlotBtns.forEach(btn => {
                 btn.addEventListener('click', function () {
+                    // Check if date is selected
+                    if (!dateInput.value) {
+                        // User forgot the date! Show error and clear selection
+                        timeSlotBtns.forEach(b => b.classList.remove('selected'));
+                        hiddenTimeInput.value = '';
+                        
+                        // Show warning alert
+                        if (timeSlotAlert) {
+                            timeSlotAlert.style.display = 'flex';
+                            
+                            // Highlight date field
+                            dateInput.classList.add('is-invalid');
+                            
+                            // Shake the date picker wrapper
+                            const dateWrapper = document.querySelector('.date-picker-wrapper');
+                            if (dateWrapper) {
+                                dateWrapper.classList.add('shake');
+                                setTimeout(() => dateWrapper.classList.remove('shake'), 500);
+                            }
+                            
+                            // Smooth scroll to date input
+                            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                            window.scrollTo({
+                                top: dateWrapper.offsetTop - navbarHeight - 30,
+                                behavior: 'smooth'
+                            });
+                        }
+                        return;
+                    }
+
+                    // Date is present! Select the slot normally
                     timeSlotBtns.forEach(b => b.classList.remove('selected'));
                     this.classList.add('selected');
                     const selectedTime = this.getAttribute('data-time');
                     hiddenTimeInput.value = selectedTime;
                     timeSlotFeedback.classList.add('d-none');
+                    if (timeSlotAlert) timeSlotAlert.style.display = 'none';
                 });
             });
 
@@ -732,8 +943,11 @@
                     : 'धन्यवाद! हमें आपका बुकिंग अनुरोध मिल गया है और हम जल्द ही इसकी पुष्टि करेंगे।';
 
                 // WhatsApp message prep
-                const waMessage = encodeURIComponent(`Hello Dr. A Gupta, I just booked a dental appointment through the website.\n\nDetails:\n- Name: ${data.name}\n- Service: ${data.treatment}\n- Date: ${formattedDate}\n- Time: ${data.time}\n\nPlease confirm my slot.`);
+                const dayMsg = data.day_of_week ? ` (${data.day_of_week})` : '';
+                const waMessage = encodeURIComponent(`Hello Dr. A Gupta, I just booked a dental appointment through the website.\n\nDetails:\n- Name: ${data.name}\n- Service: ${data.treatment}\n- Date: ${formattedDate}${dayMsg}\n- Time: ${data.time}\n\nPlease confirm my slot.`);
                 const waUrl = `https://wa.me/919984847807?text=${waMessage}`;
+
+                const dayOfBooking = data.day_of_week ? `, ${data.day_of_week}` : '';
 
                 wrapper.innerHTML = `
                     <div class="success-card" data-aos="zoom-in">
@@ -753,8 +967,8 @@
                                 <span class="success-summary-val">${data.treatment}</span>
                             </div>
                             <div class="success-summary-item">
-                                <span class="success-summary-label" data-en="Date:" data-hi="तारीख:">Date:</span>
-                                <span class="success-summary-val">${formattedDate}</span>
+                                <span class="success-summary-label" data-en="Date & Day:" data-hi="तारीख और दिन:">Date & Day:</span>
+                                <span class="success-summary-val">${formattedDate}${dayOfBooking}</span>
                             </div>
                             <div class="success-summary-item">
                                 <span class="success-summary-label" data-en="Requested Time:" data-hi="अनुरोधित समय:">Requested Time:</span>
