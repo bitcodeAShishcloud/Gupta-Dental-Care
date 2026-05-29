@@ -2,8 +2,14 @@
 // Gupta Dental Care - JavaScript Functionality
 // =====================================================
 
-// Language state
-let currentLanguage = 'hi';
+// Helper to detect browser language (defaults to 'hi' if Hindi, otherwise 'en')
+const getBrowserLanguage = () => {
+    const lang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+    return lang.startsWith('hi') ? 'hi' : 'en';
+};
+
+// Language state - checks localStorage first, then browser language
+let currentLanguage = localStorage.getItem('preferredLanguage') || getBrowserLanguage();
 
 // ==================== Document Ready ====================
 document.addEventListener('DOMContentLoaded', function () {
@@ -225,7 +231,7 @@ function initScrollAnimations() {
 
 // ==================== Load Saved Language Preference ====================
 window.addEventListener('load', function () {
-    const savedLanguage = localStorage.getItem('preferredLanguage') || 'hi';
+    const savedLanguage = localStorage.getItem('preferredLanguage') || getBrowserLanguage();
 
     currentLanguage = savedLanguage;
     document.body.setAttribute('data-lang', currentLanguage);
