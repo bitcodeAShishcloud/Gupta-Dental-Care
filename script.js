@@ -3,7 +3,7 @@
 // =====================================================
 
 // Language state
-let currentLanguage = 'en';
+let currentLanguage = 'hi';
 
 // ==================== Document Ready ====================
 document.addEventListener('DOMContentLoaded', function () {
@@ -225,17 +225,18 @@ function initScrollAnimations() {
 
 // ==================== Load Saved Language Preference ====================
 window.addEventListener('load', function () {
-    const savedLanguage = localStorage.getItem('preferredLanguage');
+    const savedLanguage = localStorage.getItem('preferredLanguage') || 'hi';
 
-    if (savedLanguage && savedLanguage !== currentLanguage) {
-        currentLanguage = savedLanguage;
-        document.body.setAttribute('data-lang', currentLanguage);
+    currentLanguage = savedLanguage;
+    document.body.setAttribute('data-lang', currentLanguage);
 
-        const langText = document.getElementById('lang-text');
-        langText.textContent = currentLanguage === 'en' ? 'हिंदी' : 'English';
+    const langText = document.getElementById('lang-text');
+    if (langText) langText.textContent = currentLanguage === 'en' ? 'हिंदी' : 'English';
 
-        updateContent();
-    }
+    const langTextMobile = document.getElementById('lang-text-mobile');
+    if (langTextMobile) langTextMobile.textContent = currentLanguage === 'en' ? 'हिं' : 'En';
+
+    updateContent();
 });
 
 // ==================== Gallery Image Modal (Optional Enhancement) ====================
